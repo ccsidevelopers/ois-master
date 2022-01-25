@@ -1,0 +1,67 @@
+[19-Feb-2021 03:23:29 UTC] PHP Fatal error:  Class UpdateHelper\ComposerPlugin contains 2 abstract methods and must therefore be declared abstract or implement the remaining methods (Composer\Plugin\PluginInterface::deactivate, Composer\Plugin\PluginInterface::uninstall) in /home/ccsioims/ois/vendor/kylekatarnls/update-helper/src/UpdateHelper/ComposerPlugin.php on line 11
+[25-Jul-2021 23:34:02 UTC] PHP Fatal error:  Uncaught ReflectionException: Class config does not exist in /home/ccsioims/ois/vendor/laravel/framework/src/Illuminate/Container/Container.php:767
+Stack trace:
+#0 /home/ccsioims/ois/vendor/laravel/framework/src/Illuminate/Container/Container.php(767): ReflectionClass->__construct('config')
+#1 /home/ccsioims/ois/vendor/laravel/framework/src/Illuminate/Container/Container.php(646): Illuminate\Container\Container->build('config')
+#2 /home/ccsioims/ois/vendor/laravel/framework/src/Illuminate/Container/Container.php(601): Illuminate\Container\Container->resolve('config', Array)
+#3 /home/ccsioims/ois/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(734): Illuminate\Container\Container->make('config', Array)
+#4 /home/ccsioims/ois/vendor/laravel/framework/src/Illuminate/Container/Container.php(1210): Illuminate\Foundation\Application->make('config')
+#5 /home/ccsioims/ois/vendor/laravel/framework/src/Illuminate/Log/LogManager.php(443): Illuminate\Container\Container->offsetGet('config')
+#6 /home/ccs in /home/ccsioims/ois/vendor/laravel/framework/src/Illuminate/Container/Container.php on line 767
+[25-Jul-2021 23:34:08 UTC] PHP Fatal error:  Uncaught ReflectionException: Class config does not exist in /home/ccsioims/ois/vendor/laravel/framework/src/Illuminate/Container/Container.php:767
+Stack trace:
+#0 /home/ccsioims/ois/vendor/laravel/framework/src/Illuminate/Container/Container.php(767): ReflectionClass->__construct('config')
+#1 /home/ccsioims/ois/vendor/laravel/framework/src/Illuminate/Container/Container.php(646): Illuminate\Container\Container->build('config')
+#2 /home/ccsioims/ois/vendor/laravel/framework/src/Illuminate/Container/Container.php(601): Illuminate\Container\Container->resolve('config', Array)
+#3 /home/ccsioims/ois/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(734): Illuminate\Container\Container->make('config', Array)
+#4 /home/ccsioims/ois/vendor/laravel/framework/src/Illuminate/Container/Container.php(1210): Illuminate\Foundation\Application->make('config')
+#5 /home/ccsioims/ois/vendor/laravel/framework/src/Illuminate/Log/LogManager.php(443): Illuminate\Container\Container->offsetGet('config')
+#6 /home/ccs in /home/ccsioims/ois/vendor/laravel/framework/src/Illuminate/Container/Container.php on line 767
+[25-Jul-2021 23:37:11 UTC] PHP Fatal error:  Uncaught ReflectionException: Class config does not exist in /home/ccsioims/ois/vendor/laravel/framework/src/Illuminate/Container/Container.php:767
+Stack trace:
+#0 /home/ccsioims/ois/vendor/laravel/framework/src/Illuminate/Container/Container.php(767): ReflectionClass->__construct('config')
+#1 /home/ccsioims/ois/vendor/laravel/framework/src/Illuminate/Container/Container.php(646): Illuminate\Container\Container->build('config')
+#2 /home/ccsioims/ois/vendor/laravel/framework/src/Illuminate/Container/Container.php(601): Illuminate\Container\Container->resolve('config', Array)
+#3 /home/ccsioims/ois/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(734): Illuminate\Container\Container->make('config', Array)
+#4 /home/ccsioims/ois/vendor/laravel/framework/src/Illuminate/Container/Container.php(1210): Illuminate\Foundation\Application->make('config')
+#5 /home/ccsioims/ois/vendor/laravel/framework/src/Illuminate/Log/LogManager.php(443): Illuminate\Container\Container->offsetGet('config')
+#6 /home/ccs in /home/ccsioims/ois/vendor/laravel/framework/src/Illuminate/Container/Container.php on line 767
+[25-Jul-2021 23:37:23 UTC] PHP Fatal error:  Uncaught ReflectionException: Class config does not exist in /home/ccsioims/ois/vendor/laravel/framework/src/Illuminate/Container/Container.php:767
+Stack trace:
+#0 /home/cc[26-Jul-2021 04:15:11 UTC] PHP Fatal error:  Class UpdateHelper\ComposerPlugin contains 2 abstract methods and must therefore be declared abstract or implement the remaining methods (Composer\Plugin\PluginInterface::deactivate, Composer\Plugin\PluginInterface::uninstall) in /home/ccsioims/ois/vendor/kylekatarnls/update-helper/src/UpdateHelper/ComposerPlugin.php on line 11
+[18-Dec-2021 05:47:52 UTC] PHP Fatal error:  Uncaught ReflectionException: Class config does not exist in /home/ccsioims/ois/vendor/laravel/framework/src/Illuminate/Container/Container.php:767
+Stack trace:
+#0 /home/ccsioims/ois/vendor/laravel/framework/src/Illuminate/Container/Container.php(767): ReflectionClass->__construct('config')
+#1 /home/ccsioims/ois/vendor/laravel/framework/src/Illuminate/Container/Container.php(646): Illuminate\Container\Container->build('config')
+#2 /home/ccsioims/ois/vendor/laravel/framework/src/Illuminate/Container/Container.php(601): Illuminate\Container\Container->resolve('config', Array)
+#3 /home/ccsioims/ois/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(734): Illuminate\Container\Container->make('config', Array)
+#4 /home/ccsioims/ois/vendor/laravel/framework/src/Illuminate/Container/Container.php(1210): Illuminate\Foundation\Application->make('config')
+#5 /home/ccsioims/ois/vendor/laravel/framework/src/Illuminate/Log/LogManager.php(443): Illuminate\Container\Container->offsetGet('config')
+#6 /home/ccs in /home/ccsioims/ois/vendor/laravel/framework/src/Illuminate/Container/Container.php on line 767
+[18-Dec-2021 05:47:54 UTC] PHP Fatal error:  Uncaught ReflectionException: Class config does not exist in /home/ccsioims/ois/vendor/laravel/framework/src/Illuminate/Container/Container.php:767
+Stack trace:
+#0 /home/ccsioims/ois/vendor/laravel/framework/src/Illuminate/Container/Container.php(767): ReflectionClass->__construct('config')
+#1 /home/ccsioims/ois/vendor/laravel/framework/src/Illuminate/Container/Container.php(646): Illuminate\Container\Container->build('config')
+#2 /home/ccsioims/ois/vendor/laravel/framework/src/Illuminate/Container/Container.php(601): Illuminate\Container\Container->resolve('config', Array)
+#3 /home/ccsioims/ois/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(734): Illuminate\Container\Container->make('config', Array)
+#4 /home/ccsioims/ois/vendor/laravel/framework/src/Illuminate/Container/Container.php(1210): Illuminate\Foundation\Application->make('config')
+#5 /home/ccsioims/ois/vendor/laravel/framework/src/Illuminate/Log/LogManager.php(443): Illuminate\Container\Container->offsetGet('config')
+#6 /home/ccs in /home/ccsioims/ois/vendor/laravel/framework/src/Illuminate/Container/Container.php on line 767
+[18-Dec-2021 06:04:30 UTC] PHP Fatal error:  Uncaught ReflectionException: Class config does not exist in /home/ccsioims/ois/vendor/laravel/framework/src/Illuminate/Container/Container.php:767
+Stack trace:
+#0 /home/ccsioims/ois/vendor/laravel/framework/src/Illuminate/Container/Container.php(767): ReflectionClass->__construct('config')
+#1 /home/ccsioims/ois/vendor/laravel/framework/src/Illuminate/Container/Container.php(646): Illuminate\Container\Container->build('config')
+#2 /home/ccsioims/ois/vendor/laravel/framework/src/Illuminate/Container/Container.php(601): Illuminate\Container\Container->resolve('config', Array)
+#3 /home/ccsioims/ois/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(734): Illuminate\Container\Container->make('config', Array)
+#4 /home/ccsioims/ois/vendor/laravel/framework/src/Illuminate/Container/Container.php(1210): Illuminate\Foundation\Application->make('config')
+#5 /home/ccsioims/ois/vendor/laravel/framework/src/Illuminate/Log/LogManager.php(443): Illuminate\Container\Container->offsetGet('config')
+#6 /home/ccs in /home/ccsioims/ois/vendor/laravel/framework/src/Illuminate/Container/Container.php on line 767
+[18-Dec-2021 06:12:14 UTC] PHP Fatal error:  Uncaught ReflectionException: Class config does not exist in /home/ccsioims/ois/vendor/laravel/framework/src/Illuminate/Container/Container.php:767
+Stack trace:
+#0 /home/ccsioims/ois/vendor/laravel/framework/src/Illuminate/Container/Container.php(767): ReflectionClass->__construct('config')
+#1 /home/ccsioims/ois/vendor/laravel/framework/src/Illuminate/Container/Container.php(646): Illuminate\Container\Container->build('config')
+#2 /home/ccsioims/ois/vendor/laravel/framework/src/Illuminate/Container/Container.php(601): Illuminate\Container\Container->resolve('config', Array)
+#3 /home/ccsioims/ois/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(734): Illuminate\Container\Container->make('config', Array)
+#4 /home/ccsioims/ois/vendor/laravel/framework/src/Illuminate/Container/Container.php(1210): Illuminate\Foundation\Application->make('config')
+#5 /home/ccsioims/ois/vendor/laravel/framework/src/Illuminate/Log/LogManager.php(443): Illuminate\Container\Container->offsetGet('config')
+#6 /home/ccs in /home/ccsioims/ois/vendor/laravel/framework/src/Illuminate/Container/Container.php on line 767
