@@ -9758,7 +9758,7 @@ Route::get('bank_endo_no_action', function(Request $request)
 
 Route::get('check_if_existing_ip_attendance', function(Request $request)
 {
-    $to_return = '';
+    $to_return = ''; //test commit
     $getData = DB::table('attendance_all_employee')
         ->join('users', 'users.id', '=', 'attendance_all_employee.user_id')
         ->where('ip_address', '=', $request->ipAddress)
