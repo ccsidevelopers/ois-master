@@ -45,8 +45,8 @@
 <body>
 <div class="row">
     {!! $content !!}
-    <!-- third commit dapat walang errors -->
-    <!-- test commit comment -->
+    
+    
 </div>
 </body>
 </html>
