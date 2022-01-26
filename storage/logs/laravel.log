@@ -232,3 +232,22 @@
 #27 C:\\xampp\\htdocs\\ois-master\\artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
 #28 {main}
 "} 
+[2022-01-25 12:47:16] local.ERROR: Command "cache:config" is not defined.
+
+Did you mean one of these?
+    cache:clear
+    cache:forget
+    cache:table {"exception":"[object] (Symfony\\Component\\Console\\Exception\\CommandNotFoundException(code: 0): Command \"cache:config\" is not defined.
+
+Did you mean one of these?
+    cache:clear
+    cache:forget
+    cache:table at C:\\xampp\\htdocs\\ois-master\\vendor\\symfony\\console\\Application.php:618)
+[stacktrace]
+#0 C:\\xampp\\htdocs\\ois-master\\vendor\\symfony\\console\\Application.php(229): Symfony\\Component\\Console\\Application->find('cache:config')
+#1 C:\\xampp\\htdocs\\ois-master\\vendor\\symfony\\console\\Application.php(148): Symfony\\Component\\Console\\Application->doRun(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#2 C:\\xampp\\htdocs\\ois-master\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Application.php(88): Symfony\\Component\\Console\\Application->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#3 C:\\xampp\\htdocs\\ois-master\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(121): Illuminate\\Console\\Application->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#4 C:\\xampp\\htdocs\\ois-master\\artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#5 {main}
+"} 

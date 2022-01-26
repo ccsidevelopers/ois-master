@@ -45,6 +45,8 @@
 <body>
 <div class="row">
     {!! $content !!}
+
+    <!-- test commit comment -->
 </div>
 </body>
 </html>
