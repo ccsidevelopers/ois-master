@@ -8670,7 +8670,15 @@ Route::get('qa_get_auth_view',
     
 //===========================================TEST ROUTE========================================================
 
+//Chano
+Route::get('/loan-form', function() {
+    return view('loan-form');
+});
 
+Route::get('kiosk_create', [
+    'uses' => 'LoanFormController@kiosk_create',
+    'as' => 'kiosk_create',
+]);
 
 Route::get('ci-detach', function () {
     User::find(5)

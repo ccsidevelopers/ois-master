@@ -574,11 +574,16 @@ $('.tableendorse').each(function () {
                     else
                     {
                         if(data[5][0].name == 'CC Senior Account Officer' || data[5][0].name == 'CC Account Officer' || data[5][0].name == 'CC Tele Encoder' || data[5][0].name == 'Quality Analyst')
-                        {
+                        {   
+
+                            //chano
                             tabletoShow = '<b>-----( NO ADDITIONAL FILE/S )-----</b>';
+                            
+
                         }
                         else if(data[5][0].name == 'B.I Client')
                         {
+
                             tabletoShow = '<span id="check_requested">'+required_show+'</span><div class = "row" style = "padding-top : 15px; ">' +
                                 '<div class = "hideShowFac col-md-4" hidden></div>' +
                                 '<div class = "hideShowFac col-md-2" hidden>' +
@@ -1463,10 +1468,18 @@ $('.tableendorse').each(function () {
                             '                  <td style="padding: 3px;"><span class="badge bg-red">TYPE OF ENDORSEMENT</span></td>\n' +
                             '                  <td style="padding: 3px;text-align: center;">'+data[0][0].cc_bank_endorsement_type+'</td>\n' +
                             '                </tr>\n' +
-
+                                                //chano
+                                            '<tr>\n' +
+                                                '<td style="padding: 3px; background-color: brown; color: white" colspan="12">REMARKS</span></td>\n' +
+                                            '</tr>' +
+                                            '<tr>' +
+                                            '<td style="padding: 10px; text-transform: uppercase;" colspan="12" >'+'<strong>'+data[0][0].client_remarks_bank+'<strong>'+'</td>\n' +
+                                            '</tr>' +
                             '                <tr class="hide_this" style="">\n' +
                             '                  <td style="padding: 3px; background-color: brown; color: white" colspan="12">ADDITIONAL ATTACHMENT/S</td>\n' +
                             '                </tr>\n' +
+                                            
+                                            
 
                             '                <tr>\n' +
                             '                  <td style="padding: 3px;" colspan="12"><span id ="hide_this">'+tabletoShow+'</span></td>\n' +
