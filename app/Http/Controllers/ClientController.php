@@ -113,6 +113,9 @@ class ClientController extends Controller
                 $timeStamp = $dataDashboard[3];
                 $tatAccounts = $dataDashboard[4];
                 //            END
+                
+                //Added $provinces variable
+                $provinces = Province::all();
                 $tors = TypeOfRequest::all();
                 $tols = TypeOfLoan::all();
 

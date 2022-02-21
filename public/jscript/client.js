@@ -174,7 +174,7 @@ function pending_accounts_table() {
                     }
                 }
             ],
-        "columns":
+        "columns":provinces
             [
                 {data: 'id', name: 'endorsements.id'},
                 {data: 'account_name', name: 'endorsements.account_name',"className": "text-center"},

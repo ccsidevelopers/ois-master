@@ -45,7 +45,6 @@
 <body>
 <div class="row">
     {!! $content !!}
-    <!-- test-commit 10:33AM -->
 </div>
 </body>
 </html>
