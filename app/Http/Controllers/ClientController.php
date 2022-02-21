@@ -115,6 +115,7 @@ class ClientController extends Controller
                 //            END
                 $tors = TypeOfRequest::all();
                 $tols = TypeOfLoan::all();
+                // $provinces = Province::all(); ADDED ON LIVE FEB 14,2022
 
                 $javs = DB::table('javascript_magic')
                     ->select('unique')
