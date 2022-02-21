@@ -1115,7 +1115,7 @@ function manage_table_init() {
                             if(data.acct_status == '')
                             {
                                 return ' <a href="#edit-' + data.id + '" class="btn btn-xs btn-warning" name="'+data.id+':'+data.account_name+'" id="btnHoldEndorse" data-toggle="modal" data-target="#modal-hold" style="width: 100%">Hold</a><br/>' +
-                                    ' <a href="#edit-' + data.id + '" class="btn btn-xs btn-info" name="'+data.id+':'+data.account_name+'" id="btnReturnEndorse" data-toggle="modal" data-target="#srao-modal-return" style="width: 100%">Return</a><br/>'+
+                                    ' <a href="#edit-' + data.id + '" class="btn btn-xs btn-info btn-return_test" name="'+data.id+':'+data.account_name+'" id="btnReturnEndorse" data-toggle="modal" data-target="#srao-modal-return" style="width: 100%">Return</a><br/>'+
                                     ' <a href="#edit-' + data.id + '" class="btn btn-xs btn-danger" name="'+data.id+':'+data.account_name+'" id="btnCancelEndorse" data-toggle="modal" data-target="#modal-cancel" style="width: 100%">Cancel</a>';
                             }
                             else if(data.acct_status == 5)
