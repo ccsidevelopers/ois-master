@@ -45,8 +45,6 @@
 <body>
 <div class="row">
     {!! $content !!}
-    
-    
 </div>
 </body>
 </html>
