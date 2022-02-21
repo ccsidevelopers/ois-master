@@ -25,6 +25,8 @@
         }
     </style>
 </head>
+
+{{-- Nag dagdag kame ng comment dito --}}
 <body>
     <div class="main mh-100 main bg-light ">
         <div class="main-form d-flex align-items-center justify-content-center p-5">
