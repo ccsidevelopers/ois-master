@@ -26,8 +26,7 @@
     </style>
 </head>
 
-{{-- uwian na comment ko --}}
-{{-- pano ba mag github --}}
+{{-- uwian na naman kare-kare ulam ko mamaya --}}
 
 <body>
     <div class="main mh-100 main bg-light ">
