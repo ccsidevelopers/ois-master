@@ -237,7 +237,6 @@ var tableIncidentRepDone;
 var inc_rep_done = [];
 var inc_rep_done_count = 0;
 var incidentBool = false;
-var existing_cat_id = '';
 
 $(document).ready(function()
 {
@@ -861,6 +860,7 @@ $(document).ready(function()
             "pageLength": 10,
             "lengthMenu": [[10, 25, 50, 100, -1], ['10 rows', '25 rows', '50 rows', '100 rows', 'Show all']],
             "bSortClasses": false,
+            "deferRender": true,
             initComplete: function () {
                 var api = this.api();
 
@@ -887,8 +887,7 @@ $(document).ready(function()
                         }
                     });
                 });
-            },
-            "deferRender": true
+            }
         });
 
         $('#admin-staff-table-reports_filter input').unbind();
@@ -12888,6 +12887,7 @@ function incidentDoneReview()
     });
     tableIncidentRepDone = $('#incident-rep-table-admin-reviewed').DataTable
     ({
+
         // "responsive": true,
         dom: 'Blfrtip',
         buttons:
@@ -13189,7 +13189,6 @@ $('.incident_admin_status_class').click(function() {
 $('#btnArToPDFSendToEmail').click(function()
 {
     $('#btnArToPDFSendToEmail').prop('disabled', true);
-    // $('#overlay_add_ar_send').show();
 
     var btn = $(this);
     var ar_bols = true;
@@ -13241,6 +13240,7 @@ $('#btnArToPDFSendToEmail').click(function()
 
     save_daa += ']}';
 
+
     $('.ar_inputs').each(function ()
     {
         if($(this).val() != '')
@@ -13249,13 +13249,11 @@ $('#btnArToPDFSendToEmail').click(function()
         }
         else
         {
-            console.log($(this));
             ar_bols = false;
             alert('Fill-up the required fields');
             return false;
         }
     });
-
 
     if (ar_bols) {
         $.ajax({
@@ -13270,7 +13268,8 @@ $('#btnArToPDFSendToEmail').click(function()
                 'user_id': $('#ar_cont_email').attr('name'),
                 'checkBox': checkBox
             },
-             success: function (data) {
+            success: function (data) {
+                console.log(data);
                 if(data == 'success')
                 {
                     $('.ar_inputs').val('');
@@ -13294,19 +13293,14 @@ $('#btnArToPDFSendToEmail').click(function()
 
                     });
                     alert('Acknowledge Receipt sent to Employee');
-                    $('#overlay_add_ar_send').hide();
-                    $('#btnArToPDFSendToEmail').prop('disabled', false);
-                    tableArReceipts.ajax.reload(null, false);
+
                 }
                 else{
                     alert('Failed to send Acknowledge Receipt to Employee ');
                 }
             },
-            complete: function()
-            {
+            complete: function(){
                 $('#btnArToPDFSendToEmail').prop('disabled', false);
-                // $('#overlay_add_ar_send').hide();
-                tableArReceipts.ajax.reload(null, false);
             }
         });
      }
@@ -13374,10 +13368,10 @@ $('#btn_ar_clear').click(function ()
 
         $('.ar_doble').each(function ()
         {
-            if ($(this).val() != '')
+            if($(this).val() != '')
             {
                 $(this).val('');
-                $('.ar_checkbox').prop('checked', false);
+                $('.ar_inputs').prop('checked', false);
             }
             else
             {
@@ -13438,11 +13432,11 @@ $(document).on('click', '.ar_tab_monit1', function() {
                 {
                     if(aData.status == 'Acknowledge')
                     {
-                        $('td', nRow).css('background-color', '#ffb84d');
+                        $('td', nRow).css('background-color', '#b3ffb3');
                     }
                     else
                     {
-                        $('td', nRow).css('background-color', '#b3ffb3');
+                        $('td', nRow).css('background-color', '#ffb84d');
                     }
 
                     $('td', nRow).css('cursor', 'pointer');
@@ -13468,9 +13462,9 @@ $(document).on('click', '.ar_tab_monit1', function() {
     }
 });
 
-
 $('#ar-monitoring-table').on('click', '.get_infos', function()
 {
+
     var get_id = atob($(this).attr('id'));
     $('.ar_monitsView').val('');
 
@@ -13530,1054 +13524,18 @@ $('#ar-monitoring-table').on('click', '.get_infos', function()
 
 $(document).ready(function()
 {
-    $("#Ar_searchViewqwe").on("keyup", function() {
+$("#Ar_searchViewqwe").on("keyup", function() {
     var value = $(this).val().toLowerCase();
-        $("#tbl_acnoo li").filter(function() {
-            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-        });
+    $("#tbl_acnoo li").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
     });
 });
-// MANPOWER REQUEST ENDORSE
-$('#manpower_admin_monitoring').click(function(){
-    get_manpower_endorse();
-    $('.manpower_action_btns').hide();
-});
-function get_manpower_endorse()
-{
-    manpower_endorse_request_table = $('#manpower_endorse_request_table').DataTable
-    ({
-        dom: 'Bfrtip',
-        buttons:[
-            {
-                text: '<i class="fa fa-refresh"></i>',
-                action: function ( e, dt, node, config ) {
-                    manpower_endorse_request_table.draw();
-                    manpower_to_clear();
-                }
-            }
-        ],
-        "responsive": true,
-        "processing": true,
-        "serverSide": true,
-        "ajax": 'get_manpower_endorsements',
-        "columns":
-            [
-                {data: 'manpower_id', name: 'manpower_request.id'},
-                {
-                    data: function reason_vacancy_cb(data)
-                {
-                    if(data.manpower_request_status =='Endorse')
-                    {
-                        if(data.hold_status !='true')
-                        {
-                            return '<span class="pull-left">'+data.reason_vacancy_cb+'</span>' + '<span style="margin-top:2%; width:100%; font-weight:400; font-size:13px; padding:4%;"  class="text-uppercase pull-right label bg-yellow color-palette">'+data.manpower_request_status+'</span>'
-                        }
-                        else{
-                            return '<span class="pull-left">'+data.reason_vacancy_cb+'</span>'+ '<span style="margin-top:2%; width:100%; font-weight:600; font-size:13px; padding:4%;  "  class="pull-right  label bg-gray color-palette text-red">'+'<i class="fa fa-fw fa-lock"></i> HOLD'+'</span>'
-                            }
-                    }
-
-                    else if(data.manpower_request_status =='Acknowledge')
-                    {
-                        if(data.hold_status !='true')
-                        {
-                            return '<span class="pull-left">'+data.reason_vacancy_cb+'</span>'+ '<span style="margin-top:2%; width:100%; font-weight:400; font-size:13px; padding:4%;"   class="text-uppercase pull-right label bg-aqua color-palette">'+data.manpower_request_status+'</span>'
-
-                        }
-                        else{
-                            return '<span class="pull-left">'+data.reason_vacancy_cb+'</span>'+ '<span style="margin-top:2%; width:100%; font-weight:600; font-size:13px; padding:4%;  "  class="pull-right  label bg-gray color-palette text-red">'+'<i class="fa fa-fw fa-lock"></i> HOLD'+'</span>'
-                            }
-                    }
-                }, name: 'manpower_request.reason_vacancy_cb'
-                },
-                {
-                    data:function actions(data)
-                    {
-                        return'<a value="'+data.hold_status+'" what="'+data.manpower_request_status+'" id="'+data.manpower_id+'" class="btn bg-purple btn-block btn-sm manpower_activities manpower_view_info"  name=""><i class = "fa fa-fw fa-eye"></i> View Info</a>'+
-                            '<a id="manpower_view_logs" class="btn bg-navy btn-sm btn-block manpower_activities" data-toggle="modal" data-target="#manpower_logs" name="'+data.manpower_id+'"><i class = "fa fa-edit"></i> View Logs</a>'
-                    },name:'manpower_request.id',"orderable":false,"searchable":false,
-                }
-            ],
-        "order": [[0, 'desc']],
-        "pageLength": 10,
-        "lengthMenu": [[2, 10, 25, 50, -1], ['2 rows', '10 rows', '25 rows', '50 rows', 'Show all']],
-        "fnRowCallback":function(nRow, aData)
-        {
-            $('td', nRow).css({"cursor":"pointer","letter-spacing":"2px","border":"none"});
-            $('.manpower_action_btns').hide();
-        },
-        initComplete:function()
-        {
-            $('#manpower_endorse_request_table_length').hide();
-            $('#manpower_endorse_request_table_wrapper .dt-buttons').addClass('pull-right');
-            $('#manpower_endorse_request_table_filter').css({"margin-bottom":"5%", "width": "100%"});
-            $('#manpower_endorse_request_table_filter label').css({"text-align": "left", "width":"100%"});
-            $('#manpower_endorse_request_table_wrapper .col-sm-5').css({"width": "100%"});
-            $('#manpower_endorse_request_table_wrapper .col-sm-6').css({"width": "100%"});
-            $('#manpower_endorse_request_table_wrapper .col-sm-7').css({"width": "100%"});
-            $('#manpower_endorse_request_table_filter input').css({"width": "100%", "margin": "0","border-radius":"8px","padding":"17px"});
-            $('#manpower_endorse_request_table th').css({"border":"0"});
-            $('.overlay').hide();
-        }
-    })
-
-    $('#manpower_endorse_request_table_filter input').unbind();
-    $('#manpower_endorse_request_table_filter input').bind('keyup change', function (e) {
-        if ($(this).is(':focus')) {
-            if (e.keyCode === 13) {
-                manpower_endorse_request_table.search($(this).val()).draw();
-            }
-            else if (e.keyCode === 8) {
-                if ($(this).val() == '') {
-                    manpower_endorse_request_table.search($(this).val()).draw();
-                }
-            }
-        }
-    });
-}
-//manpower acknowledge btn
-$('#manpower_endorse_request_table').on('click', '.manpower_view_info',function () {
-    var endorse_request_id = $(this).attr('id');
-
-    $('.manpower_action_btns').show();
-
-    var selected_data =$(this).attr('what');
-    var selected_hold_status =$(this).attr('value');
-
-    $('#manpower_acknowledge_btn').attr('name',endorse_request_id);
-    $('#manpower_acknowledge_btn').attr('what2',selected_hold_status);
-
-    if(selected_data == 'Endorse')
-    {
-        $('#manpower_acknowledge_btn').attr('disabled',false);
-    }
-    else
-        {
-            $('#manpower_acknowledge_btn').attr('disabled',true);
-        }
-
-    if($(this).closest('tr').hasClass('selected'))
-    {
-        $('#manpower_acknowledge_btn').attr('name','');
-        $('.manpower_action_btns').hide();
-        manpower_endorse_request_table.rows('.selected').deselect();
-        manpower_to_clear();
-    }
-    else{
-        manpower_endorse_request_table.rows('.selected').deselect();
-        $(this).closest('tr').addClass('selected');
-
-        $.ajax({
-            url: 'manpower_request_selected',
-            type: 'get',
-            data:
-                {
-                    'manpower_id': endorse_request_id
-                },
-            success: function (data) {
-                console.log(data)
-                $('.manpower_management_toclear').val('');
-                $('.manpower_management_toclear').prop('checked',false);
-
-                var split_holder = data[0].cb_data;
-                var split_holder_checkbox = split_holder.split('||-||');
-                split_holder_checkbox.pop();
-
-                var get_requested_date = data[0].created_at.split(" ");
-                var get_requested_duedate = data[0].due_date.split(" ");
-                $('#manpower_dateofrequest').val(get_requested_date[0]);
-                $('#manpower_requestedby').val(data[0].manpower_requestor);
-                $('#manpower_office_loc').val(data[0].off_loc_dept_pos);
-                $('#reason_vacancy_text_area').val(data[0].reason_remarks);
-                $('#manpower_location_dept_pos').val(data[0].job_details_loc_dept_pos);
-                $('#manpower_no_candidate').val(data[0].no_of_candidates);
-                $('#manpower_quali_required_desired').val(data[0].qualification);
-                $('#job_offer_salary').val(data[0].job_offer_salary);
-                $('#manpower_duedate').val(get_requested_duedate[0]);
-
-                $('.manpower_checkbox_grp_1 ').each(function()
-                {
-                    var val = $(this).attr('name');
-                    if(val === data[0].reason_vacancy_cb)
-                    {
-                        $(this).prop('checked', true);
-                    }
-                    else
-                    {
-                        $(this).prop('checked', false);
-                    }
-                });
-
-                for (var a=0; a < split_holder_checkbox.length; a++){
-                    if(split_holder_checkbox[a] == 'true')
-                    {
-                        $('.manpower_checkbox_grp_2[name="'+a+'"]').prop('checked', true);
-                    }
-                    else if(split_holder_checkbox[a] == 'false') {
-                        $('.manpower_checkbox_grp_2[name="'+a+'"]').prop('checked', false);
-                    }
-                    else
-                    {
-                        $('.manpower_checkbox_grp_2[name="'+a+'"]').prop('checked', true);
-                        $($('.manpower_checkbox_grp_2[name="'+a+'"]').attr('what')).val(split_holder_checkbox[a]);
-                    }
-                }
-            }
-        })
-
-    }
-});
-
-$('#manpower_acknowledge_btn').on('click',function () {
-    var endorse_request_id = $(this).attr('name');
-    var $this = $(this);
-    if(confirm('Acknowledge ?'))
-    {
-        $.ajax({
-            url: 'get_manpower_endorsement_acknowledge',
-            type: 'get',
-            data:
-                {
-                    'manpower_id':endorse_request_id,
-                    'manpower_request_status':"Acknowledge",
-                    'table_status' : $this.attr('what2')
-                },
-            beforeSend:function(){
-                $('.overlay').show();
-            },
-            success:function (data) {
-
-                if(data =='ACKNOWLEDGE')
-                {
-                    manpower_scrollToTop();
-                    manpower_endorse_request_table.draw();
-                    manpower_to_clear();
-                    $this.attr('disabled',false);
-                    $('.overlay').hide();
-                    $('.manpower_action_btns').hide();
-                    alert('Acknowledge Success');
-                }
-                else if(data =='REFRESH')
-                {
-                    alert('Failed to Acknowledge request. Please refresh the table to continue');
-                    $('.overlay').hide();
-                }
-            }
-        });
-    }
-});
-
-function manpower_to_clear()
-{
-    $('.manpower_management_toclear').each(function()
-    {
-        if ($(this).val() != '')
-        {
-            $(this).val('');
-            $('.manpower_management_toclear').prop('checked', false);
-            $('#manpower_approved_request_table_filter input.form-control.input-sm').val('');
-        }
-        else
-        {
-
-        }
-    });
-}
-function manpower_scrollToTop()
-{
-    $('html, body').animate({ scrollTop: 0 }, 300 ,"swing");
-}
-$('#manpower_close_clear').click(function ()
-{
-    manpower_to_clear();
-});
-$('#manpower_endorse_request_table').on('click','.manpower_activities',function () {
-    var activity_log_id = $(this).attr('name');
-
-    $('#manpower_activity_logs_table tbody tr').each(function()
-    {
-        $(this).remove();
-    });
-
-    $.ajax({
-        url:'manpower_activity_logs',
-        type:'get',
-        data:{
-            'manpower_id':activity_log_id
-        },
-        success:function(data){
-            console.log(data);
-
-            var act_logs_append ='';
-
-            if(data.length > 0)
-            {
-                for(var i = 0;i < data.length; i++)
-                {
-                    act_logs_append +=  '<tr>' +
-                        '<td>'+data[i].user_name+'</td>' +
-                        '<td>'+data[i].manpower_request_status+'</td>' +
-                        '<td>'+data[i].created_at+'</td>' +
-                        +'</tr>'
-                }
-            }
-            else
-            {
-                act_logs_append =  '<tr>' +
-                    '<td colspan="3">No Records Found</td>' +
-                    +'</tr>';
-            }
-
-            $('#manpower_activity_logs_table tbody').append(act_logs_append);
-        }
-    })
-  
-});
-// utilities_expense
-$('#utilities_expenses_request_admin').on('click',function(){
-    utilities_expense_table()
-});
-
-function utilities_expense_table(){
-    $('#select2-fund_util_category-container, #select2-existing_cat_id_holder-container').css({"line-height":"20px"});
-    fund_utility_general = $('#fund_utility_table_general').DataTable
-    ({dom: 'Blfrtip',
-        buttons:[
-            {
-                text: '<span class="text-capitalize"><i class="fa fa-fw fa-refresh"></i> refresh</span>',
-                action: function ( e, dt, node, config ) {
-                    fund_utility_general.draw();
-                },className:'bg-orange btn btn-sm',
-                init: function(api, node, config){
-                    $(node).removeClass('dt-button')
-                }
-            }],
-        "responsive": true,
-        "processing": true,
-        "serverSide": true,
-        "ajax": {
-                url:'fund_utility_expenses_table',
-                data:function(d)
-                    {
-                        d.category_select = $('#fund_util_category').find(':selected').val();
-                    }
-                },
-        "columns":
-                [
-                    {data: 'fund_utility_id',name:'fund_utility_expenses_table.id'},
-                    {
-                        data: function cat_id(data)
-                        {
-                            return '<span id="cat_identifier-'+data.fund_utility_id+'">'+data.category_name+'</span>'
-                        },
-                        name:'fund_utility_category.category_name'
-                    },
-                    {
-                        data: function accnt_number(data)
-                        {
-                            return '<span id="accnt_nmber_identifier-'+data.fund_utility_id+'">'+data.account_number+'</span>'
-                        },
-                        name:'fund_utility_expenses_table.account_number'
-                    },
-                    {
-                        data: function amount(data)
-                        {
-                            return '<span id="amount_identifier-'+data.fund_utility_id+'">'+data.amount+'</span>'
-                        },
-                        name:'fund_utility_expenses_table.amount'
-                    },
-                    {
-                        data: function statement_date(data)
-                        {
-                            return '<span class="btn-block" id="statement_date_identifier-'+data.fund_utility_id+'">'+'<i class="fa fa-fw fa-hourglass-start margin text-green"></i>'+data.statement_date+'</span>'+
-                             '<span class="btn-block" id="due_date_identifier-'+data.fund_utility_id+'">'+'<i class="fa fa-fw fa-hourglass-end margin text-red"></i>'+data.due_date+'</span>'
-                        },
-                        name:'fund_utility_expenses_table.statement_date'
-                    },
-                    {
-                        data: function branch(data)
-                        {
-                            return '<span id="branch_identifier-'+data.fund_utility_id+'">'+data.fund_utility_branch+'</span>'
-                        },
-                        name:'fund_utility_expenses_table.branch'
-                    },
-                    {
-                        data: function status(data)
-                        {
-                            if(data.fund_status == 0)
-                            {
-                                return '<span class="btn-xs btn-block text-orange text-uppercase" style="border:1px solid #f39c12;">pending</span>'
-                            }
-
-                            else if(data.fund_status == 1)
-                            {
-                                return '<span class="btn-xs btn-block text-green text-uppercase" style="border:1px solid #00a65a;">approved</span>'
-                            }
-                        },name:'fund_utility_expenses_table.fund_status'
-                    },
-                    {
-                        data: function actions(data)
-                        {
-                            return'<span>'+'<a value="'+data.fund_status+'" id="'+data.fund_utility_id+'" class="btn-block btn btn-sm bg-purple text-capitalize fund_util_edit_class" data-toggle="modal" data-target="#fund_util_update_data_modal"><i class="fa fa-fw fa-pencil-square-o"></i> view info</a>'+
-                                '<a id="fund_util_logs_id" class="btn-block btn btn-sm btn-default text-capitalize fund_util_logs_class" data-toggle="modal" data-target="#fund_util_activity_logs" name="'+data.fund_utility_id+'" style="border:1px solid #605ca8;"><i class="fa fa-fw fa-eye text-purple"></i> view logs</a>'
-                                +'</span>'
-                        },name:'fund_utility_expenses_table.id'
-                    }
-                ],
-        "order": [[0, 'desc']],
-        "pageLength": 10,
-        "lengthMenu": [[2, 10, 25, 50, -1], ['2 rows', '10 rows', '25 rows', '50 rows', 'Show all']],
-        initComplete:function()
-        {
-            $('.overlay').hide();
-            $('#fund_utility_table_general tbody td').css({"vertical-align":"middle"});
-            $('#fund_utility_table_general th').css({"font-size":"12.5px"});
-            $('#fund_utility_table_general_length, #fund_utility_table_general_filter').css({"margin-bottom":"5%","letter-spacing":"1px"});
-            $('#fund_utility_table_general_wrapper .dt-buttons').css({"position":"absolute","right":"68%"});
-        },
-    });
-
-    $('#fund_util_category').change(function()
-    {
-        fund_utility_general.draw();
-    });
-}
-// fund_update_buttons
-$('#fund_utility_table_general, #fund_utility_table_approved').on('click','.fund_util_edit_class',function()
-{
-    var edit_data_id = $(this).attr('id');
-    var selected_status = $(this).attr('value');
-    $('#fund_util_update_actions').show();
-    $('#expenses_statement_date_edit').val($('#statement_date_identifier-'+edit_data_id+'').text());
-    $('#expenses_due_date_edit').val($('#statement_date_identifier-'+edit_data_id+'').text());
-    $('#expenses_branches_edit').val($('#branch_identifier-'+edit_data_id+'').text());
-    $('#expenses_account_number_edit').val($('#accnt_nmber_identifier-'+edit_data_id+'').text());
-    $('#expenses_amount_edit').val($('#amount_identifier-'+edit_data_id+'').text());
-    $('.fund_util_update_btn').attr('name',edit_data_id);
-    $('.fund_util_update_btn').attr('fund_util_status',selected_status);
-
-    $.ajax
-        ({
-            type:'get',
-            url:'admin_fund_util_get_file_uploads',
-
-            data:{'fund_utility_id':edit_data_id},
-
-            success:function(data)
-            {
-                var fund_status_con = data[4][0].fund_status;
-                if(fund_status_con != 0)
-                {
-                    $('#fund_util_update').prop('disabled',true);
-                }
-                else
-                    {
-                        $('#fund_util_update').prop('disabled',false);
-                    }
-
-                var upload_files='';
-                for (var i = 0; i < data[0].length; i++)
-                {
-                    var data_array = data[0][i];
-                    var data_array_name = btoa(data_array.substring(1));
-                    var file_id = btoa(edit_data_id);
-                    var file_extension = data_array.split('.');
-                    var file_checker = file_extension.pop();
-
-                    if(file_checker =='jpeg' || file_checker =='jpg' || file_checker =='png' || file_checker =='gif' || file_checker =='tiff')
-                    {
-                        upload_files +=
-                            '<div class="col-md-4" id="'+edit_data_id+'">'
-                            +'<div class="">'
-                            +'<div class="form-group">'
-                            +'<a href="getuploaded_files/'+file_id+'/'+data_array_name+'" target="_blank" title="'+data_array.substring(1)+'">'
-                            +'<img src="getuploaded_files/'+file_id+'/'+data_array_name+'" title="Click to enlarge photo" alt="'+data_array.substring(1)+'" style="width:100%; max-height:25%;">'+
-                            '</a>'
-                            +'</div>'
-                            +'</div>'
-                            +'</div>'
-                    }
-                    else
-                        {
-                            upload_files +=
-                                '<div class="col-md-4" id="'+edit_data_id+'">'
-                                +'<div class="">'
-                                +'<div class="form-group">'
-                                +'<a href="getuploaded_files/'+file_id+'/'+data_array_name+'" target="_blank" title="'+data_array.substring(1)+'">'
-                                +'<img src="dist/img/downloadIconnn (2).png" title="Click to download" alt="'+data_array.substring(1)+'" style="width:100%; max-height:25%;">'+
-                                '</a>'
-                                +'</div>'
-                                +'</div>'
-                                +'</div>'
-                        }
-                }
-                $('#upload_file_append').append(upload_files);
-            },
-            complete:function(){
-                $('#upload_file_append img').css({"border-radius":"4px"});
-            }
-        });
-
-    $('#fund_util_update_data_modal').on('hidden.bs.modal',function(){
-        $('#upload_file_append').html('');
-    });
-});
-
-$('#fund_utility_table_general, #fund_utility_table_approved').on('click','.fund_util_logs_class',function () {
-   var view_logs_id = $(this).attr('name');
-
-    $('#fund_utilities_logs tbody tr').each(function()
-    {
-        $(this).remove();
-    });
-
-   $.ajax({
-       type:'get',
-       url:'admin_view_fund_utilites_logs',
-       data:{'fund_logs_id':view_logs_id},
-       success:function(data){
-           console.log(data);
-           var fund_util_logs_append='';
-
-           if(data.length > 0)
-           {
-               for(var i = 0;i < data.length; i++)
-               {
-                   fund_util_logs_append +=  '<tr>' +
-                       '<td>'+data[i].user_name+'</td>' +
-                       '<td>'+data[i].activity+'</td>' +
-                       '<td>'+data[i].created_at+'</td>' +
-                       +'</tr>'
-               }
-           }
-           else
-           {
-               fund_util_logs_append =  '<tr>' +
-                   '<td colspan="3">No Records Found</td>' +
-                   +'</tr>';
-           }
-
-           $('#fund_utilities_logs tbody').append(fund_util_logs_append);
-       }
-   });
-});
-
-$('.fund_util_radio').click(function()
-{
-    if($(this).val() === 'existing_id')
-    {
-        existing_cat_id = true;
-        $('#new_cat_id_holder').hide();
-        $('#existing_cat_id_holder').next('.select2-container').show();
-    }
-    else if($(this).val() === 'new_id')
-    {
-        existing_cat_id = false;
-        $('#new_cat_id_holder').show();
-        $('#existing_cat_id_holder').next('.select2-container').hide();
-    }
-});
-
-$('.file_upload_add_more').click(function()
-{
-    var add_new = Math.floor((Math.random()*100)+1);
-
-    $('#upload_append_id').append(''+'<div class="put_add_more" id="add_more_new_'+add_new+'" >'
-        +'<div class="upload_append pull-left col-md-12 col-sm-9 no-padding" id="upload_append_id" style="margin-top:4%;">'
-        +'<label class="btn btn-lg text-muted pull-left file_upload_btn" id="expenses_input_files_label_'+add_new+'" for="expenses_input_files_id_'+add_new+'" style="border: 1px solid darkgrey;border-radius: 4px;box-shadow: 1px 8px 4px #eee; font-size: 14px;"><i class="fa fa-paperclip"> File upload</i></label>'
-        +'<input type="file" class="expenses_class expenses_files_upload no-border add_expenses_required" name="#expenses_input_files_label_'+add_new+'" id="expenses_input_files_id_'+add_new+'" style="display: none;">'
-        +'<span class="btn btn-xs margin text-muted file_upload_remove_more text-red" id="'+add_new+'" style="width:25%;border:1px solid #f56954;box-shadow: 1px 5px 4px #f5695445;"> Remove <i class="text-red fa fa-fw fa-trash"></i></span>'
-        +'</div>'
-        +'</div>'
-        +'');
-});
-
-$(document).on("click", ".file_upload_remove_more", function()
-{
-    $('#add_more_new_' + $(this).attr('id')+'').remove();
-});
-
-$(document).on('change', '.expenses_files_upload', function(e)
-{
-    var label_id = $(this).attr('name');
-    var file_path = $(label_id).text($(this).val());
-    var trim_path = file_path.text().split("fakepath",2);
-    var pop_path = trim_path.pop();
-    var str_path = pop_path.replace(/[^\w\s\.]/gi, '');
-    var file_name = '';
-    var file_size = 0;
-    var split_file_name = [];
-
-    if($(this).val() !='')
-    {
-        file_name = e.target.files[0].name;
-        file_size = e.target.files[0].size;
-        split_file_name = file_name.split('.');
-        var LastIndex = split_file_name.pop();
-
-        console.log(file_size);
-
-        if(LastIndex =='jpg' || LastIndex =='jpeg' || LastIndex =='png' || LastIndex =='tiff' || LastIndex =='tif'|| LastIndex =='bmp' || LastIndex =='gif' || LastIndex =='pdf')
-            {
-                if(file_size <= 1.5e+7)
-                {
-                    $(label_id).css({"border":"1px solid #00a65a","box-shadow":"#00a65a2e 1px 8px 4px","color":"#00a65a2e","overflow":"hidden","max-width":"60%"});
-                    // $(label_id).text(str_path);
-                    $(label_id).text(e.target.files[0].name);
-                }
-                else{
-                    $(label_id).val('');
-                    $(label_id).css({"border":"1px solid darkgrey","color":"#777","box-shadow":"1px 8px 4px #eee","overflow":"hidden","max-width":"60%"});
-                    $($(label_id)).html('<i class="fa fa-paperclip"> File upload</i>');
-                    alert('File size too large (maximum is 15MB only)');
-                }
-            }
-            else{
-            $(label_id).val('');
-            $(label_id).css({"border":"1px solid darkgrey","color":"#777","box-shadow":"1px 8px 4px #eee","overflow":"hidden","max-width":"60%"});
-            $($(label_id)).html('<i class="fa fa-paperclip"> File upload</i>');
-            alert('File format invalid (select only IMAGE or PDF file types only)')
-        }
-    }
-    else
-    {
-        $(label_id).css({"border":"1px solid darkgrey","color":"#777","box-shadow":"1px 8px 4px #eee","overflow":"hidden","max-width":"60%"});
-        $($(label_id)).html('<i class="fa fa-paperclip"> File upload</i>');
-    }
-
-});
-
-$('#expenses_submit').click(function(){
-    var $this = $(this);
-    var validation_upload = false;
-    var fund_utilities_inputs=true;
-
-    var formData =  new FormData();
-    var number_of_files = 0;
-
-    var expenses_statement_date =$('#expenses_statement_date').val();
-    var expenses_due_date =$('#expenses_due_date').val();
-    var expenses_account_number =$('#expenses_account_number').val();
-    var expenses_amount =$('#expenses_amount').val();
-    var expenses_branches =$('#expenses_branches').val();
-    var activity ='Added new expenses';
-
-    $('.expenses_files_upload').each(function(){
-        if($(this).val() !='')
-        {
-            formData.append('file_'+number_of_files+'', $(this).prop('files')[0]);
-            number_of_files++;
-        }
-        else
-        {
-            alert('please check attachments');
-            validation_upload = false;
-            return false;
-        }
-    });
-
-    formData.append('statement_date', expenses_statement_date);
-    formData.append('due_date', expenses_due_date);
-    formData.append('account_number', expenses_account_number);
-    formData.append('amount', expenses_amount);
-    formData.append('branch', expenses_branches);
-    formData.append('category_name_utility',$('#new_cat_id_holder').val());
-    formData.append('activity', activity);
-    formData.append('number_of_files_count',number_of_files);
-    formData.append('exists_identifier',$('#existing_cat_id_holder').find(':selected').val());
-    formData.append('exists_bool', existing_cat_id);
-
-    if(fund_utilities_inputs == true && $('#new_cat_id_holder').val() !='')
-    {
-
-    }
-    else if(fund_utilities_inputs == true && $('#existing_cat_id_holder').val() !='')
-    {
-
-    }
-    else
-    {
-        fund_utilities_inputs=false;
-        alert('Please Fill-up the required fields');
-        return false;
-    }
-
-        $('.add_expenses_required').each(function(){
-        if($(this).val() !='')
-        {
-            fund_utilities_inputs=true;
-        }
-        else
-            {
-                fund_utilities_inputs=false;
-                alert('Please Fill-up the required fields');
-                return false;
-            }
-    });
-
-    if(fund_utilities_inputs)
-    {
-        if(confirm('Add utilities expenses'))
-        {
-            $this.attr('disabled',true);
-
-            $.ajax({
-                url:'admin_add_utility_expenses',
-                type:'post',
-                data:formData,
-                contentType: false,
-                processData: false,
-
-                beforeSend:function(){
-                    $('.overlay').show();
-                },
-                success:function(data)
-                {
-                    console.log(data);
-                    console.log(number_of_files);
-                    $this.attr('disabled',false);
-                    $('.put_add_more').each(function()
-                    {
-                        $(this).remove();
-                    });
-
-                    alert('Utilities and Expenses Added');
-
-                    $('.expenses_files_upload ').val('');
-                    $('.expenses_class ').val('');
-
-                    $('#expenses_input_files_label_default').css({"border":"1px solid darkgrey","color":"#777","box-shadow":"1px 8px 4px #eee"});
-                    $('#expenses_input_files_label_default').html('<i class="fa fa-paperclip"> File upload</i>');
-                },
-                complete:function()
-                {
-                    fund_utility_general.ajax.reload(null, false);
-                    $('.overlay').hide();
-                }
-            });
-        }
-    }
-});
-
-$('.fund_util_update_btn').click(function() {
-    var update_btn_id = $(this).attr('name')
-    var $this = $(this);
-    var fund_utilities_inputs = true;
-    var selected_fund_status = $(this).attr('fund_util_status');
-    // console.log(update_btn_id)
-    alert(update_btn_id)
-
-$('.input_required_fund_util').each(function(){
-    if($(this).val() != '')
-    {
-        fund_utilities_inputs =true;
-    }
-    else
-        {
-            fund_utilities_inputs =false;
-            alert('Please Fill-up the required fields');
-            return false;
-        }
-});
-
-    if(fund_utilities_inputs)
-    {
-        if(confirm('Saved changes ?'))
-        {
-            $this.attr('disabled',true);
-
-            //chano ref
-            $.ajax({
-                url:'admin_staff_update_data',
-                type:'get',
-                data:{
-                    'fund_util_id':update_btn_id,
-                    'statement_date_update':$('#expenses_statement_date_edit').val(),
-                    'due_date_update':$('#expenses_due_date_edit').val(),
-                    'branch_update':$('#expenses_branches_edit').val(),
-                    'account_number_update':$('#expenses_account_number_edit').val(),
-                    'amount_update':$('#expenses_amount_edit').val(),
-                    'fund_table_status' :selected_fund_status
-                },
-                beforeSend:function(){
-                    $('.overlay').show();
-                },
-                success:function(data) {
-                    if(data==='DONE_UPDATE'){
-                        console.log(data);
-                        alert('Done saving changes');
-                        $this.attr('disabled',false);
-                        $('#fund_util_update_data_modal').modal('hide');
-                        fund_utility_general.draw();
-                        $('.overlay').hide();
-                    }
-                    else if(data == 'REFRESH'){
-                        alert('Cannot update changes request has been approved! (please refresh table)')
-                        $('.overlay').hide();
-                    }
-                },
-            });
-        }
-    }
-});
-// APPROVE REQUEST FUND UTILITIES
-$('#fund_util_approved_table').click(function(){
-
-    $('#select2-fund_util_category-container, #select2-existing_cat_id_holder-container').css({"line-height":"20px"});
-    fund_approved_table = $('#fund_utility_table_approved').DataTable
-    ({
-        dom: 'Blfrtip',
-        buttons:[
-            {
-                text: '<span class="text-capitalize"><i class="fa fa-fw fa-refresh"></i> refresh</span>',
-                action: function ( e, dt, node, config ) {
-                    fund_utility_general.draw();
-                },className:'bg-orange btn btn-sm',
-                init: function(api, node, config){
-                    $(node).removeClass('dt-button')
-                }
-            }],
-        "responsive": true,
-        "processing": true,
-        "serverSide": true,
-        "ajax": {
-            url:'fund_utility_approved_table',
-            data:function(d)
-            {
-                d.category_select = $('#fund_util_category').find(':selected').val();
-            }
-        },
-        "columns":
-            [
-                {data: 'fund_utility_id',name:'fund_utility_expenses_table.id'},
-                {
-                    data: function cat_id(data)
-                    {
-                        return '<span id="cat_identifier-'+data.fund_utility_id+'">'+data.category_name+'</span>'
-                    },
-                    name:'fund_utility_category.category_name'
-                },
-                {
-                    data: function accnt_number(data)
-                    {
-                        return '<span id="accnt_nmber_identifier-'+data.fund_utility_id+'">'+data.account_number+'</span>'
-                    },
-                    name:'fund_utility_expenses_table.account_number'
-                },
-                {
-                    data: function amount(data)
-                    {
-                        return '<span id="amount_identifier-'+data.fund_utility_id+'">'+data.amount+'</span>'
-                    },
-                    name:'fund_utility_expenses_table.amount'
-                },
-                {
-                    data: function statement_date(data)
-                    {
-                        return '<span class="btn-block" id="statement_date_identifier-'+data.fund_utility_id+'">'+'<i class="fa fa-fw fa-hourglass-start margin text-green"></i>'+data.statement_date+'</span>'+
-                            '<span class="btn-block" id="due_date_identifier-'+data.fund_utility_id+'">'+'<i class="fa fa-fw fa-hourglass-end margin text-red"></i>'+data.due_date+'</span>'
-                    },
-                    name:'fund_utility_expenses_table.statement_date'
-                },
-                {
-                    data: function branch(data)
-                    {
-                        return '<span id="branch_identifier-'+data.fund_utility_id+'">'+data.fund_utility_branch+'</span>'
-                    },
-                    name:'fund_utility_expenses_table.branch'
-                },
-                {
-                    data: function status(data)
-                    {
-                        if(data.fund_status == 1)
-                        {
-                            return '<span class="btn-xs btn-block text-green text-uppercase" style="border:1px solid #00a65a;">approved</span>'
-                        }
-                    },name:'fund_utility_expenses_table.fund_status'
-                },
-                {
-                    data: function actions(data)
-                    {
-                        return'<span>'+'<a value="'+data.fund_status+'" id="'+data.fund_utility_id+'" class="btn-block btn btn-sm bg-purple text-capitalize fund_util_edit_class" data-toggle="modal" data-target="#fund_util_update_data_modal"><i class="fa fa-fw fa-pencil-square-o"></i> view info</a>'+
-                            '<a id="fund_util_logs_id" class="btn-block btn btn-sm btn-default text-capitalize fund_util_logs_class" data-toggle="modal" data-target="#fund_util_activity_logs" name="'+data.fund_utility_id+'" style="border:1px solid #605ca8;"><i class="fa fa-fw fa-eye text-purple"></i> view logs</a>'
-                            +'</span>'
-                    },name:'fund_utility_expenses_table.id'
-                }
-            ],
-        "order": [[0, 'desc']],
-        "pageLength": 10,
-        "lengthMenu": [[2, 10, 25, 50, -1], ['2 rows', '10 rows', '25 rows', '50 rows', 'Show all']],
-
-        initComplete:function()
-        {
-            $('.overlay').hide();
-            $('#fund_utility_table_approved tbody td').css({"vertical-align":"middle"});
-            $('#fund_utility_table_approved th').css({"font-size":"12.5px"});
-            $('#fund_utility_table_approved_length, #fund_utility_table_approved_filter').css({"margin-bottom":"5%","letter-spacing":"1px"});
-            $('#fund_utility_table_approved_wrapper .dt-buttons').css({"position":"absolute","right":"68%"});
-        },
-    });
-
-    $('#fund_util_category').change(function()
-    {
-        fund_approved_table.draw();
-    });
 });
 
 
-// Admin staff left send button powerman
-$('#submitme').click(function() {
+// var table = $('#Ar_searchViewqwe').DataTable();
 
-  $.ajax({
-            url: 'powerman_create',
-            type:'get',
-            data:{
-                'name':$('#inputName').val(),
-                'age':$('#inputAge').val(),
-                'phone_number':$('#inputNumber').val(),
-                'gender':$('#inputGender').val(),
-                'address':$('#inputAddress').val(),
-            },
-            success:function(data) {
-                powerman_data_table.ajax.reload(null, false);
-                // console.log(data);
-            }
-        });
-});
-
-
-$('#powerman_admin_monitoring').click(function() {
-
-    powerman_data_table = $('#powerman_table').DataTable({
-        "responsive": true,
-        "processing": true,
-        "serverSide": true,
-        "ajax": "/powerman_read",
-        "columns":[
-            {data:function fetchid(data)
-                { return'<span class="powerman_id_'+data.fetchId+'">'+data.fetchId+'</span>' }
-                ,name:'powerman_user.id'
-            },
-            {data:function fetchName(data)
-                { return'<span class="powerman_id_'+data.fetchId+'">'+data.fetchName+'</span>' }
-                ,name:'powerman_user.name'
-            },
-            {data:function fetchAge(data)
-                { return'<span class="powerman_id_'+data.fetchId+'">'+data.fetchAge+'</span>' }
-                ,name:'powerman_user.age'
-            },
-            {data:function fetchNumber(data)
-                { return'<span class="powerman_id_'+data.fetchId+'">'+data.fetchNumber+'</span>' }
-                ,name:'powerman_user.number'
-            },
-            {data:function fetchGender(data)
-                { return'<span class="powerman_id_'+data.fetchId+'">'+data.fetchGender+'</span>' }
-                ,name:'powerman_user.gender'
-            },
-            {data:function fetchAddress(data)
-                { return'<span class="powerman_id_'+data.fetchId+'">'+data.fetchAddress+'</span>' }
-                ,name:'powerman_user.address'
-            },
-            {data:function fetchCreatedAt(data)
-                { return'<span class="powerman_id_'+data.fetchId+'">'+data.fetchCreatedAt+'</span>' }
-                ,name:'powerman_user.created_at'
-            },
-            {data:function fetchAction(data)
-            {return'<a class="btn btn-block btn-primary btn-flat powerman_id_'+data.fetchId+'" id="">Ideth</a>'}
-            }
-        ],
-        //Default copy only
-        // "order": [[0, 'desc']],
-        // "pageLength": 10,
-        // "lengthMenu": [[10, 25, 50, 100, -1], ['10 rows', '25 rows', '50 rows', '100 rows', 'Show all']],
-    });
-});
-
-
-//Student information
-
-$('#student_submit_btn').click(function() {
-
-    $.ajax({
-        url: 'student_create',
-        type: 'get',
-        data: {
-            'name': $('#student_input_name').val(),
-            'age': $('#student_input_age').val(),
-            'gender': $('#student_input_gender').val()
-        },
-        success: function(data) {
-            student_information_data_table.ajax.reload(null, false);
-        }
-    });
-});
-
-$('#student_admin_information').click(function() {
-    student_information_data_table = $('#student_information_table').DataTable({
-        "responsive": true,
-        "processing": true,
-        "serverSide": true,
-        "ajax": "/student_read",
-        "columns": [
-            { data: function fetchStudentIdFunc(data)
-                { return '<span class="student_id_'+data.fetchStudentId+'">'+data.fetchStudentId+'</span>' },
-                name: 'student_admin_user.id'
-            },
-            { data: function fetchStudentNameFunc(data) 
-                { return '<span class="student_id_'+data.fetchStudentId+'">'+data.fetchStudentName+'</span>' },
-                name: 'student_admin_user.name'
-            },
-            { data: function fetchStudentAgeFunc(data) 
-                { return '<span class="student_id_'+data.fetchStudentId+'">'+data.fetchStudentAge+'</span>' },
-                name: 'student_admin_user.age'
-            },
-            { data: function fetchStudentAgeFunc(data) 
-                { return '<span class="student_id_'+data.fetchStudentId+'">'+data.fetchStudentGender+'</span>' },
-                name: 'student_admin_user.age'
-            },
-            { data: function fetchStudentCreatedAtFunc(data)
-                { return '<span class="student_id_'+data.fetchStudentId+'">'+data.fetchStudentCreatedAt+'</span>' },
-                name: 'student_admin_user.created_at'
-            },
-            { data: function fetchStudentActionFunc(data)
-                { return '<button class="btn btn-block btn-primary btn-flat student_id_'+data.fetchStudentId+'" data-toggle="modal" data-target="#student_edit_modal">Edit</button>'+
-            '<button class="btn btn-block btn-primary btn-flat student_id_'+data.fetchStudentId+' student_delete_btn">Delete</button>' }
-            }
-        ]
-    });
-});
-
-
-$('.student_delete_btn').click(function(){
-    var student_delete_btn_id = $(this).attr('name');
-
-    if(confirm('Are you sure?')) {
-        $.ajax({
-            url: 'student_delete',
-            type: 'get',
-            data: {
-                'delete_this': student_delete_btn_id,
-            },
-            success: function(data) {
-                student_information_data_table.draw();
-            }
-        })
-    }
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// #myInput is a <input type="text"> element
+// $('#Ar_searchViewqwe').on( 'keyup', function () {
+//     ar-monitoring-table.search( this.value ).draw();
+// } )

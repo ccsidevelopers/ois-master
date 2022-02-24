@@ -1233,22 +1233,61 @@ $(document).ready(function()
                 });
 
 
-                if(countRows >= 6)
-                {
-                    if(countInputs == false)
-                    {
-                        check_true_false_next = true;
-                    }
-                    else
-                    {
-                        alert('Please fill up necessary fields');
-                    }
+                // if(countRows >= 0)
+                // {
+                //     if(countInputs == false)
+                //     {
+                //         check_true_false_next = true;
+                //     }
+                //     else
+                //     {
+                //         alert('Please fill up necessary fields');
+                //     }
 
-                }
-                else if(countRows < 6 && countRows >= 1)
+                // }
+                // else if(countRows < 0 && countRows >= 0)
+                // {
+                //     alert('Please input 5 Professional Character References');
+                // }
+                
+                if($('#checkifsitel').val() == '1')
                 {
-                    alert('Please input 5 Professional Character References');
+                    if(countRows >= 6)
+                    {
+                        if(countInputs == false)
+                        {
+                            check_true_false_next = true;
+                        }
+                        else
+                        {
+                            alert('Please fill up necessary fields');
+                        }
+
+                    }
+                    else if(countRows < 6 && countRows >= 1)
+                    {
+                        alert('Please input 5 Professional Character References');
+                    }
                 }
+                else
+                {
+                    if(countRows >= 0)
+                    {
+                        if(countInputs == false)
+                        {
+                            check_true_false_next = true;
+                        }
+                        else
+                        {
+                            alert('Please fill up necessary fields');
+                        }
+
+                    }
+                    else if(countRows < 0 && countRows >= 0)
+                    {
+                        alert('Please input 5 Professional Character References');
+                    }
+                 }
 
             }
             else if(stepCheck == 3)
@@ -2967,28 +3006,35 @@ $('#ff_upload').click(function()
 
     if(to_go)
     {
-        btn.attr('disabled', true);
-        $.ajax({
-            type: 'post',
-            url: '../bi_direct_upload_additional_from_return',
-            contentType: false,
-            processData: false,
-            async : true,
-            data :FileData,
-            success: function(data)
-            {
-                if(data == 'success')
+        if(fileCounter >= 1)
+        {
+            btn.attr('disabled', true);
+            $.ajax({
+                type: 'post',
+                url: '../bi_direct_upload_additional_from_return',
+                contentType: false,
+                processData: false,
+                async : true,
+                data :FileData,
+                success: function(data)
                 {
-                    $('.ff_file').val('');
-                    $('.update_info_class').hide();
-                    $('.return_validation_clear').val('');
+                    if(data == 'success')
+                    {
+                        $('.ff_file').val('');
+                        $('.update_info_class').hide();
+                        $('.return_validation_clear').val('');
 
-                    alert('Updating Information Success');
+                        alert('Updating Information Success');
+                    }
+                    btn.attr('disabled', false);
+
                 }
-                btn.attr('disabled', false);
-
-            }
-        });
+            });
+        }
+        else
+        {
+            alert('Upload at least 1 file/document to continue.')
+        }
     }
 });
 
@@ -3181,32 +3227,4 @@ $('#convert_auth_to_pdf').click(function()
             console.log(data);
         }
     });
-});
-
-$('#ff_signature').change(function()
-{
-    var defaultResources = window.location.origin + '/fine-uploader/placeholders/not_available-generic.png';
-    if($(this).val() != '')
-    {
-        // $("#signatureHolder").attr('src', '');
-        readURL(this);
-
-        function readURL(input) {
-
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-
-                reader.onload = function(e) {
-                    $('#signatureHolder').attr('src', e.target.result);
-                    // $('#uploadedImgModalView').attr('src', e.target.result);
-                };
-
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-    }
-    else
-    {
-        $("#signatureHolder").attr('src', defaultResources);
-    }
 });

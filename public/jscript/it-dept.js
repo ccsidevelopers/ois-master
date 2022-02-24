@@ -493,7 +493,7 @@ $('.it_dept_leftside_class').click(function ()
         else if (it_tabs_2 == false)
         {
             it_tabs_2 = true;
-
+   
         }
     }
     else if (gethref == '#it_dept_checklist')
@@ -700,13 +700,3 @@ $('#it-dept-ci-archive-table').on('click', '.btnArchiveIT', function()
 
 
 });
-
-
-
-
-
-
-
-
-
-

@@ -685,12 +685,12 @@ function get_pending_table() {
         if($(this).is(':focus'))
         {
             if (e.keyCode == 13) {
-                table_general.search($(this).val()).draw();
+                table_pending.search($(this).val()).draw();
             }
             else if (e.keyCode === 8)
             {
                 if ($(this).val() == '') {
-                    table_general.search($(this).val()).draw();
+                    table_pending.search($(this).val()).draw();
                 }
             }
         }
@@ -1430,11 +1430,11 @@ $('#btn_bi_submit_endorsement').click(function ()
 
         if(!required_fieldBool)
         {
-            required_field = if_no_check === 0 || if_no_attachment === 0 || $('#bi_account_tat').val() == '-' || $('#acct_last').val() == '' || $('#acct_first').val() == '' || $('#acct_endorsedby').val() == '' || $('#bi_present_address').val() == '' || $('#bi_present_municipality').val() == '' || $('#bi_permanent_address').val() == '' || $('#bi_permanent_municipality').val() == '' ||
+            required_field = if_no_check === 0 || $('#acct_last').val() == '' || $('#acct_first').val() == '' || $('#acct_endorsedby').val() == '' || $('#bi_present_address').val() == '' || $('#bi_present_municipality').val() == '' || $('#bi_permanent_address').val() == '' || $('#bi_permanent_municipality').val() == '' ||
                 $('#bi_permanent_municipality').val() == '' || $('#acct_birthdate_day').val() == '-' || $('#acct_birthdate_month').val() == '-' || $('#acct_birthdate_year').val() == '-';
         }
         else {
-            required_field = if_no_check === 0 || if_no_attachment === 0 || $('#bi_account_tat').val() == '-' || $('#acct_last').val() == '' || $('#acct_first').val() == '' || $('#acct_endorsedby').val() == '' || $('#acct_birthdate_day').val() == '-' || $('#acct_birthdate_month').val() == '-' || $('#acct_birthdate_year').val() == '-';
+            required_field = if_no_check === 0 || $('#acct_last').val() == '' || $('#acct_first').val() == '' || $('#acct_endorsedby').val() == '' || $('#acct_birthdate_day').val() == '-' || $('#acct_birthdate_month').val() == '-' || $('#acct_birthdate_year').val() == '-';
         }
 
         if(what_to_submit == 'cc_bi')
@@ -2127,7 +2127,8 @@ $('#btn_bi_submit_endorsement').click(function ()
         }
         else
         {
-            alert('Please upload a file');
+            // alert('Please upload a file');
+            endorseAccountFunc();
             // console.log('do nothing di mageendorse');
         }
     }
@@ -2586,6 +2587,7 @@ function bi_finish()
                 data: function (d)
                 {
                     d.min_date_endorsed = $('#fin_client_min').val();
+                    d.max_date_endorsed = $('#fin_client_max').val();
                     d.search_methodd = $('input[name="finished_client_rad"]:checked').val();
                 }
             },
@@ -4063,14 +4065,14 @@ $('#BtnBulkEndorseSubmitExcel').click(function()
     }
 
 
-    if(checkNoFile != '')
-    {
-        var x =  checkNoFile.toString();
+    // if(checkNoFile != '')
+    // {
+    //     var x =  checkNoFile.toString();
 
-        to_alert += '*Please add attachment/s on endorsement row: '+x+'<br>';
+    //     to_alert += '*Please add attachment/s on endorsement row: '+x+'<br>';
 
-        // btn.attr('disabled', false)
-    }
+    //     // btn.attr('disabled', false)
+    // }
     //
     if(packagesCheck != '')
     {
@@ -4131,8 +4133,8 @@ $('#BtnBulkEndorseSubmitExcel').click(function()
     $('.presentMuniCheck').each(function(){
         if($(this).val() == '')
         {
-            present_muni_check_alert = true;
-            present_muni_check_row_count += (parseInt($(this).attr('name'))+1)+', ';
+            present_muni_check_alert = false;
+            // present_muni_check_row_count += (parseInt($(this).attr('name'))+1)+', ';
         }
     });
 
@@ -4148,8 +4150,8 @@ $('#BtnBulkEndorseSubmitExcel').click(function()
     $('.presentProvCheck').each(function(){
         if($(this).val() == '')
         {
-            present_prov_check_alert = true;
-            present_prov_check_row_count += (parseInt($(this).attr('name'))+1)+', ';
+            present_prov_check_alert = false;
+            // present_prov_check_row_count += (parseInt($(this).attr('name'))+1)+', ';
         }
     });
 
@@ -4163,8 +4165,8 @@ $('#BtnBulkEndorseSubmitExcel').click(function()
     $('.permaMuniCheck').each(function(){
         if($(this).val() == '')
         {
-            perma_muni_check_alert = true;
-            perma_muni_check_row_count += (parseInt($(this).attr('name'))+1)+', ';
+            perma_muni_check_alert = false;
+            // perma_muni_check_row_count += (parseInt($(this).attr('name'))+1)+', ';
         }
     });
 
@@ -4179,8 +4181,8 @@ $('#BtnBulkEndorseSubmitExcel').click(function()
     $('.permaProvCheck').each(function(){
         if($(this).val() == '')
         {
-            perma_muni_check_alert = true;
-            perma_muni_check_row_count += (parseInt($(this).attr('name'))+1)+', ';
+            perma_muni_check_alert = false;
+            // perma_muni_check_row_count += (parseInt($(this).attr('name'))+1)+', ';
         }
     });
 
@@ -7673,7 +7675,6 @@ $('#downNowMultiRep').click(function()
 });
 
 
-
 function getContactNumbers()
 {
     $('#applicant_encoded_table thead tr th').each(function()
@@ -7720,7 +7721,6 @@ function getContactNumbers()
                         {
                             return '<label class="bg-yellow color-palette" style="padding: 8px; border-radius: 8px">'+data.application_status+'</label>';
                         }
-
                     }
                     ,name : 'bi_direct_encoded_data.id',
                     searchable : false,
@@ -7806,8 +7806,6 @@ $('.client_bi_endorsement_class').click(function()
         }
     }
 });
-
-
 
 $('#ack_encoded').click(function()
 {
@@ -7908,7 +7906,6 @@ $('#ack_encoded').click(function()
 
 
 });
-
 
 $('#bi_client_general_table').on('click', '.client_req_cancel', function()
 {
@@ -8353,6 +8350,7 @@ $(document).on('click', '.removeToBulkEndo', function()
     bulkExcelRed();
 });
 
+
 $('#applicant_encoded_table').on('click', '.btnShowAdditionalfilesDirect', function()
 {
     var id = $(this).attr('name');
@@ -8393,7 +8391,6 @@ $('#applicant_encoded_table').on('click', '.btnShowAdditionalfilesDirect', funct
     })
 });
 
-
 //floyd
 $('#applicant_encoded_table').on('click', '.btn_return_attach_encoded', function()
 {
@@ -8429,15 +8426,13 @@ $('#return_btn_email_to_applicant').click(function()
        complete : function()
        {
            $('#modal-send-email-loading-applicant').modal('hide');
-
+           
            pending_applicants_table.ajax.reload(null, false);
 
            setTimeout(function()
            {
                $('#modal-send-email-success-applicant').modal('show');
            }, 1000);
-
-
 
            $('#return_txtarea_application').val('');
        },

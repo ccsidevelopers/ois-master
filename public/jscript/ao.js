@@ -652,7 +652,7 @@ function pending_accounts()
                             }
                             else if(data.acct_status == 2)
                             {
-                                if(data.type_of_sending_report=='' && data.ci_cert=='NC' || data.type_of_sending_report==null && data.ci_cert=='NC')
+                                if(data.type_of_sending_report=='' && data.ci_cert=='NC')
                                 {
                                     return '<a class="btn btn-xs btn-block btn-primary" name = "'+data.id+':'+data.account_name+'" id="btnDownloadFile" data-toggle="modal" data-target="#dispatch_modal"><i class="glyphicon glyphicon-cloud-download"></i> DOWNLOAD FILES</a>' +
                                         ' <a href="'+data.id+'" class="btn btn-xs btn-block btn-info" name = "'+data.id+':'+data.account_name+'" id="btnShowInfo" data-toggle="modal" data-target="#modal-update-info"><i class="glyphicon glyphicon-pencil"></i> UPDATE INFO &<br><i class="glyphicon glyphicon-envelope"></i> ATTACH REPORT</a>'+
@@ -859,7 +859,7 @@ function finish_accounts()
                             {
                                 return '<a class="btn btn-xs btn-block btn-primary" name = "'+data.id+':'+data.account_name+'" id="btnDownloadFile" data-toggle="modal" data-target="#dispatch_modal"><i class="glyphicon glyphicon-cloud-download"></i> DOWNLOAD FILES</a>' +
                                     ' <a href="'+data.id+'"  class="btn btn-xs btn-block btn-warning" id="btnViewFullInfo" name="'+data.account_name+'" data-toggle="modal" data-target="#modal-view-info"><i class="glyphicon glyphicon-film"></i> VIEW ACCOUNT</a>' +
-                                    // ' <a href="'+data.id+'" hidden  class="btn btn-xs btn-block btn-info" id="btn_finish_resend_email" name="'+data.account_name+'" data-toggle="modal" data-target="#modal-update-info"><i class="fa fa-envelope-o"></i><i class="fa fa-long-arrow-up"></i> RESEND EMAIL</a>' +
+                                    ' <a href="'+data.id+'" hidden  class="btn btn-xs btn-block btn-info" id="btn_finish_resend_email" name="'+data.account_name+'" data-toggle="modal" data-target="#modal-update-info"><i class="fa fa-envelope-o"></i><i class="fa fa-long-arrow-up"></i> RESEND EMAIL</a>' +
                                     ' <a href="'+data.id+'" class="btn btn-xs btn-block btn-success" name="'+data.account_name+'" id="btnViewReport" data-toggle="modal" data-target="#modal-view-report"><i class="glyphicon glyphicon-envelope"></i> C.I NOTE</a>'+
                                     nonotes;
                             }
@@ -867,7 +867,7 @@ function finish_accounts()
                             {
                                 return '<a class="btn btn-xs btn-block btn-primary" name = "'+data.id+':'+data.account_name+'" id="btnDownloadFile" data-toggle="modal" data-target="#dispatch_modal"><i class="glyphicon glyphicon-cloud-download"></i> DOWNLOAD FILES</a>' +
                                     ' <a href="'+data.id+'"  class="btn btn-xs btn-block btn-warning" id="btnViewFullInfo" name="'+data.account_name+'" data-toggle="modal" data-target="#modal-view-info"><i class="glyphicon glyphicon-film"></i> VIEW ACCOUNT</a>' +
-                                    // ' <a href="'+data.id+'" hidden  class="btn btn-xs btn-block btn-info" id="btn_finish_resend_email" name="'+data.link_path+'" data-toggle="modal" data-target="#modal-update-info"><i class="fa fa-envelope-o"></i><i class="fa fa-long-arrow-up"></i> RESEND EMAIL</a>' +
+                                    ' <a href="'+data.id+'" hidden  class="btn btn-xs btn-block btn-info" id="btn_finish_resend_email" name="'+data.link_path+'" data-toggle="modal" data-target="#modal-update-info"><i class="fa fa-envelope-o"></i><i class="fa fa-long-arrow-up"></i> RESEND EMAIL</a>' +
                                     ' <a href="'+data.id+'" class="btn btn-xs btn-block btn-success" name="'+data.account_name+'" id="btnViewReport" data-toggle="modal" data-target="#modal-view-report"><i class="glyphicon glyphicon-envelope"></i> C.I NOTE</a>'+
                                     nonotes;
                             }
@@ -980,6 +980,7 @@ $('#ao-new-endorsement, #ao-finish-endorsement').on('click', '#btnDownloadFile',
     var get_name = get_id_name_array[1];
     acctID = get_id;
     DownloadAo(get_name,get_id,$('input[name=_tokens]').val());
+    
 
 });
 
@@ -988,7 +989,7 @@ function DownloadAo(acctName, id, token) {
         var acct_encode = btoa(acctName);
         var id_encode = btoa(id);
         var token_token = btoa(token);
-
+        
        var q = '<form action="/ao-download-file" target="_blank" method="get">'+
         '<div class="input-group">'+
         '<input type="text" hidden value="'+acct_encode+'" name="acctName">'+
@@ -1003,6 +1004,7 @@ function DownloadAo(acctName, id, token) {
     $('#down_form').html(q);
 
     $('#button_form_download').click();
+    
 
 }
 

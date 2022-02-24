@@ -536,15 +536,12 @@ $('#table_login_trail').on('click', '.showExpand', function()
             },
             success: function(data)
             {
-                console.log(data);
-
-
                 if(data.length > 0)
                 {
                     var tableData = '<tr>' +
                         '<td><b>Uploaded Photo/s</b></td>' +
                         '</tr>';
-                    for(var i = 0; i <= data[0].length; i++)
+                    for(var i = 0; i < data[0].length; i++)
                     {
                         tableData += '<tr>' +
                             '<td>' +

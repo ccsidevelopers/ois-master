@@ -65,6 +65,8 @@ var tele_ci_gen_table_array2 = [];
 var tele_ci_gen_table_title2 = 0;
 var tele_ci_gen_table_bool2 = false;
 
+
+
 $.ajaxSetup
 ({
     headers:
@@ -113,9 +115,9 @@ $(document).ready(function ()
 
     $('#btnSaveIncentDed').hide();
     $('#afterClickRepCi').hide();
-
-    $( ".gen_mon_date_range_dates" ).datepicker({orientation: "bottom"});
-    $( ".gen_mon_date_range_dates_cc" ).datepicker({orientation: "bottom"});
+    
+    // $( ".gen_mon_date_range_dates" ).datepicker({orientation: "bottom"});
+    // $( ".gen_mon_date_range_dates_cc" ).datepicker({orientation: "bottom"});
 
     $( "#datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' ,        orientation: "bottom"});
     $( "#datepickermax" ).datepicker({ dateFormat: 'yy-mm-dd' ,        orientation: "bottom"});
@@ -2141,7 +2143,7 @@ $('#audit-table-reports').on('click', '#btnDlAoReport', function()
     var id_encode = btoa(acct_ci_dl_id);
     var q = '<form action="/audit-ao-file-dl" target="_blank" method="get">'+
         '<div class="input-group">'+
-        '<input type="text" hidden value="'+id_encode+'" name="acctID">'+
+        '<input type="text" hidden value="'+id_encode+'" name="id">'+
         '<button type="submit" hidden id="button_ao_download" >'+
         '</button>'+
         '</span>'+
@@ -2305,7 +2307,7 @@ $('#table-finance-expenses-report').on('click', '.btn_view_ci_liq', function()
                     for (u = 0; u < data[3].length; u++)
                     {
                         var pathToLoop = data[3][u].split('|');
-
+                        
                         for(m = 0; m < (pathToLoop.length -1); m++)
                         {
                             extensionCheck = pathToLoop[m].split('.');
@@ -8632,255 +8634,4 @@ $('.cc_bank_sorting').click(function()
 $('.cc_sorting').click(function()
 {
     tele_ci_gen_table2.draw();
-});
-
-
-$('#add_new_contact').click(function(){
-    var $this = $(this);
-
-    $('.contact_required').each(function(){
-        if($(this).val()!=''){
-            contact_true=true;
-
-        }
-        else{
-            alert('Please complete your data');
-            contact_true=false;
-            return false;
-        }
-    });
-
-    if(contact_true){
-        if(confirm('Add this contact?'))
-        {
-            $this.attr('disabled',true);
-            $.ajax({
-                type:'get',
-                url:'audit_barangay_contact_list',
-                data:{
-                    'contact_province':$('#province_id').val(),
-                    'contact_municipality':$('#municipality_id').val(),
-                    'contact_brgy':$('#brgy_name').val(),
-                    'contact_person':$('#contact_person').val(),
-                    'contact_position':$('#position').val(),
-                    'contact_number':$('#contact_number').val(),
-                },
-                beforeSend:function(){
-                    $('.overlay').show();
-                },
-                success:function(data)
-                {
-                    if(data=='NEW_CONTACT_ADDED')
-                    {
-                        console.log(data);
-                        $this.attr('disabled',false);
-                        $('.gen_contact_class').val('');
-                        $('.overlay').hide();
-                        contact_by_regions_table.draw();
-                    }
-                    else if(data=='CONTACT_INVALID')
-                    {
-                        alert('Contact number has already exists');
-                        $this.attr('disabled',false);
-                        $('.overlay').hide();
-                    }
-
-                }
-            })
-        }
-    }
-
-});
-
-$('#brgy_contact_list').click(function(){
-    contact_by_regions_table=$('#contact_provinces_table').DataTable({
-        "responsive": true,
-        "processing": true,
-        "serverSide": true,
-        "ajax": {
-            url:'get_audit_barangay_contact_list'},
-        "columns":[
-            {data:'contact_id',name:'audit_contact_list.id'},
-            {
-                data:function province(data)
-                {
-                    return'<span id="province_id-'+data.contact_id+'">'+data.province_name+'</span>'
-                },name:'provinces.name'
-            },
-            {
-                data:function municipality(data)
-                {
-                    return'<span id="municipality_id-'+data.contact_id+'">'+data.muni_name+'</span>'
-                },name:'municipalities.muni_name'
-            },
-            {
-                data:function brgy(data)
-                {
-                    return'<span id="brgy_id-'+data.contact_id+'" class="text-lowercase">'+data.brgy_name+'</span>'
-                },name:'audit_contact_list.brgy_name'
-            },
-            {
-                data:function contact_person(data)
-                {
-                    return'<span id="person_id-'+data.contact_id+'">'+data.contact_person+'</span>'
-                },name:'audit_contact_list.contact_person'
-            },
-            {
-                data:function position(data)
-                {
-                    return'<span id="position_id-'+data.contact_id+'">'+data.contact_position+'</span>'
-                },name:'audit_contact_list.position'
-            },
-            {
-                data:function contact_number(data)
-                {
-                    return'<span id="number_id-'+data.contact_id+'">'+data.contact_num+'</span>'
-                },name:'audit_contact_list.contact_num'
-            },
-            {
-                data: function actions(data)
-                {
-                    return'<span>'+'<a id="'+data.contact_id+'" class="btn-block btn btn-sm bg-navy-active color-palette text-capitalize contact_list_edit" data-toggle="modal" data-target="#contact_list_update_modal"><i class="fa fa-fw fa-pencil-square-o"></i> edit data</a>'+
-                        '<a id="contact_logs_id" class="btn-block btn btn-sm btn-default text-capitalize view_logs" data-toggle="modal" data-target="#contact_list_logs_modal" name="'+data.contact_id+'" style="border:1px solid #001a35 ;"><i class="fa fa-fw fa-eye text-navy"></i> view logs</a>'
-                        +'</span>'
-                },name:'audit_contact_list.id'
-            }
-
-            ],
-        "order": [[0, 'desc']],
-        "pageLength": 10,
-        "lengthMenu": [[2, 10, 25, 50, -1], ['2 rows', '10 rows', '25 rows', '50 rows', 'Show all']],
-        initComplete:function()
-        {
-            $('.overlay').hide();
-            $('#contact_provinces_table tbody td').css({"vertical-align":"middle"});
-            $('#contact_provinces_table th').css({"font-size":"12.5px"});
-            $('#contact_provinces_table_length, #contact_provinces_table_filter').css({"margin-bottom":"5%","letter-spacing":"1px"});
-
-        }
-    });
-});
-
-$('#municipality_id').change(function(){
-    $.ajax({
-        type:'get',
-        url:'get_audit_provinces',
-        data:{
-            'muni_id':$('#municipality_id').val(),
-        },
-        success:function(data){
-            if(data  !=''){
-                $('#province_id').val(data[0].province_name);
-            }
-            else{
-                $('#province_id').val('');
-            }
-        }
-    });
-});
-
-$('#contact_provinces_table').on('click','.contact_list_edit',function(){
- var contact_update_id = $(this).attr('id');
- var $this = $(this);
-    $('#province_id_update').val($('#province_id-'+contact_update_id+'').text());
-    $('#municipality_id_update').val($('#municipality_id-'+contact_update_id+'').text());
-    $('#brgy_name_update').val($('#brgy_id-'+contact_update_id+'').text());
-    $('#contact_person_update').val($('#person_id-'+contact_update_id+'').text());
-    $('#position_update').val($('#position_id-'+contact_update_id+'').text());
-    $('#contact_number_update').val($('#number_id-'+contact_update_id+'').text());
-    $('#update_changes').attr('name',contact_update_id);
-
-    $('#update_changes').click(function(){
-        $('.contact_required_update').each(function(){
-            if($(this).val()!=''){
-                update_inputs=true;
-            }
-            else
-                {
-                    alert('Please dont leave blank inputs')
-                    update_inputs=false;
-                    return false;
-                }
-        });
-
-        if(update_inputs)
-            {
-                // if(confirm('Update changes on this contact ?'))
-                // {
-                    $this.attr('disabled',true);
-                    $.ajax({
-                        type:'get',
-                        url:'audit_barangay_contact_update',
-                        data:{
-                            'contact_id':$('#update_changes').attr('name')  ,
-                            'brgy_name_update':$('#brgy_name_update').val(),
-                            'contact_person_update':$('#contact_person_update').val(),
-                            'position_update':$('#position_update').val(),
-                            'contact_number_update':$('#contact_number_update').val(),
-                        },
-                        beforeSend:function(){
-                            $('.overlay').show();
-                        },
-                        success:function(data){
-                            alert('Done saving changes')
-                            $this.attr('disabled',false);
-                            $('.overlay').hide();
-                            $('#contact_list_update_modal').modal('hide');
-                            contact_by_regions_table.draw();
-
-                            // if(data=='ALREADY_EXIST'){
-                            //     alert('Contact number already exist!');
-                            //     $this.attr('disabled',false);
-                            // }
-                            // else if(data=='CONTACT_UPDATED'){
-                            //     alert('Done saving changes');
-                            //     $this.attr('disabled',false);
-                            //     $('.overlay').hide();
-                            //     $('#contact_list_update_modal').modal('hide');
-                            //     contact_by_regions_table.draw();
-                            // }
-                        }
-                    });
-                }
-            // }
-    });
-});
-
-$('#contact_provinces_table').on('click','.view_logs',function(){
-    var contact_logs_id = $(this).attr('name');
-
-    $('#contact_list_logs tbody tr').each(function()
-    {
-        $(this).remove();
-    });
-
-    $.ajax({
-        type:'get',
-        url:'audit_contact_logs',
-        data:{'view_logs_id':contact_logs_id},
-        success:function(data){
-
-            var contact_log_append='';
-
-            if(data.length > 0)
-            {
-                for(var i = 0;i < data.length; i++)
-                {
-                    contact_log_append +=  '<tr>' +
-                        '<td>'+data[i].contact_user_name+'</td>' +
-                        '<td>'+data[i].logs_contact_activity+'</td>' +
-                        '<td>'+data[i].created_at+'</td>' +
-                        +'</tr>'
-                }
-            }
-            else
-            {
-                contact_log_append= '<tr>' +
-                    '<td colspan="3">No Records Found</td>' +
-                    +'</tr>';
-            }
-
-            $('#contact_list_logs tbody').append(contact_log_append);
-        }
-    })
 });
