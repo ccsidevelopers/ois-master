@@ -41,7 +41,6 @@ var ci_table_get_head = [];
 var user_client_list_bool = false;
 var adminEmailReceiver = '';
 var adminEmailReceiverBool = false;
-var tableAccountBI;
 
 $.ajaxSetup
 ({
@@ -88,14 +87,13 @@ $(document).ready(function ()
                 {data: 'client_name', name: 'client_name'},
                 {
                     data: function (data) {
+
                         if (data.acct_status > 0 || data.handled_by_account_officer !== '') {
                             return '<button class="btn-xs btn-danger" value="' + data.id + '" id="btnDetach" name="btnDetach" style="width: 100%"><i class="fa fa-remove"></i> Reset</button>';
                         }
                         else {
                             return '<button class="btn-xs btn-info btn-block" disabled><i class="fa  fa-file-o"></i> Empty</button>';
                         }
-
-                        // if()
 
                     },
                     "orderable": false,
@@ -123,7 +121,7 @@ $(document).ready(function ()
             });
         }
     });
-})
+});
 
 
 $(document).ready(function ()
@@ -186,6 +184,221 @@ $(document).ready(function ()
             });
         }
     });
+    
+        //=============Start of FILEMANAGER===========================
+    $(document).ready(function ()
+    {
+        $('#tableUsersAccountManage tfoot th').each(function () {
+            var title = $(this).text();
+            $(this).html(title+'<br><input type="text" placeholder="Search" style="position: relative; width: 100%">');
+        });
+
+        tableUsersAccountManage = $('#tableUsersAccountManage').DataTable
+        ({
+            "responsive": false,
+            "processing": true,
+            "serverSide": true,
+            "ajax": "/admin-users-table-manage",
+            "columns":
+                [
+                    {data: 'id', name: 'users.id'},
+                    {data: 'Emp_ID', name: 'users.Emp_ID'},
+                    {data: 'name', name: 'users.name'},
+                    {data: 'email', name: 'users.email'},
+                    {
+                        data: function actions(data) {
+
+                            return data.pro_branch;
+                        },
+                        "name": 'provinces.name'
+                    },
+                    {
+                        data: function actions(data) {
+
+                            return data.role_name;
+                        },
+                        "name": 'provinces.name'
+                    },
+                    {
+
+                        data: function (data) {
+                            
+                            return '<button class="btn-xs btn-danger" value="' + data.id + '" id="btnUsers_detach" name="btnUsers_detach" style="width: 100%"><i class="fa fa-remove" data-target="modal-delete-users-manage"></i> Delete</button>';
+                        },
+
+                        "orderable": false,
+                        "searchable": false,
+                        "name": 'action',
+                        "width": "7%"
+                    }
+                ],
+            'order': [[0, 'desc']],
+            "pageLength": 10,
+            "bSortClasses": false,
+            "deferRender": true,
+            initComplete: function () {
+                var api = this.api();
+                // Apply the search
+                api.columns().every(function () {
+                    var that = this;
+                    $('input', this.footer()).on('keyup change', function () {
+                        if (that.search() !== this.value) {
+                            that
+                                .search(this.value)
+                                .draw();
+                        }
+                    });
+                });
+            }
+        });
+    });
+    
+    $('#tableUsersAccountManage').on('click','#btnUsers_detach', function ()
+    {
+        var id = $(this).val();
+
+        if(confirm('Are you really sure bro? Last Chance?'))
+        {
+            $.ajax({
+                url: 'del-cont',
+                type: 'get',
+                data:{
+                    'id' : id
+                },
+                success: function (data) {
+                    console.log(data);
+                    // $('#modal-delete-users-manage').modal('hide');
+                    alert('delete success');
+                    tableUsersAccountManage.ajax.reload(null, false);
+                },
+                error: function () {
+                    console.log('error');
+                }
+            });
+        }
+    });
+    
+
+    
+    // $(document).ready(function ()
+    // {
+    //     $('#tableBankAccountManage tfoot th').each(function () {
+    //         var title = $(this).text();
+    //         $(this).html(title+'<br><input type="text" placeholder="Search" style="position: relative; width: 100%">');
+    //     });
+
+    //     tableAccount = $('#tableBankAccountManage').DataTable
+    //     ({
+    //         "scrollX": 300,
+    //         "responsive": false,
+    //         "processing": true,
+    //         "serverSide": true,
+    //         "ajax": "/admin-bank-table-manage",
+    //         "columns":
+    //             [
+    //                 {data: 'id', name: 'id'},
+    //                 {data: 'date_endorsed', name: 'date_endorsed'},
+    //                 {data: 'time_endorsed', name: 'time_endorsed'},
+    //                 {data: 'account_name', name: 'account_name'},
+    //                 {data: 'address', name: 'address'},
+    //                 {data: 'requestor_name', name: 'requestor_name'},
+    //                 {data: 'type_of_request', name: 'type_of_request'},
+    //                 {data: 'provinces', name: 'provinces'},
+    //                 {data: 'client_name', name: 'client_name'},
+    //                 {data: 'link_path', name: 'link_path'},
+    //                 {
+    //                     data: function (data) {
+                            
+    //                         return '<button class="btn-xs btn-danger" value="' + data.id + '"  style="width: 100%"><i class="fa fa-remove"></i> Delete</button>';
+    //                     },
+    //                     "orderable": false,
+    //                     "searchable": false,
+    //                     "name": 'action',
+    //                     "width": "7%"
+    //                 }
+    //             ],
+    //         'order': [[0, 'desc']],
+    //         "pageLength": 10,
+    //         "bSortClasses": false,
+    //         "deferRender": true,
+    //         initComplete: function () {
+    //             var api = this.api();
+    //             // Apply the search
+    //             api.columns().every(function () {
+    //                 var that = this;
+    //                 $('input', this.footer()).on('keyup change', function () {
+    //                     if (that.search() !== this.value) {
+    //                         that
+    //                             .search(this.value)
+    //                             .draw();
+    //                     }
+    //                 });
+    //             });
+    //         }
+    //     });
+    // });
+    
+    // $(document).ready(function (){
+
+    //     $('#tableBIAccountManage thead tr th').each(function()
+    //     {
+    //         $(this).css('background-color', 'black');
+    //         $(this).css('color', 'white');
+    //     });
+
+    //     getBIStatus();
+
+    //     function getBIStatus() {
+
+    //         table_bi_manager = $('#tableBIAccountManage').DataTable
+    //         ({
+    //             // "scrollY":300,
+    //             // "scrollCollapse": true,
+    //             // "paging": false,
+    //             "orderCellsTop": true,
+    //             "responsive": true,
+    //             "processing": true,
+    //             "serverSide": true,
+    //             "ajax": "admin-bi-table-manage",
+    //             "columns":
+    //                 [
+    //                     {data: 'endorse_id', name: 'bi_endorsements.id'}, //0
+    //                     {data: 'date_time_endorsed', name: 'bi_endorsements.created_at'}, //3
+    //                     {data: 'project', name: 'bi_endorsements.project'}, //4
+    //                     {data: 'account_name', name: 'bi_endorsements.account_name'}, //5
+    //                     {data: 'due', name: 'bi_endorsements.date_time_due'}, //3
+    //                     {
+    //                         data: function action(data)
+    //                         {
+    //                                 return '<button class="btn-xs btn-danger" value="' + data.endorse_id + '" id="btnbi_detach" name="btnbi_detach" style="width: 100%"><i class="fa fa-remove" data-target="modal-delete-bi-manage"></i> Delete</button>';
+    //                         },
+    //                         'name': 'bi_endorsements.id',
+    //                         searchable: false,
+    //                         orderable: false
+    //                     }
+    //                 ],
+    //             "order": [[0, 'desc']],
+    //             "pageLength": 10,
+    //             "pagingType": "simple",
+    //             "bSortClasses": false
+    //         });
+
+    //         $('#tableBIAccountManage_filter input').unbind();
+    //         $('#tableBIAccountManage_filter input').bind('keyup change', function (e) {
+
+    //             if ($(this).is(':focus')) {
+    //                 if (e.keyCode == 13) {
+    //                     table_bi_manager.search($(this).val()).draw();
+    //                 }
+    //                 else if (e.keyCode === 8) {
+    //                     if ($(this).val() == '') {
+    //                         table_bi_manager.search($(this).val()).draw();
+    //                     }
+    //                 }
+    //             }
+    //         });
+    //     }
+    // });
 
     $('#tableManageAllBIaccounts').on('click', '.btnEditStat', function()
     {
@@ -289,7 +502,6 @@ $(document).ready(function ()
 
 
 
-
 $(document).ready(function ()
 {
 
@@ -365,7 +577,6 @@ $(document).ready(function ()
                         else {
                             return data.rol_id + ' - ' + data.role_name;
                         }
-
                     },
                     'name': 'roles.name'
                 },
@@ -3471,10 +3682,13 @@ $('#radio_bi_add').click(function () {
     bi_what_to ='add';
 
     $('#select_bi_row').hide();
-    checking_counter_add_button = 0;
-    $('.btnRemoveItem').each(function () {
-        $(this).click();
-    });
+    
+    // checking_counter_add_button = 0;
+    // $('.btnRemoveItem').each(function () {
+    //     $(this).click();
+    // });
+    
+    
 });
 
 function select_bi_func() {
@@ -4592,8 +4806,7 @@ $('#change-view-bi').click(function()
     $('#addViewable_bi').hide();
     bi_access_table.draw();
 
-    $.ajax
-    ({
+    $.ajax({
         type: 'get',
         url: 'admin_get_bi_view',
         success: function(data)
@@ -4848,7 +5061,6 @@ var user_acc_id=
                 $('#client_type').val(data[0].client_type);
                 $('#client_check').val(data[0].client_check);
                 $('#authrequest').val(data[0].authrequest);
-                $('#login_check').val(data[0].login_check);
             }
         });
     });
@@ -4862,8 +5074,7 @@ $('#submit_access_control').click(function()
             'id' : user_acc_id,
             'client_type': $('#client_type').val(),
             'client_check' : $('#client_check').val(),
-            'authrequest' : $('#authrequest').val(),
-            'login_check' : $('#login_check').val()
+            'authrequest' : $('#authrequest').val()
         },
         success: function(data)
         {

@@ -788,8 +788,16 @@ function fund_disp_init()
             }
         })
     }
-
+    
     var template_history = Handlebars.compile($("#details-template-success").html());
+    $('#table-disp-historical-archive thead th').each(function()
+    {
+        var title = $(this).text();
+        if(title == 'Address')
+        {
+            $(this).html(title+'<br><input type="text" placeholder="Search" style="position: relative; width: 100%">');
+        }
+    });
     tableFundHistory = $('#table-disp-historical-archive').DataTable(
         {
             "responsive": true,
@@ -804,7 +812,6 @@ function fund_disp_init()
                     d.muni_id = $('#historical_muni_id').val();
                 }
             },
-            // "ajax": "/dispatcher-table-fund-history",
             "columns":
                 [
 
@@ -1023,6 +1030,5 @@ $('#btn_add_req').on('click',function (e)
 
 $('#historical_muni_id').change(function()
 {
-    console.log($(this).val());
     tableFundHistory.draw();
 });

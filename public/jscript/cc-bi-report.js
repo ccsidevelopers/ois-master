@@ -27,16 +27,14 @@ $(document).on('click', '.class_bi_reports', function()
                     [
                         {data: 'id', name: 'bi_ci_report.id'},
                         {data: 'name', name: 'users.name'},
-                        {data: 'dpo_name', name: 'dpo.name'},
                         {data: 'client_name', name: 'bi_ci_report.client_name'},
                         {data: 'subj_name', name: 'bi_ci_report.subj_name'},
-                        {data: 'date_time_due', name: 'bi_ci_report.date_time_due'},
                         {data: 'created_at', name: 'bi_ci_report.created_at'},
                         {
                             data: function action (data)
                             {
-                                return '<button class="btn btn-sm btn-success btn-block edit_bi_note"  href="'+data.id+'"><i class="glyphicon glyphicon-eye-open"></i> View B.I Report</button>' +
-                                    '<button class="btn btn-sm btn-info btn-block view_bi_rep_logs"  href="'+data.id+'"><i class="glyphicon glyphicon-film"></i> Logs</button>';
+                                return '<button class="btn btn-sm btn-success btn-block edit_bi_note" href="'+data.id+'"><i class="glyphicon glyphicon-eye-open"></i> View B.I Report</button>' +
+                                    '<button class="btn btn-sm btn-info btn-block view_bi_rep_logs" href="'+data.id+'"><i class="glyphicon glyphicon-film"></i> Logs</button>';
                             },
                             'name' : 'bi_ci_report.ci_note',
                             // searchable : false,
@@ -170,7 +168,6 @@ $(document).on('click', '.class_bi_reports', function()
                 $('#download_ci_bi').attr('href', 'download-ci-bi-attachments?id='+ btoa($this.attr('href')));
                 $('#modal_ci_update_bi_note').modal('show');
                 $('#update_bi_note').val(data[0].ci_note);
-
             },
             error: function(e)
             {

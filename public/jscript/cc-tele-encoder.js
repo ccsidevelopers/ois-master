@@ -260,7 +260,10 @@ $.ajax
         $('#cc_tele_accounts_table').on('click', '.btn_upload_files_report', function()
         {
             accID = $(this).attr('id');
-
+            $('#tele-acc-stat').val('-');
+            $('#tele-acc-stat').change();
+            $('#contactedSelect').hide();
+            $('#uncontactedSelect').hide();
             console.log(accID);
 
             $('#modal-upload-attach-file').modal('show');
@@ -806,6 +809,8 @@ $('#btnSendtoSao').click(function()
     var veriStat = $('#tele-acc-stat').find(':selected').val();
     var remarks = $('#tele-acc-remarks-upload').val();
     var contacted_details = $('#contacted-details').val();
+    var un_contacted_details = $('#un-contacted-details').val();
+    var check_tick = '';
 
     var formData = new FormData();
 
@@ -813,9 +818,26 @@ $('#btnSendtoSao').click(function()
     formData.append('stat', veriStat);
     formData.append('id', id_endode);
     formData.append('remarks', remarks);
-    formData.append('contacted_details', contacted_details);
 
-    if(veriStat != '-')
+    if(veriStat == 'Contacted')
+    {
+        formData.append('contacted_details', contacted_details);
+        
+        check_tick = contacted_details;
+    }
+    else if(veriStat == 'Uncontacted')
+    {
+        formData.append('contacted_details', un_contacted_details);
+        check_tick = un_contacted_details;
+    }
+    else
+    {
+        formData.append('contacted_details', veriStat);
+        check_tick = veriStat;
+    }
+
+
+    if(veriStat != '-' &&  check_tick != '-')
     {
         btn.attr("disabled", true);
         $.ajax
@@ -5475,7 +5497,11 @@ $('#cc-bank-encoded-list').on('click','#view_save_data_btn', function ()
 
                         $('#tdToFillCobs table').each(function()
                         {
-                            count++
+                            count++;
+                            if(count == 9)
+                            {
+                                $(this).addClass('newPageTrigger');
+                            }
                         });
 
                         if(count >= 12)
@@ -6268,15 +6294,26 @@ $('#addComakerTable').on('click', '.checktoSametoPresentCOB', function()
     }
 });
 
+
+
 $('#tele-acc-stat').change(function()
 {
     if($(this).find(':selected').val() == 'Contacted')
     {
         $('#contactedSelect').show();
+        $('#uncontactedSelect').hide();
+
     }
-    else if ($(this).find(':selected').val() != 'Contacted')
+    else if ($(this).find(':selected').val() == 'Uncontacted')
     {
         $('#contactedSelect').hide();
+        $('#uncontactedSelect').show();
+
+    }
+    else
+    {
+        $('#contactedSelect').hide();
+        $('#uncontactedSelect').hide();
     }
 });
 
@@ -6717,11 +6754,7 @@ $('#btnAddCobFinal').click(function()
 
     $('#tdToFillCobs table').each(function()
     {
-        count++;
-        if(count == 9)
-        {
-            $(this).addClass('newPageTrigger');
-        }
+        count++
     });
 
     if(count >= 12)

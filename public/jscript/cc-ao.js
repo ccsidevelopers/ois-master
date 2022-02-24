@@ -417,7 +417,7 @@ function get_accounts_table() {
                                     header:  function (dt, idx, title)
                                     {
                                         return title_accounts[(idx)];
-                                    }
+                                    },
                                 }
                         },
                     customize: function ( xlsx ){
@@ -446,7 +446,21 @@ function get_accounts_table() {
                 {data: 'endorse_id', name: 'bi_endorsements.id'},
                 {data: 'site', name: 'bi_endorsements.bi_account_name'},
                 {data: 'tor', name: 'bi_endorsements.type_of_endorsement_bank'},
-                {data: 'date_time_endorsed', name: 'bi_endorsements.created_at'},
+                {
+                    data : function d_t(data)
+                    {
+                        var date_time = data.date_time_endorsed;
+
+                        var split = date_time.split(' ');
+
+                        var time = split[1].split(':');
+
+                        var final = time[0] + ':' + time[1];
+
+                        return split[0] + ' ' +final;
+                    },
+                    name : 'bi_endorsements.created_at'
+                },
                 {data: 'project', name: 'bi_endorsements.project'},
                 {data: 'account_name', name: 'bi_endorsements.account_name'},
                 {data: 'package', name: 'bi_endorsements.package'},
@@ -646,7 +660,21 @@ function get_acknowledge_table()
                 {data: 'endorse_id', name: 'bi_endorsements.id'},
                 {data: 'site', name: 'bi_endorsements.bi_account_name'},
                 {data: 'bank', name: 'bi_endorsements.type_of_endorsement_bank'},
-                {data: 'date_time_endorsed', name: 'bi_endorsements.created_at'},
+                {
+                    data : function d_t(data)
+                    {
+                        var date_time = data.date_time_endorsed;
+
+                        var split = date_time.split(' ');
+
+                        var time = split[1].split(':');
+
+                        var final = time[0] + ':' + time[1];
+
+                        return split[0] + ' ' +final;
+                    },
+                    name : 'bi_endorsements.created_at'
+                },
                 {data: 'project', name: 'bi_endorsements.project'},
                 {data: 'account_name', name: 'bi_endorsements.account_name'},
                 {data: 'package', name: 'bi_endorsements.package'},
@@ -827,7 +855,21 @@ function get_return_table()
                 {data: 'endorse_id', name: 'bi_endorsements.id'},
                 {data: 'site', name: 'bi_endorsements.bi_account_name'},
                 {data: 'bank', name: 'bi_endorsements.type_of_endorsement_bank'},
-                {data: 'date_time_endorsed', name: 'bi_endorsements.created_at'},
+                {
+                    data : function d_t(data)
+                    {
+                        var date_time = data.date_time_endorsed;
+
+                        var split = date_time.split(' ');
+
+                        var time = split[1].split(':');
+
+                        var final = time[0] + ':' + time[1];
+
+                        return split[0] + ' ' +final;
+                    },
+                    name : 'bi_endorsements.created_at'
+                },
                 {data: 'project', name: 'bi_endorsements.project'},
                 {data: 'account_name', name: 'bi_endorsements.account_name'},
                 {data: 'package', name: 'bi_endorsements.package'},
@@ -1009,7 +1051,21 @@ function get_table_finished()
                 {data: 'endorse_id', name: 'bi_endorsements.id'},
                 {data: 'site', name: 'bi_endorsements.bi_account_name'},
                 {data: 'bank', name: 'bi_endorsements.type_of_endorsement_bank'},
-                {data: 'date_time_endorsed', name: 'bi_endorsements.created_at'},
+                {
+                    data : function d_t(data)
+                    {
+                        var date_time = data.date_time_endorsed;
+
+                        var split = date_time.split(' ');
+
+                        var time = split[1].split(':');
+
+                        var final = time[0] + ':' + time[1];
+
+                        return split[0] + ' ' +final;
+                    },
+                    name : 'bi_endorsements.created_at'
+                },
                 {data: 'project', name: 'bi_endorsements.project'},
                 {data: 'account_name', name: 'bi_endorsements.account_name'},
                 {data: 'package', name: 'bi_endorsements.package'},
@@ -1384,7 +1440,7 @@ $('#cc_ao_accounts_table').on('click','.btn_acknowledge',function ()
                     }
 
                     $('#tat_date_due').val(final_date[0]);
-
+                    
                     $('#tat_time_due').val(data[4]);
                 }
             }
@@ -1980,7 +2036,21 @@ function get_success_table()
                 {data: 'endorse_id', name: 'bi_endorsements.id'},
                 {data: 'site', name: 'bi_endorsements.bi_account_name'},
                 {data: 'bank', name: 'bi_endorsements.type_of_endorsement_bank'},
-                {data: 'date_time_endorsed', name: 'bi_endorsements.created_at'},
+                {
+                    data : function d_t(data)
+                    {
+                        var date_time = data.date_time_endorsed;
+
+                        var split = date_time.split(' ');
+
+                        var time = split[1].split(':');
+
+                        var final = time[0] + ':' + time[1];
+
+                        return split[0] + ' ' +final;
+                    },
+                    name : 'bi_endorsements.created_at'
+                },
                 {data: 'project', name: 'bi_endorsements.project'},
                 {data: 'account_name', name: 'bi_endorsements.account_name'},
                 {data: 'poc', name: 'bi_endorsements.endorser_poc'},
@@ -2048,15 +2118,33 @@ function get_success_table()
                 {
                     data: function contact_details(data)
                     {
-                        if(data.tele_stat == 'Contacted')
+                       if(data.tele_stat == 'Contacted')
                         {
-                            if(data.contact_details == 'Refused to be interviewed')
+                            console.log(data.tele_stat);
+
+                            if(data.contact_details == null || data.contact_details == '')
+                            {
+                                return 'N/A';
+                            }
+                            else if(data.contact_details == 'Refused to be interviewed')
                             {
                                 return '<p style="font-style: italic">'+data.contact_details+'</p>';
                             }
                             else if(data.contact_details == 'Verified applying')
                             {
                                 return '<p style="font-style: italic">'+data.contact_details+'</p>';
+                            }
+                            else
+                            {
+                                return '<p style="font-style: italic">'+data.contact_details+'</p>';
+                            }
+                        }
+                        else if(data.tele_stat == 'Uncontacted')
+                        {
+
+                            if(data.contact_details == null || data.contact_details == '')
+                            {
+                                return 'N/A';
                             }
                             else
                             {
@@ -2893,7 +2981,21 @@ function get_assigned_table()
                 {data: 'endorse_id', name: 'bi_endorsements.id'},
                 {data: 'site', name: 'bi_endorsements.bi_account_name'},
                 {data: 'bank', name: 'bi_endorsements.type_of_endorsement_bank'},
-                {data: 'date_time_endorsed', name: 'bi_endorsements.created_at'},
+                {
+                    data : function d_t(data)
+                    {
+                        var date_time = data.date_time_endorsed;
+
+                        var split = date_time.split(' ');
+
+                        var time = split[1].split(':');
+
+                        var final = time[0] + ':' + time[1];
+
+                        return split[0] + ' ' +final;
+                    },
+                    name : 'bi_endorsements.created_at'
+                },
                 {data: 'project', name: 'bi_endorsements.project'},
                 {data: 'account_name', name: 'bi_endorsements.account_name'},
                 {data: 'package', name: 'bi_endorsements.package'},
@@ -3059,18 +3161,9 @@ $('#btnTransferAccttoTele').click(function()
                         },
                     success : function()
                     {
-                        if(data == 'Downloaded')
-                        {
-                            btn.attr('disabled', false);
-                            alert('Account Transfer Failed, Account is already on-process');
-                        }
-                        else
-                        {
-                            alert('Successfully Transferred Account!');
-                            btn.attr('disabled', false);
-                            $('#modal-transfer-tele').modal('hide');
-                            $('#btnTransferAccttoTele').attr("disabled", false);
-                        }
+                        alert('Successfully Transferred Account!');
+                        btn.attr('disabled', false);
+                        $('#modal-transfer-tele').modal('hide');
                     },
                     complete: function(){
                         $('#lodadingAssignTele').html('');
@@ -3152,7 +3245,21 @@ function getCancel()
                 {data: 'endorse_id', name: 'bi_endorsements.id'},
                 {data: 'site',name: 'bi_endorsements.bi_account_name'},
                 {data: 'bank', name: 'bi_endorsements.type_of_endorsement_bank'},
-                {data: 'date_time_endorsed', name: 'bi_endorsements.created_at'},
+                {
+                    data : function d_t(data)
+                    {
+                        var date_time = data.date_time_endorsed;
+
+                        var split = date_time.split(' ');
+
+                        var time = split[1].split(':');
+
+                        var final = time[0] + ':' + time[1];
+
+                        return split[0] + ' ' +final;
+                    },
+                    name : 'bi_endorsements.created_at'
+                },
                 {data: 'project', name: 'bi_endorsements.project'},
                 {data: 'account_name', name: 'bi_endorsements.account_name'},
                 {data: 'package', name: 'bi_endorsements.package'},
@@ -3303,7 +3410,21 @@ function getHold()
                 {data: 'endorse_id', name: 'bi_endorsements.id'},
                 {data: 'site',name: 'bi_endorsements.bi_account_name'},
                 {data: 'bank', name: 'bi_endorsements.type_of_endorsement_bank'},
-                {data: 'date_time_endorsed', name: 'bi_endorsements.created_at'},
+                {
+                    data : function d_t(data)
+                    {
+                        var date_time = data.date_time_endorsed;
+
+                        var split = date_time.split(' ');
+
+                        var time = split[1].split(':');
+
+                        var final = time[0] + ':' + time[1];
+
+                        return split[0] + ' ' +final;
+                    },
+                    name : 'bi_endorsements.created_at'
+                },
                 {data: 'project', name: 'bi_endorsements.project'},
                 {data: 'account_name', name: 'bi_endorsements.account_name'},
                 {data: 'package', name: 'bi_endorsements.package'},
@@ -3969,7 +4090,22 @@ function get_general_mon_table()
                 {data: 'endorse_id', name: 'bi_endorsements.id'}, //0
                 {data: 'site', name: 'bi_endorsements.bi_account_name'}, //1
                 {data: 'tor', name: 'bi_endorsements.type_of_endorsement_bank'}, //2
-                {data: 'date_time_endorsed', name: 'bi_endorsements.created_at'}, //3
+                // {data: 'date_time_endorsed', name: 'bi_endorsements.created_at'}, //3
+                {
+                    data : function d_t(data)
+                    {
+                        var date_time = data.date_time_endorsed;
+
+                        var split = date_time.split(' ');
+
+                        var time = split[1].split(':');
+
+                        var final = time[0] + ':' + time[1];
+
+                        return split[0] + ' ' +final;
+                    },
+                    name : 'bi_endorsements.created_at'
+                }, //3
                 {data: 'project', name: 'bi_endorsements.project'}, //4
                 {data: 'account_name', name: 'bi_endorsements.account_name'}, //5
                 {data: 'package', name: 'bi_endorsements.package'}, //6
@@ -3983,13 +4119,31 @@ function get_general_mon_table()
                     {
                         if(data.tele_stat == 'Contacted')
                         {
-                            if(data.contact_details == 'Refused to be interviewed')
+                            console.log(data.tele_stat);
+
+                            if(data.contact_details == null || data.contact_details == '')
+                            {
+                                return 'N/A';
+                            }
+                            else if(data.contact_details == 'Refused to be interviewed')
                             {
                                 return '<p style="font-style: italic">'+data.contact_details+'</p>';
                             }
                             else if(data.contact_details == 'Verified applying')
                             {
                                 return '<p style="font-style: italic">'+data.contact_details+'</p>';
+                            }
+                            else
+                            {
+                                return '<p style="font-style: italic">'+data.contact_details+'</p>';
+                            }
+                        }
+                        else if(data.tele_stat == 'Uncontacted')
+                        {
+
+                            if(data.contact_details == null || data.contact_details == '')
+                            {
+                                return 'N/A';
                             }
                             else
                             {
@@ -4004,29 +4158,6 @@ function get_general_mon_table()
                     'name': 'bi_endorsements.verify_tele_status_details',
                     'orderable' : false
                 }, //12
-                {data: 'due_status', name: 'bi_endorsements.id', orderable: 'false', searchable: 'false'}, //13
-                {
-                    data: function d_t_f(data)
-                    {
-                        if(data.date_time_finished != '')
-                        {
-                            var date_time = data.date_time_finished;
-
-                            var split = date_time.split(' ');
-
-                            var time = split[1].split(':');
-
-                            var final = time[0] + ':' + time[1];
-
-                            return split[0] + ' ' +final;
-                        }
-                        else
-                        {
-                            return 'N/A';
-                        }
-                    },
-                    name: 'bi_endorsements.date_time_finished'
-                }, //14
                 {
                     data : function action(data) {
                         return '<a id="'+data.endorse_id+'" class="btn_view_information_bi btn btn-xs btn-info btn-block" data-toggle="modal" data-target="" ><i class="glyphicon glyphicon-film"></i> View Information</a>';
@@ -4152,23 +4283,4 @@ $('.gen_mon_date_range_click').click(function()
 $('.gen_mon_date_range_dates').change(function()
 {
     table_general_mon.draw();
-});
-
-$('.gen_search_date_range_click').click(function()
-{
-    if($(this).val() != 'all')
-    {
-        $('#gen_search_date_pick_holder').show();
-    }
-    else
-    {
-        $('#gen_search_date_pick_holder').hide();
-    }
-
-    table_general_search.draw();
-});
-
-$('.gen_search_date_range_dates').change(function()
-{
-    table_general_search.draw();
 });
