@@ -82,7 +82,7 @@ var expenseEnd = '';
 
 var tableSraAssignAr = [];
 var sra_count = 0;
-var today = new Date();
+
 
 
 
@@ -353,7 +353,7 @@ $(document).ready(function()
                         data: function actions(data)
                         {
 
-                            if(data.handled_by_account_officer == "" || data.handled_by_account_officer == null)
+                            if(data.handled_by_account_officer == "")
                             {
                                 return '<a href="'+ data.id + '" class="btn btn-xs btn-primary btn-block" id="btnAssign" data-toggle="modal" data-target="#dispatch_modal"><i class="glyphicon glyphicon-edit"></i> Assign</a>' +
                                     '<a href="'+ data.id + '" class="btn btn-xs btn-primary btn-block" id="btnFullViewInfo" data-toggle="modal" data-target="#modal-view-info">View Info</a>';
@@ -846,11 +846,8 @@ $(document).ready(function()
     });
 
     $('#datepicker_report').change( function() {
-
-
         var min = $.datepicker.formatDate('yy-mm-dd', $('#datepicker_report').datepicker('getDate'));
         console.log(min);
-
         $('#min_report').val(min);
 
         var max = $.datepicker.formatDate('yy-mm-dd', $('#datepickermax_report').datepicker('getDate'));
@@ -864,11 +861,8 @@ $(document).ready(function()
         else {
             $('#max_report').val(max);
         }
-
         table_sao_audit.draw();
     });
-
-
     $('#datepickermax_report').change( function() {
 
         var min = $.datepicker.formatDate('yy-mm-dd', $('#datepicker_report').datepicker('getDate'));
@@ -942,9 +936,6 @@ $(document).ready(function()
         // table_ci_fund_dec.ajax.reload(null, false);
     },60000);
 });
-
-
-
 
 function trans_table_init() {
 
@@ -1115,21 +1106,15 @@ function manage_table_init() {
                             if(data.acct_status == '')
                             {
                                 return ' <a href="#edit-' + data.id + '" class="btn btn-xs btn-warning" name="'+data.id+':'+data.account_name+'" id="btnHoldEndorse" data-toggle="modal" data-target="#modal-hold" style="width: 100%">Hold</a><br/>' +
-                                    ' <a href="#edit-' + data.id + '" class="btn btn-xs btn-info btn-return_test_001" name="'+data.id+':'+data.account_name+'" id="btnReturnEndorse" data-toggle="modal" data-target="#srao-modal-return" style="width: 100%">Return</a><br/>'+
                                     ' <a href="#edit-' + data.id + '" class="btn btn-xs btn-danger" name="'+data.id+':'+data.account_name+'" id="btnCancelEndorse" data-toggle="modal" data-target="#modal-cancel" style="width: 100%">Cancel</a>';
                             }
                             else if(data.acct_status == 5)
                             {
                                 return ' <a href="#edit-' + data.id + '" class="btn btn-xs btn-danger" name="'+data.id+':'+data.account_name+'" id="btnUncancelEndorse" data-toggle="modal" data-target="#modal-uncancel" style="width: 100%">Uncancelled</a>';
                             }
-
                             else if(data.acct_status == 4)
                             {
                                 return ' <a href="#edit-' + data.id + '" class="btn btn-xs btn-warning" name="'+data.id+':'+data.account_name+'" id="btnUnholdEndorse" data-toggle="modal" data-target="#modal-unhold" style="width: 100%">Unhold</a>';
-                            }
-                            else if(data.acct_status == 6)
-                            {
-                                return ' <a href="#edit-' + data.id + '" class="btn btn-xs btn-info" name="'+data.id+':'+data.account_name+'" id="btnCancelReturnEndorse" data-toggle="modal" data-target="#srao-modal-cancelreturn" style="width: 100%">Cancel Return</a>';
                             }
                         },
                         "orderable": false,
@@ -1443,7 +1428,8 @@ function ci_account_report_table() {
                     data: function actions(data)
                     {
                         var toreturn = '';
-                        var note="";
+
+                        var note =' <a href="'+data.id+'" class="btn btn-xs btn-block btn-success" name="'+data.account_name+'" id="btnViewReport" data-toggle="modal" data-target="#modal-view-report"><i class="glyphicon glyphicon-envelope"></i> C.I NOTE</a>';
 
                         if(data.acct_status==1)
                         {
@@ -1487,8 +1473,6 @@ function ci_account_report_table() {
 
                         return toreturn+'<a href="'+ data.id + '" class="btn btn-xs btn-primary btn-block" id="btnFullViewInfo" data-toggle="modal" data-target="#modal-view-info"><i class="fa fa-exclamation-circle"></i> VIEW INFO</a>';
                     },
-
-
                     "name": 'endorsements.acct_status'
                 }
             ],
@@ -1549,7 +1533,6 @@ function ci_account_report_table() {
     });
 
 
-
     $('.viewable').click(function () {
         if($(this).is(":checked"))
         {
@@ -1569,7 +1552,6 @@ function ci_account_report_table() {
             {
 
                 $('.viewable#rad_daterange_sao').prop('checked',true);
-
 
                 $('.date_range_conts').css('display','');
 
@@ -1623,9 +1605,7 @@ function ci_account_report_table() {
                 $('#min_sao').val(yearmonth+date);
                 $('#max_sao').val(yearmonth+date);
 
-
-
-                 //table_ci_account_report.draw();
+                // table_ci_account_report.draw();
 
                 //pending
 
@@ -1696,15 +1676,12 @@ function ci_account_report_table() {
     });
 
     $('.viewable#rad_all_sao').prop('checked',true);
+
+
 }
-
-
-
 function sao_audit_table() {
-
     var i1 = 0;
     var titleheader;
-
     $('#sao-audit-table-reports thead th').each(function()
     {
         audit_header[i1] = $(this).text();
@@ -1852,8 +1829,6 @@ function sao_audit_table() {
                     data: function actions(data)
                     {
 
-
-
                         if(data.acct_status==1)
                         {
                             return '<a class="btn btn-xs btn-warning"><i class="glyphicon glyphicon-refresh"></i> ON PROCESS</a>';
@@ -1863,9 +1838,7 @@ function sao_audit_table() {
                             //data forwarded
                             if(data.ci_cert=='NC')
                             {
-                                return '<button value="'+data.id+'" class="btnAuditDownload_sao btn btn-xs btn-primary" name="dataforwarded"><i class="glyphicon glyphicon-cloud-download"></i> DOWNLOAD CI REPORT</button><br>'+
-                                    '<button value="'+data.id+'" class="btn btn-xs btn-block btn-success" name="'+data.account_name+'" id="btnViewReport" data-toggle="modal" data-target="#modal-ci-note"><i class="glyphicon glyphicon-envelope"></i> C.I NOTE</button>'
-                                    ;
+                                return '<button value="'+data.id+'" class="btnAuditDownload_sao btn btn-xs btn-primary" name="dataforwarded"><i class="glyphicon glyphicon-cloud-download"></i> DOWNLOAD CI REPORT</button>';
                             }
 
                         }
@@ -1891,29 +1864,10 @@ function sao_audit_table() {
                         {
                             return '<a href="'+data.id+'" class="btn btn-xs btn-primary" data-toggle="modal" data-target="#dispatch_mssodal"><i class="glyphicon glyphicon-cloud-download"></i> CANCEL</a>';
                         }
-                        else if(data.acct_status==6)
-                        {
-                            return '<a href="'+data.id+'" class="btn btn-xs btn-info" data-toggle="modal" data-target="#dispatch_mssodal"><i class=" fa fa-rotate-left"></i> RETURN ACCOUNT</a>';
-                        }
                         else
                         {
                             return '<a href="'+data.id+'" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#dispatch_mssodal"><i class="glyphicon glyphicon-cloud-download"></i> NEW ENDORSEMENT</a>';
                         }
-
-                        if(data.nononote==null)
-                        {
-                            return '<a href="'+ data.id + '" class="btn btn-xs btn-primary btn-block" id="btnFullViewInfo" data-toggle="modal" data-target="#modal-view-info">View Info</a>' +
-                                '<a href="'+ data.id + '" class="btn btn-xs btn-default btn-block" id="btnView" data-toggle="modal">No Available Note</a>';
-                        }
-                        else
-                        {
-                            return '<a href="'+ data.id + '" class="btn btn-xs btn-primary btn-block" id="btnFullViewInfo" data-toggle="modal" data-target="#modal-view-info">View Info</a>' +
-                                '<a href="'+ data.id + '" class="btn btn-xs btn-warning btn-block" id="btnNoteView" data-toggle="modal" data-target="#modal-dispatcher-view-notee">View Note</a>';
-                        }
-
-
-
-
                     },
                     "name": 'endorsements.acct_status'
                 }
@@ -1974,155 +1928,10 @@ function sao_audit_table() {
         }
     });
 
-
-    $('#sao-audit-table-reports').on('click','#btnViewReport', function ()
-    {
-
-
-        // $('#txtAreaNote').html();
-        $('#ciReport').val('');
-        var accountID = $(this).attr("value");
-        var acctName =  $(this).attr("name");
-        // console.log(acctName);
-
-        $('#exportNote').attr('name', acctName);
-
-        $.ajax
-        ({
-            method: 'get',
-            url: 'ci-get-report',
-            data:
-                {
-                    'acctID': accountID
-                },
-            success: function (data)
-            {
-                /*console.log(data[0].endorsement_report);*/
-                $('#ciReport').val(data[0].endorsement_report);
-
-            }
-
-        });
-    });
-
-
-
-
-
-
 }
-
-$('#modal-ci-note').on('click','#exportNote', function ()
-{
-    var a = document.body.appendChild
-    (
-        document.createElement("a")
-    );
-    var textToWrite = $('#ciReport').val();
-
-    var acctName = $(this).attr('name');
-    // console.log(textToWrite);
-    a.download = acctName+".txt";
-    textToWrite = textToWrite.replace(/\n/g, "%0D%0A");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    textToWrite = textToWrite.replace('#', "*");
-    console.log(textToWrite);
-    a.href = "data:text/plain," + textToWrite+'%0D%0A%0D%0A%0D%0A***NOTE: All HASHTAG SYMBOL ARE REPLACE WITH * (ASTERISK) SYMBOL***';
-
-    setTimeout(function () {
-        a.click();
-    },1000);
-});
-
-
-
-
 
 $('#sao_table_ci_account_reports').on('click','#btnViewReport', function ()
 {
-    console.log('GG');
 
     // $('#txtAreaNote').html();
     $('#acctReport').val('');
@@ -2146,8 +1955,6 @@ $('#sao_table_ci_account_reports').on('click','#btnViewReport', function ()
         }
     });
 });
-
-
 
 $('#modal-view-report').on('click','#exportReport', function ()
 {
@@ -3551,29 +3358,6 @@ $('#tableholdcancel').on('click', '#btnUnholdEndorse', function (e)
     $('#accountName').val(accountName);
 });
 
-
-$('#tableholdcancel').on('click', '#btnReturnEndorse', function (e)
-{
-    var getching = $(this).attr('name').split(':');
-    var id = getching[0];
-    var accountName = getching[1];
-
-    $('#accountID').val(id);
-    $('#accountName').val(accountName);
-});
-
-
-$('#tableholdcancel').on('click', '#btnCancelReturnEndorse', function (e)
-{
-    var getching = $(this).attr('name').split(':');
-    var id = getching[0];
-    var accountName = getching[1];
-
-    $('#accountID').val(id);
-    $('#accountName').val(accountName);
-});
-
-
 // $('#tableholdcancel').on('click', '#btnView', function (e)
 // {
 //     var tr = $(this).closest('tr');
@@ -3891,108 +3675,9 @@ $('#btnTransferr').click(function (e)
         }
     });
 
-});
-
-
-
-$('#btnReturn').click(function ()
-{
-    var promptRemarks = prompt('Enter Return Remarks:', '');
-    var accountID = $('#accountID').val();
-    var accountName = $('#accountName').val();
-
-    if(promptRemarks.length > 0)
-    {
-        $.ajax
-        ({
-            type: 'post',
-            url: 'srao-return-account',
-            data:
-                {
-                    'accountID': accountID,
-                    'accountName': accountName,
-                    'remarks' : promptRemarks
-                },
-            success: function (data)
-            {
-                if(data.errorDispatch===600)
-                {
-                    table.ajax.reload(null, false);
-                    //tablee.ajax.reload(null, false);
-                    // tableee.ajax.reload(null, false);
-                    $('#srao-modal-return').modal('hide');
-                    alert('Endorsement is already on process, please contact your system administrator')
-                }
-                else
-                {
-                    $('#srao-modal-return').modal('hide');
-                    var timerSuccess = setInterval(function()
-                    {
-                        $('#modal-success-change-status').modal('show');
-                        table.ajax.reload(null, false);
-                        // tablee.ajax.reload(null, false);
-                        //tableee.ajax.reload(null, false);
-                        clearInterval(timerSuccess);
-
-                        var timer2 = setInterval(function () {
-                            $('#modal-success-change-status').modal('hide');
-                            clearInterval(timer2);
-                        },2000);
-                    }, 1000);
-                }
-            },
-            error: function (data) {
-                console.log('error cancel');
-            }
-        });
-    }
-    else if(promptRemarks.length == 0)
-    {
-        alert('Cancellation failed. Indicate the reason of cancellation.');
-    }
-
-
 
 
 });
-
-$('#btnReturnCancel').click(function ()
-{
-    var accountID = $('#accountID').val();
-    var accountName = $('#accountName').val();
-
-    $.ajax
-    ({
-        type: 'post',
-        url: 'srao-return-cancel-account',
-        data:
-            {
-                'accountID': accountID,
-                'accountName': accountName
-            },
-        success: function (data)
-        {
-            table.ajax.reload(null, false);
-            // tablee.ajax.reload(null, false);
-            // tableee.ajax.reload(null, false);
-            $('#srao-modal-cancelreturn').modal('hide');
-            var timerSuccess = setInterval(function()
-            {
-                $('#modal-success-change-status').modal('show');
-                table.ajax.reload(null, false);
-                //  tablee.ajax.reload(null, false);
-                //  tableee.ajax.reload(null, false);
-                clearInterval(timerSuccess);
-
-                var timer2 = setInterval(function () {
-                    $('#modal-success-change-status').modal('hide');
-                    clearInterval(timer2);
-                },2000);
-            }, 1000);
-        }
-    });
-});
-
 
 //other info
 // btnFullViewInfo
@@ -4809,6 +4494,7 @@ $('#ci_selected_fund').change(function()
 {
     ciIdUnliqHold = $(this).find(':selected').val();
     ciNameUnliqHold = $(this).find(':selected').attr('name');
+    $('#sao_fund_selected_accnt tbody tr td').remove();
 
     if(ciIdUnliqHold == '--')
     {
@@ -6086,7 +5772,7 @@ function fund_disp_init()
             // ajax: 'pending_fund_details_endorsements',
             ajax:
                 {
-                    url: "/pending_fund_details_endorsements",
+                    url: "/sao_pending_fund_details_endorsements",
                     data : function (e) {
                         e.id = data.id
                     }

@@ -231,8 +231,7 @@ function fund_request_approved_table()
                 {
                     url: "/finance_app_fund_details_endorsements",
                     data : function (e) {
-                        e.id = data.id;
-                        e.tor = data.type_of_fund_request;
+                        e.id = data.id
                     }
                 },
             columns: [
@@ -576,8 +575,7 @@ function getSuccessTable()
                 {
                     url: "/finance_app_fund_details_endorsements",
                     data : function (e) {
-                        e.id = data.id;
-                        e.tor = data.type_of_fund_request;
+                        e.id = data.id
                     }
                 },
             columns: [

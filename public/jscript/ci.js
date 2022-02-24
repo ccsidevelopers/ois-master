@@ -32,8 +32,8 @@ var bi_rep_array_edit = [];
 var permissionUpdateTime = false;
 var checkAccountUpdateTimeVisit = false;
 var checkAcctPendingFinish = false;
-var table_reimbursement_records = '';
 var tableGenIssuanceCI;
+
 
 
 $.ajaxSetup
@@ -863,7 +863,6 @@ $('#table-fund-receive-accept').on('click', '.btnViewManagementRem', function()
 {
     $('#req_rem_remarks_manage').val('');
     $('#dispatcher_req_name').val('');
-    $('.reimbursement_ci_rem').hide();
     $('#modal-req-rem-manage').modal('show');
 
     var get_rem_name = $(this).attr('name').split('||==||');
@@ -1908,11 +1907,6 @@ $('#tab1_pending').click(function ()
     // tableFundReceiveAccept.ajax.reload(null, false);
 });
 
-$('#tab4_reimburse').click(function()
-{
-    get_table_reimburse();
-});
-
 $('#tab2_receives').click(function ()
 {
 
@@ -1937,13 +1931,11 @@ $('#tab2_receives').click(function ()
 $('#tab2_done').click(function()
 {
     get_table_liq_done_fund();
-
-});
+    
+})
 
 
 $('#ci-table-finish , #ci-table').on('click', '#btnAttachFile', function (e) {
-
-
     $('#successUpdateVisit').html('');
     $('#btnAttachReport').removeAttr('disabled');
     $('#attachFile').removeAttr('disabled');
@@ -1961,7 +1953,7 @@ $('#ci-table-finish , #ci-table').on('click', '#btnAttachFile', function (e) {
     var countsuccess = 0;
     var counterror = 0;
     var item_status;
-
+    
     var tableName = $(this).closest('table').attr('id');
 
     if(tableName == 'ci-table')
@@ -1974,8 +1966,6 @@ $('#ci-table-finish , #ci-table').on('click', '#btnAttachFile', function (e) {
     }
 
     checkUpdateTimeAcct();
-
-
 
     $('#spanhere').html('<center><button id="btnviewuploadedfile" type="button" class="btn btn-info" style="margin-bottom: 5px; margin-top: 5px; margin-left: 10px; margin-right: 10px">View Uploaded File</button></center>');
     $('#btnviewuploadedfile').click(function () {
@@ -2077,7 +2067,7 @@ $('#ci-table-finish , #ci-table').on('click', '#btnAttachFile', function (e) {
                             {
 
                                 $('#acctReport').modal('hide');
-
+                                
                                 check_validation_encode_attach_visit(accountID,'need_to_refresh');
                                 if($('#tab1').parent().hasClass('active'))
                                 {
@@ -2109,7 +2099,7 @@ $('#ci-table-finish , #ci-table').on('click', '#btnAttachFile', function (e) {
         maxConnections: 1
     });
 
-    $('#trigger-upload').click(function ()
+   $('#trigger-upload').click(function ()
     {
         if(checkAcctPendingFinish == true)
         {
@@ -2133,6 +2123,8 @@ $('#ci-table-finish , #ci-table').on('click', '#btnAttachFile', function (e) {
         {
             $('#fine-uploader-manual-trigger').fineUploader('uploadStoredFiles');
         }
+        
+        //   $('#fine-uploader-manual-trigger').fineUploader('uploadStoredFiles');
     });
 
     $('#endorse_encode_account').html('<tbody>' +
@@ -2948,8 +2940,6 @@ $('#updateVisit').click(function () {
             }
         });
     }
-
-
 });
 
 $('#ci-table').on('click', '#btnOtherInfo', function (e) {
@@ -3442,7 +3432,7 @@ function table_accept_fund(table_id)
             table_fund_id = data[2];
             var declareCount = 0;
             var amountCheck;
-
+            var editCheck;
             dataLengthforFiles = data[0].length;
             var test = '';
             var checkCounterM;
@@ -3451,67 +3441,11 @@ function table_accept_fund(table_id)
             var fundRem = '';
             var beforetest = '';
             var newtest = '';
-            var getLabelPos = [];
-            var labelBool = false;
-
-
-            $('#liquidateNowFund').attr('dyolf', dataLengthforFiles);
-
-            if(data[12] != '')
-            {
-                var cur = '';
-                var internalBool = false;
-
-                for(var v = 0; v < data[12].length; v++)
-                {
-                    var label = data[12][v].label;
-                    var amt = data[12][v].amount;
-                    var desc = data[12][v].desc;
-                    var acct_arr = data[12][v].acct_arrange;
-
-                    if(labelBool == false)
-                    {
-                        if(internalBool == false)
-                        {
-                            cur = data[12][v].acct_arrange;
-                            getLabelPos[parseInt(acct_arr)] = [];
-                            getLabelPos[parseInt(acct_arr)].push([label, amt, desc]);
-                            labelBool = true;
-                        }
-                        else
-                        {
-                            cur = data[12][v].acct_arrange;
-                            getLabelPos[parseInt(acct_arr)].push([label, amt, desc]);
-                            labelBool = true;
-                        }
-
-                    }
-                    else
-                    {
-                        if(cur == acct_arr)
-                        {
-                            getLabelPos[parseInt(acct_arr)].push([label, amt, desc]);
-                        }
-                        else if(cur != acct_arr)
-                        {
-                            labelBool = false;
-                            getLabelPos[parseInt(acct_arr)] = [];
-                            getLabelPos[parseInt(acct_arr)].push([label, amt, desc]);
-                            internalBool = true;
-                        }
-                    }
-                }
-            }
-            else
-            {
-
-            }
-
-            console.log(getLabelPos);
 
             for(t = 0; t < dataLengthforFiles; t++)
             {
                 var countAcct = t + 1;
+
 
                 if(data[5] != '')
                 {
@@ -3566,18 +3500,15 @@ function table_accept_fund(table_id)
 
                 if (data[3] != "")
                 {
-                    amountCheck = '<input type="number" id = "atmInputVal-' + t + '-'+data[2]+'"  class = "amtSpentCi-' + data[2] + '" href = "' + data[0][t].id + '" value = "' + data[3][t] + '"  disabled>';
-                    // editCheck =
+                    amountCheck = '<input type="number" id = "atmInputVal-' + t + '"  class = "amtSpentCi-' + data[2] + '" href = "' + data[0][t].id + '" value = "' + data[3][t] + '" disabled>';
+                    editCheck = '<button type = "button" class = "editLiqAmount btn btn-xs btn-warning" id = "amtEditBtn-' + t + '" name = "' + t + '"><i class = "fa fa-fw fa-pencil">';
                     $('#liquidateNowFund').html('Update Liquidated Amount');
                     statusLiq = 'done';
-
-
-
                 }
                 else
                 {
-                    amountCheck = '<input type="number" id = "atmInputVal-' + t + '-'+data[2]+'"  class = "amtSpentCi-' + data[2] + '" href = "' + data[0][t].id + '" style="width : 50%" disabled>';
-                    // editCheck = '';
+                    amountCheck = '<input type="number" id = "atmInputVal-' + t + '"  class = "amtSpentCi-' + data[2] + '" href = "' + data[0][t].id + '" value = "">';
+                    editCheck = '';
                     $('#liquidateNowFund').html('Liquidate Amount');
                     $('#liquidateNowFund').attr('disabled', false);
                     statusLiq = 'pending';
@@ -3612,59 +3543,16 @@ function table_accept_fund(table_id)
                     fundRem = '<textarea class = "fundIndivRemarks-' + data[2] + ' form-control" rows = "2" href= "' + data[0][t].id + '" id = "remIndiv-'+t+'"></textarea>'
                 }
 
-                var contentLabel = '';
-
-                if(getLabelPos != '')
-                {
-                    for(var f = 0; f < getLabelPos[t].length; f++)
-                    {
-                        console.log('test');
-
-                        var rand = Math.floor(Math.random() * 1000000000);
-
-                        contentLabel += '<tr class="removeMeLabelRow-'+data[2]+'-'+t+'-'+rand+'" style="background-color: lightgrey">\n' +
-                            '                    <td colspan="1">' +
-                            '                  <input type="text" class="form-control fundReqLabels-'+t+'" style="font-size : 11px" value="'+getLabelPos[t][f][0]+'">\n' +
-                            '</td>\n' +
-                            '                    <td colspan="1"><input type="number" class="amtLabeltoLoop-'+data[2]+'-'+t+' form-control fundReqLabels-'+t+' amtLabelGeneral" style="font-size : 11px" value="'+getLabelPos[t][f][1]+'" fst="'+data[2]+'" scn="'+t+'"></td>\n' +
-                            '                    <td colspan="1">' +
-                            '<input class="form-control fundReqLabels-'+t+'" value="'+getLabelPos[t][f][2]+'"></td></tr>' +
-                            '<tr class="removeMeLabelRow-'+data[2]+'-'+t+'-'+rand+'">' +
-                            '<td colspan="3">' +
-                            '<button type = "button" class = "btnremoveLabelToFund btn btn-block btn-xs btn-danger " name="'+data[2]+'" scd="'+t+'" skrt="'+rand+'" ><i class = "fa fa-fw fa-close"></i></button>\n' +
-                            '</td>' +
-                            '</tr>' +
-                            '';
-                    }
-                }
-                else
-                {
-
-                }
-
                 getdata += '<h5 style = "padding-bottom : 10px;">Account no. ' + countAcct + '</h5><div class = "row" style = "padding-bottom : 30px;">' +
                     '<div class = "col-md-12"><table class = "table_liquidation tableendorse display table-hover table-condensed"  width="100%">' +
                     '<tr style="white-space: normal ; text-align: center">' +
                     '<th style = "font-weight: bold; background-color: lightblue; text-align: center">ID</th>' +
                     '<th style = "text-align: center">' + data[0][t].id + '</th>' +
                     '<tr>' +
-                    '<tr><th style = "font-weight: bold; background-color: lightblue; text-align: center">ACCOUNT NAME AND ADDRESS</th><th style = "text-align: center">' + data[0][t].name + ' / '+data[0][t].address+'</th></tr>' +
+                    '<tr><th style = "font-weight: bold; background-color: lightblue; text-align: center">ACCOUNT NAME/S</th><th style = "text-align: center">' + data[0][t].name + '</th></tr>' +
                     '<tr><th style = "font-weight: bold; background-color: lightblue; text-align: center">TYPE OF REQUEST</th><th style = "text-align: center">' + data[0][t].tor + '</th></tr>' +
                     '<tr><th style = "font-weight: bold; background-color: lightblue; text-align: center">AMOUNT SPENT</th>' +
-                    '<th><span>TOTAL: </span>' + amountCheck +'<button type = "button" class = "btnLookLabelUnder btn btn-xs btn-primary" name="'+data[2]+'" scd="'+t+'"><i class = "fa fa-fw fa-chevron-down"></i></button>' +
-                    '<span id ="btnhideShowToAdd-'+data[2]+'-'+t+'" hidden><button type = "button" class = "btnAddLabelToFund btn btn-xs btn-success" name="'+data[2]+'" scd="'+t+'" ><i class = "fa fa-fw fa-plus"></i></button></span></th></tr>' +
-                    '<tr id="hideShowmyLabelFund-'+data[2]+'-'+t+'" stat="closed" hidden><th colspan="2">' +
-                    '<div class="row"><div class="col-md-12">' +
-                    '<table class="" width="100%" id="tableShowmyLabel-'+data[2]+'-'+t+ '"><thead>' +
-                    '<tr>' +
-                    '<th><span>LABEL</span></th>' +
-                    '<th><span>AMOUNT</span></th>' +
-                    '<th><span>DESCRIPTION</span></th>' +
-                    '</th>' +
-                    '</tr>' +contentLabel+
-                    '</thead></table>' +
-                    '</div></div>' +
-                    '</th></tr>' +
+                    '<th style = "text-align: center ;">' + amountCheck + '<span id = "checkEditSpan-' + t + '" hidden><button type = "button" class = "checkNewAmt btn btn-xs btn-success" id = "checkEdit-' + t + '" name = "' + t + '"><i class = "glyphicon glyphicon-ok"></i></button></span>' + editCheck + '</th></tr>' +
                     '<tr><th style = "font-weight: bold; background-color: lightblue; text-align: center">UPLOAD ATTACHMENT</th>' +
                     '<th style = "text-align: center">' +
                     '<span id = "attachAppendstorage-' + t + '">'+test+'</span>' +
@@ -3676,8 +3564,8 @@ function table_accept_fund(table_id)
                     '</table></div></div>';
                 beforetest = '';
                 newtest = '';
-
             }
+
 
             var liqRemElem =
                 '  <h5>General Liquidation Remarks : <span id = "insertEditRemBtn-'+ table_fund_id +'"></span> </h5>\n' +
@@ -3732,26 +3620,26 @@ function table_accept_fund(table_id)
                 '</div>'
             );
 
-            // $('.table_liquidation').on('click', '.editLiqAmount', function()
-            // {
-            //     $(this).attr('disabled', true);
-            //     var numId = $(this).attr('name');
-            //
-            //     $('#atmInputVal-'+ numId +'').attr('disabled', false);
-            //
-            //     $('#checkEditSpan-'+ numId +'').show();
-            //
-            // });
-            //
-            // $('.table_liquidation').on('click', '.checkNewAmt', function()
-            // {
-            //     var numId = $(this).attr('name');
-            //
-            //     $('#checkEditSpan-'+ numId +'').show();
-            //     $('#atmInputVal-'+ numId +'').attr('disabled', true);
-            //     $('#amtEditBtn-'+ numId +'').attr('disabled', false);
-            //     $('#liquidateNowFund').attr('disabled', false);
-            // });
+            $('.table_liquidation').on('click', '.editLiqAmount', function()
+            {
+                $(this).attr('disabled', true);
+                var numId = $(this).attr('name');
+
+                $('#atmInputVal-'+ numId +'').attr('disabled', false);
+
+                $('#checkEditSpan-'+ numId +'').show();
+
+            });
+
+            $('.table_liquidation').on('click', '.checkNewAmt', function()
+            {
+                var numId = $(this).attr('name');
+
+                $('#checkEditSpan-'+ numId +'').hide();
+                $('#atmInputVal-'+ numId +'').attr('disabled', true);
+                $('#amtEditBtn-'+ numId +'').attr('disabled', false);
+                $('#liquidateNowFund').attr('disabled', false);
+            });
 
             $('.table_liquidation').on('click', '.attachFileCiFund', function()
             {
@@ -3845,120 +3733,10 @@ function table_accept_fund(table_id)
                 $('#remIndiv-'+($(this).attr('name'))+'').attr('disabled', true);
             });
 
-
-
-            $('.btnLookLabelUnder').click(function()
-            {
-                var first = $(this).attr('name');
-                var second = $(this).attr('scd');
-
-                if($('#hideShowmyLabelFund-'+first+'-'+second+'').attr('stat') == 'closed')
-                {
-                    $('#hideShowmyLabelFund-'+first+'-'+second+'').attr('stat', 'open');
-
-                    $(this).html('<i class = "fa fa-fw fa-chevron-up"></i>');
-
-                    $('#hideShowmyLabelFund-'+first+'-'+second+'').show();
-
-                    $('#btnhideShowToAdd-'+first+'-'+second+'').show();
-                }
-                else if($('#hideShowmyLabelFund-'+first+'-'+second+'').attr('stat') == 'open')
-                {
-                    $('#hideShowmyLabelFund-'+first+'-'+second+'').attr('stat', 'closed');
-
-                    $(this).html('<i class = "fa fa-fw fa-chevron-down"></i>');
-
-                    $('#hideShowmyLabelFund-'+first+'-'+second+'').hide();
-
-                    $('#btnhideShowToAdd-'+first+'-'+second+'').hide();
-                }
-            });
-
-            $('.btnAddLabelToFund').click(function()
-            {
-
-                var first = $(this).attr('name');
-                var second = $(this).attr('scd');
-                var rand = Math.floor(Math.random() * 1000000000);
-
-
-                $('#tableShowmyLabel-'+first+'-'+second+ '').append(' <tr class="removeMeLabelRow-'+first+'-'+second+'-'+rand+'" style="background-color: lightgrey">\n' +
-                    '                    <td colspan="1">' +
-                    '                  <input type="text" class="form-control fundReqLabels-'+second+'" style="font-size : 11px">\n' +
-                    '</td>\n' +
-                    '                    <td colspan="1"><input type="number" class="amtLabeltoLoop-'+first+'-'+second+' form-control fundReqLabels-'+second+'  amtLabelGeneral" style="font-size : 11px" value=0 fst="'+first+'" scn="'+second+'"></td>\n' +
-                    '                    <td colspan="1">' +
-                    '<span><input class="form-control fundReqLabels-'+second+'"></span></td></tr>' +
-                    '<tr class="removeMeLabelRow-'+first+'-'+second+'-'+rand+'">' +
-                    '<td colspan="3">' +
-                    '<button type = "button" class = "btnremoveLabelToFund btn btn-block btn-xs btn-danger " name="'+first+'" scd="'+second+'" skrt="'+rand+'" ><i class = "fa fa-fw fa-close"></i></button>\n' +
-                    '</td>' +
-                    '</tr>' +
-                    '');
-
-                funcKeyUp();
-                addLabelClicks();
-                // funcKeyUp(first, second);
-
-            });
-
-
-
-            funcKeyUp()
-            addLabelClicks();
-
-
-
         },
         error : function () {
             // console.log('error');
         }
-    });
-}
-
-function autoComputeLiquidation(par_1, par_2)
-{
-    var count = 0;
-
-    $('.amtLabeltoLoop-'+par_1+'-'+par_2+'').each(function()
-    {
-        console.log($(this).val())
-        if($(this).val() == '')
-        {
-            count += 0;
-        }
-        else
-        {
-            count += parseInt($(this).val());
-        }
-    });
-
-    $('#atmInputVal-'+par_2+'-'+par_1+'').val(count);
-}
-
-function funcKeyUp()
-{
-    $('.amtLabelGeneral').keyup(function()
-    {
-        var first = $(this).attr('fst');
-        var second = $(this).attr('scn');
-
-        autoComputeLiquidation(first, second);
-    });
-}
-
-function addLabelClicks()
-{
-    $('.btnremoveLabelToFund').click(function()
-    {
-        var first = $(this).attr('name');
-        var second = $(this).attr('scd');
-        var rand = $(this).attr('skrt');
-
-        console.log('testasf');
-
-        $('.removeMeLabelRow-'+first+'-'+second+'-'+rand+'').remove();
-        autoComputeLiquidation(first, second);
     });
 }
 
@@ -3977,14 +3755,6 @@ $('#liquidateNowFund').click(function()
     var limitFund = $(this).attr('title');
     var countRem = 0;
     var countTabi = 0;
-
-    var dataBrand = [];
-    var ctrBrand = 0;
-    var ctrInnerBrand = 0;
-    var brandBool = true;
-    var mainArrLabels = [];
-
-    var acctCount = btn.attr('dyolf');
 
     var liqRem = $('#liquidRem-' + fund_id_get + '').val();
 
@@ -4010,38 +3780,6 @@ $('#liquidateNowFund').click(function()
         countInside = 0;
         countRem++;
     });
-
-    for(var s = 0; s < parseInt(acctCount); s++)
-    {
-        dataBrand = [];
-        ctrInnerBrand = 0;
-        ctrBrand = 0;
-
-        $('.fundReqLabels-'+s+'').each(function()
-        {
-            if(brandBool == false)
-            {
-                dataBrand[ctrBrand][ctrInnerBrand] = $(this).val();
-                ctrInnerBrand++;
-
-                if(ctrInnerBrand == 3)
-                {
-                    ctrInnerBrand = 0;
-                    ctrBrand++;
-                    brandBool = true;
-                }
-            }
-            else
-            {
-                dataBrand[ctrBrand] = [];
-                dataBrand[ctrBrand][ctrInnerBrand] = $(this).val();
-                ctrInnerBrand++;
-                brandBool = false;
-            }
-        });
-
-        mainArrLabels.push(dataBrand);
-    }
 
     if(Number.isNaN(declareData))
     {
@@ -4099,20 +3837,13 @@ $('#liquidateNowFund').click(function()
                             formData.append('image_' + u + '-' + i , image);
                         });
                     });
+
+
                 }
-
-
-
-
-
-
-
-
                 var json_declareArray = JSON.stringify(declareArray);
                 var json_imgContainerId = JSON.stringify(imgContainerId);
                 var json_arrayCount = JSON.stringify(imgCountArray);
                 var json_remCount = JSON.stringify(remarksFundArray);
-                var json_labels = JSON.stringify(mainArrLabels);
 
                 formData.append('declareArray' , json_declareArray);
                 formData.append('liqamount', declareData);
@@ -4123,8 +3854,6 @@ $('#liquidateNowFund').click(function()
                 formData.append('liqRem', liqRem);
                 formData.append('countArrayofFiles', json_arrayCount);
                 formData.append('fundRemarksIndiv', json_remCount);
-                formData.append('labels', json_labels);
-
 
                 // // console.log(imageContainerFund);
                 // // console.log(imgCountArray);
@@ -4197,7 +3926,6 @@ $('#liquidateNowFund').click(function()
         }
     }
 
-    console.log('test');
 });
 
 
@@ -4985,45 +4713,13 @@ function get_table_liq_done_fund()
                     {data: 'stats', name: 'stats', orderable: false, searchable: false, autoWidth: false},
                     {
                         data: function action(data) {
-                            var reimburse = '';
-
-                            if(data.reimburse_status === '')
-                            {
-                                reimburse = '<a name="' + data.fund_id + '" class="btn btn-xs btn-block btn-primary reim_req" data-toggle="modal" data-target="#modal_reimburse_request"><i class="glyphicon glyphicon-credit-card"></i> Request Reimbursement</a>';
-                            }
-                            else if(data.reimburse_status === null)
-                            {
-                                reimburse = '<a name="' + data.fund_id + '" class="btn btn-xs btn-block btn-primary reim_req" data-toggle="modal" data-target="#modal_reimburse_request"><i class="glyphicon glyphicon-credit-card"></i> Request Reimbursement</a>';
-                            }
-                            else if(data.reimburse_status == 'PENDING')
-                            {
-                                reimburse = '<a name="' + data.fund_id + '" class="btn btn-xs btn-block btn-warning" disabled><i class="glyphicon glyphicon-credit-card"></i> Reimbursement <br>Pending for Approval</a>';
-                            }
-                            // else if(data.reimburse_status == 'REQUESTED')
-                            // {
-                            //     reimburse = '<a name="' + data.fund_id + '" class="btn btn-xs btn-block btn-warning disabled"><i class="glyphicon glyphicon-credit-card"></i> Pending for Approval</a>';
-                            // }
-                            else if(data.reimburse_status == 'APPROVED')
-                            {
-                                reimburse = '<a name="' + data.fund_id + '" class="btn btn-xs btn-block btn-warning" disabled><i class="glyphicon glyphicon-credit-card"></i> Reimbursement <br>Processing on Finance</a>';
-                            }
-                            else if(data.reimburse_status == 'COMPLETED')
-                            {
-                                reimburse = '<a name="' + data.fund_id + '" class="btn btn-xs btn-block btn-success" disabled><i class="glyphicon glyphicon-credit-card"></i> Reimbursement Uploaded</a>';
-                            }
-                            else if(data.reimburse_status == 'DISAPPROVED')
-                            {
-                                reimburse = '<a name="' + data.fund_id + '" class="btn btn-xs btn-block btn-danger" disabled><i class="glyphicon glyphicon-credit-card"></i> Reimbursement Disapproved</a>';
-                            }
-
-                            return '<a name="' + data.id + '" class="btn btn-xs btn-block btn-info" id="btn_trigger_liquidate_done" data-toggle="modal" data-target="#modal_ci_endorsements_fund"><i class="fa fa-list"></i> Liquidate</a>' +
-                                '' + reimburse;
+                            return '<a name="' + data.id + '" class="btn btn-xs btn-block btn-info" id="btn_trigger_liquidate_done" data-toggle="modal" data-target="#modal_ci_endorsements_fund"><i class="fa fa-list"></i> Liquidate</a>';
                         },
                         "orderable": false,
                         "searchable": false,
                         "name": 'ci_fund_remittances.remittance_id',
                         "autoWidth": false
-                    }
+                    },
 
                 ],
             "order": [[0, 'desc']],
@@ -5166,21 +4862,13 @@ function getBiReports()
                 [
                     {data: 'id', name: 'bi_ci_report.id'},
                     {data: 'client_name', name: 'bi_ci_report.client_name'},
-                    {data: 'dpo_id', name: 'users.id'},
                     {data: 'subj_name', name: 'bi_ci_report.subj_name'},
-                    {data: 'ci_note', name: 'bi_ci_report.ci_note'},
-                    {data: 'date_time_due', name: 'bi_ci_report.date_time_due'},
                     {data: 'created_at', name: 'bi_ci_report.created_at'},
                     {
                         data: function action (data)
                         {
-                            if($('#update_bi_note').val() == ''){
-                                return '<button class="btn btn-sm btn-success btn-block edit_bi_note" href="'+data.id+'"><i class="glyphicon glyphicon-pencil"></i> Update B.I Report Note</button>';
-
-                            }
-                            else{
-                                return '<button class="btn btn-sm btn-success btn-block edit_bi_note" href="'+data.id+'"><i class="glyphicon glyphicon-pencil"></i> Send B.I Report Note</button>';
-                            }
+                            return '<button class="btn btn-sm btn-success btn-block edit_bi_note" href="'+data.id+'"><i class="glyphicon glyphicon-pencil"></i> Edit B.I Report Note</button>';
+                                // '<button class="btn btn-sm btn-info btn-block view_bi_rep_logs" href="'+data.id+'"><i class="glyphicon glyphicon-film"></i>Logs</button>';
                         },
                         'name' : 'bi_ci_report.id',
                         searchable : false,
@@ -5558,61 +5246,6 @@ function get_uploader_bi_rep_edit(rep_id)
     });
 }
 
-$('#table-fund-liq-done').on('click', '.reim_req', function()
-{
-    $('#reim_info_btn').attr('what', $(this).attr('name'));
-});
-
-$('#reim_info_btn').click(function()
-{
-    var btn = $(this);
-    var checkerrrr = false;
-    cdata = {};
-    cdata["fund_id"] = $(this).attr('what');
-
-    $('.reim_info').each(function()
-    {
-        if($(this).val() != '')
-        {
-            checkerrrr = true;
-        }
-        else
-        {
-            checkerrrr = false;
-
-            return false;
-        }
-
-        cdata[$(this).attr('what')] = $(this).val();
-    });
-
-
-    if(checkerrrr)
-    {
-        btn.attr('disabled', true);
-        $.ajax({
-            type: 'get',
-            url: 'ci_request_reimbursement_send',
-            data: cdata,
-            success: function(data)
-            {
-                if(data == 'ok')
-                {
-                    alert('Reimbursement Request Sent');
-                    btn.attr('disabled', false);
-                    tableFundDoneLiq.draw();
-                    $('#modal_reimburse_request').modal('hide');
-                }
-            },
-            error: function()
-            {
-                btn.atrr('disabled', false);
-                alert('Error occured please seek assistance of Web Developer. Thank you');
-            }
-        });
-    }
-});
-
 function checkUpdateTimeAcct()
 {
     $.ajax
@@ -5662,145 +5295,11 @@ function checkUpdateTimeAcct()
     })
 }
 
-function get_table_reimburse()
-{
-    table_reimbursement_records = $('#table-fund-reimburse').DataTable(
-        {
-            "responsive": true,
-            "processing": true,
-            "serverSide": true,
-            "ajax": "ci_fund_done_reimbursement",
-            "columns":
-                [
-                    {
-                        data: function type(data)
-                        {
-                            var remittance_check = data.remittance_id;
-                            var atm_check = data.ci_atm_fund_id;
-                            var shell_check = data.ci_shell_card_id;
-
-                            var type = '';
-
-                            if(remittance_check == 0 && atm_check == 0)
-                            {
-                                type = 'Assigned by SAO';
-                            }
-                            else if(remittance_check != 0)
-                            {
-                                type = 'Remittance';
-
-                                if(shell_check !=0)
-                                {
-                                    type = 'Remittance with Shell Card';
-                                }
-                            }
-                            else if(atm_check != 0)
-                            {
-                                type = 'ATM';
-
-                                if(shell_check !=0)
-                                {
-                                    type = 'ATM with Shell Card';
-                                }
-                            }
-                            else if(shell_check != 0 && remittance_check == 0 && atm_check == 0)
-                            {
-                                type = 'Shell Card Only';
-                            }
-
-                            return type;
-                        },
-                        "orderable": false,
-                        "searchable": true,
-                        "name": 'ci_fund_remittances.remittance_id',
-                        "autoWidth": false
-                    },
-                    {data: 'delivered_date', name: 'fund_requests.delivered_date'},
-                    {
-                        data: function amount(data)
-                        {
-                            return atob(data.fund_amount);
-                        },
-                        name: 'fund_requests.fund_amount',
-                        "orderable": false,
-                        "searchable": true
-                    },
-                    {data: 'atm_account_number', name: 'ci_atms.account_number'},
-                    {data: 'remittance_info', name: 'remittance.remittance_info'},
-                    {data: 'stats', name: 'fund_requests.finance_remarks'},
-                    {
-                        data: function action(data)
-                        {
-                            return '<button class="btn btn-xs btn-block btn-success btnReimburseApproverRem" id="'+data.fund_id+'">VIEW APPROVER REMARKS</button>';
-                        },
-                        name: 'fund_requests.id',
-                        "orderable": false,
-                        "searchable": true
-                    }
-
-
-                ],
-            "order": [[1, 'desc']],
-            "pageLength": 10,
-            "bSortClasses": false,
-            "autoWidth": false
-        });
-
-    $('#table-fund-reimburse_filter input').unbind();
-    $('#table-fund-reimburse_filter input').bind('keyup change',function (e) {
-
-        if($(this).is(':focus'))
-        {
-            if (e.keyCode == 13) {
-                table_reimbursement_records.search($(this).val()).draw();
-            }
-            else if (e.keyCode === 8)
-            {
-                if ($(this).val() == '') {
-                    table_reimbursement_records.search($(this).val()).draw();
-                }
-            }
-        }
-    });
-}
-
-$('#btnRefreshReimbursement').click(function()
-{
-    table_reimbursement_records.draw();
-});
-
-$('#table-fund-reimburse').on('click', '.btnReimburseApproverRem', function()
-{
-    $.ajax({
-        type: 'get',
-        url: 'ci_get_approver_name_info_reimburse',
-        data : {
-            'id' : $(this).attr('id')
-        },
-        success: function(data)
-        {
-            $('#modal-req-rem-manage').modal('show');
-
-            if(data.length > 0)
-            {
-                $('.reimbursement_ci_rem').show();
-                $('#manage_req_name').html(data[0].manage_name);
-                $('#req_rem_remarks_manage').val(data[0].remarks);
-                $('#reimbursement_ci_rem').text(data[0].ci_reimburse_remarks);
-            }
-            else
-            {
-                $('.reimbursement_ci_rem').show();
-                $('#manage_req_name').html('');
-                $('#req_rem_remarks_manage').val('');
-                $('#reimbursement_ci_rem').html(data[0].ci_reimburse_remarks);
-            }
-        }
-    })
-});
 
 function funcIssuanceGenMonitCI()
 {
+    console.log('test floyd');
+
     tableGenIssuanceCI = $('#gen_sent_issuance_mail_ci').DataTable
     ({
         "responsive": true,
@@ -5893,7 +5392,9 @@ function funcIssuanceGenMonitCI()
             }
         }
     });
-  $('#gen_sent_issuance_mail_ci').on('click', '.btnViewInfoIssuanceCiGen', function ()
+
+
+    $('#gen_sent_issuance_mail_ci').on('click', '.btnViewInfoIssuanceCiGen', function ()
     {
         var id = $(this).attr('name');
 
@@ -5959,384 +5460,3 @@ function funcIssuanceGenMonitCI()
         tableGenIssuanceCI.ajax.reload(null, false);
     });
 }
-
-
-$('.Acno_ref').click(function()
-{
-    $.ajax({
-        url: 'fetch-admin-sendAcno',
-        type: "get",
-        data: {
-            'id': $(this).attr('href')
-        },
-        success: function (data) {
-            var i;
-
-            $("#tbl_acnoo li").each(function ()
-            {
-                if($(this).attr('id') == 'acno_header'){
-
-                }
-                else
-                {
-                    $(this).remove();
-                }
-            });
-
-            for (i=0; i < data.length; i++)
-            {
-                if(data[i].status != 'Acknowledge')
-                {
-                    $('#tbl_acnoo').append(
-                        $('<li class="Acknowledge_Viewer" name="'+btoa(data[i].id)+'" style="cursor: pointer; background-color: #ffc107;"></li>').append(
-                            $('<a  style="text-align: center;font-size: 12px "></a>').html('Acknowledge Receipt Dated:' + ' ' + data[i].created_at))
-
-                    );
-                }
-                else {
-                    $('#tbl_acnoo').append(
-                        $('<li class="Acknowledge_Viewer" name="'+btoa(data[i].id)+'" style="cursor: pointer; background-color: #28a745;"></li>').append(
-                            $('<a  style="text-align: center; font-size: 12px"></a>').html('Acknowledge Receipt Dated:' + ' ' + data[i].created_at))
-                    );
-                }
-            }
-        }
-    });
-});
-
-
-$('#tbl_acnoo').on('click', '.Acknowledge_Viewer', function ()
-    {
-        var id = atob($(this).attr('name'));
-        $('.ar_InputsView').val('');
-
-
-        $('#acknowledge-lister tr').each(function ()
-        {
-            if ($(this).attr('name') == 0) {
-
-            }
-            else {
-                $(this).remove();
-            }
-        });
-
-        $.ajax({
-            url: 'fetch-admin-viewAcknow',
-            type: 'get',
-            data:{
-                'id': id
-            },
-            success: function (data) {
-                var attachment_boolHolder = (data[0][0].attachment_bool);
-                var attachment_bool = attachment_boolHolder.split("||");
-                attachment_bool.pop();
-                $('#Ar_btnTable').show();
-
-                if(data[0][0].status != 'Acknowledge')
-                    {
-                        $('#btnArToAcknowledge').prop('disabled', false);
-                        $('#btnArToAcknowledge').attr('href', btoa(data[0][0].id));
-
-                    }
-                    else
-                    {
-                        $('#btnArToAcknowledge').prop('disabled', true);
-                    }
-
-                $('#ar_name_view').val(data[0][0].Employee_name);
-                $('#ar_loc_dept_view').val(data[0][0].office_loc_dep_pos);
-                $('#ar_cont_email_view').val(data[0][0].cnum_email);
-                $('#ar_lbc_branch_view').val(data[0][0].LBC_Branch);
-
-
-                console.log(data);
-                for(var i=0; i < data[1].data.length; i++){
-                    $('#acknowledge-lister').append(
-                        $('<tr></tr>').append(
-                            $('<td></td>').html('<input type="number" class="form-control ar_InputsView" value="'+data[1].data[i].item_quantity+'" disabled>'),
-                            $('<td></td>').append($('<textarea class="form-control ar_inputsView" disabled></textarea>').val(data[1].data[i].brand_desc)),
-                            $('<td></td>').html('<input type="text" class="form-control ar_inputsView" value="'+data[1].data[i].warranty_period+'" disabled>')
-                        )
-                    )
-                }
-                for (var j=0; j < attachment_bool.length; j++){
-                    if(attachment_bool[j] == 'true'){
-
-                        $('.Check_arView[name="'+j+'"]').prop('checked', true);
-                    }
-                }
-            }
-        })
-    });
-
-$('#btnArToAcknowledge').on('click', function ()
-    {
-        $('#btnArToAcknowledge').prop('disabled', true);
-        $.ajax({
-            url: '/acknowledge-form-status',
-            type: 'get',
-            data: {
-                'id': atob($(this).attr('href'))
-            },
-            success: function (data) {
-                $('#btnArToAcknowledge').prop('disabled', true);
-                $('.Acno_ref').click();
-                $('#overlay_add_ar_receipt').hide();
-                tableArReceipts.ajax.reload(null, false);
-                alert('AR Successfully Acknowledge');
-                console.log(data);
-            }
-        })
-    });
-
-$('.btnviews_ups').on('click',  function ()
-{
-    if($(this).text() == "Hide")
-    {
-        $(this).text("View Uploaded File");
-        $('#bi-dl-table').hide();
-        $('#bi-dl-table').html("");
-    }
-    else if ($(this).text() == 'View Uploaded File')
-    {
-        $(this).text("Hide");
-        $('#bi-dl-table').show();
-
-        $.ajax({
-            url: 'ci-dl-viewitems',
-            type: 'get',
-            data: {
-                'id' : atob($('#update_bi_note_btn').attr('href'))
-            },
-            success: function(data){
-                var fileNameeee = '';
-
-                for(var i=0; i < data[0].length; i++)
-                {
-                    fileNameeee = data[0][i];
-
-                    $('#bi-dl-table').append(
-                        $('<tr></tr>').append(
-                            $('<td></td>').html('<img src="get-cc-bi-report-uploaded?idqwe='+data[2]+'&idasd='+data[3]+'&fileasd='+btoa(fileNameeee.slice(1))+'" style="width: 50px; height: 50px">'),
-                            $('<td> </td>').html(data[0][i]),
-                            $('<td></td>').html('' +
-                                '<button class=" btn btn-danger btn-block ci_dl_delete" idqwe="'+data[2]+'" idasd="'+data[3]+'" fileasd="'+btoa(fileNameeee.slice(1))+'">Delete</button>'
-                                )
-                        )
-                    )
-                }
-            }
-        })
-    }
-});
-
-
-$('#bi-dl-table').on('click','.ci_dl_delete', function ()
-{
-
-    if(confirm('Are you sure you want to delete the file?'))
-    {
-        window.open('ci_dl_delete?idqwe=' + $(this).attr('idqwe') + '&idasd=' + $(this).attr('idasd') + '&fileasd=' + $(this).attr('fileasd'));
-        $(this).closest('tr').remove();
-    }
-});
-
-$('#select_encode_tor').change(function()
-{
-    if($(this).find(':selected').val() != '')
-    {
-        $.ajax({
-            type: 'get',
-            url: 'ci_get_new_encoding_form',
-            data: {
-                'tor' : $(this).find(':selected').val()
-            },
-            beforeSend: function()
-            {
-                $('#overlay_load').show();
-            },
-            success: function(data)
-            {
-                console.log(data);
-
-                // REMOVING THE LOADED ROWS
-                $('#endorse_encode_accountv2 tbody tr').each(function()
-                {
-                    $(this).remove();
-                });
-
-                $('.new_encoding_tempv2').show();
-
-                var inputs_labels = '';
-                var inputs_holder = '';
-                var text_type = '';
-                // DEFAULT TABLE HEADER
-                var TableHeader = '<tr style="text-align: center">' +
-                    '<td style="background-color: black; color: white; font-weight: bold">LABEL</td>' +
-                    '<td style="background-color: black; color: white; font-weight: bold">INPUT</td>' +
-                    '</tr>';
-
-                if(data["label_holder"].length > 0)
-                {
-                    for(var i=0; i < data["label_holder"].length; i++)
-                    {
-                        inputs_holder = '';
-                        if(data["inputs_group"][data["label_holder"][i]].length > 0)
-                        {
-                            for(var j=0; j < data["inputs_group"][data["label_holder"][i]].length; j++)
-                            {
-                                //DETECT IF DROP DOWN
-                                var options = '';
-                                if(data["inputs_group"][data["label_holder"][i]][j][2].length > 1)
-                                {
-                                    //POPULATE SELECT OPTIONS
-                                    options = '<option value="">-</option>';
-                                    for(var k=0; k < data["inputs_group"][data["label_holder"][i]][j][2].length; k++)
-                                    {
-                                        if(data["inputs_group"][data["label_holder"][i]][j][2][k] !== null)
-                                        {
-                                            options += '<option value="'+data["inputs_group"][data["label_holder"][i]][j][2][k].toUpperCase()+'">'+data["inputs_group"][data["label_holder"][i]][j][2][k].toUpperCase()+'</option>';
-                                        }
-                                    }
-                                    inputs_holder += '<tr hidden style="background-color: lightblue;" class="hide_'+i+'">' +
-                                        '<td>'+data["inputs_group"][data["label_holder"][i]][j][0]+'</td>' +
-                                        '<td><select class="form-control data_to_save" id="'+data["inputs_group"][data["label_holder"][i]][j][1]+'" name="'+data["inputs_group"][data["label_holder"][i]][j][0]+'">'+options+'</select></td>' +
-                                        '</tr>';
-                                }
-                                else
-                                {
-                                    //DETECTING TEXT FIELD DATA TYPE
-                                    if(data["inputs_group"][data["label_holder"][i]][j][0].split('DATE').length == 2 || data["inputs_group"][data["label_holder"][i]][j][0].split('BIRTHDAY').length == 2)
-                                    {
-                                        text_type = 'date';
-                                    }
-                                    else if(data["inputs_group"][data["label_holder"][i]][j][0].split('TIME').length == 2)
-                                    {
-                                        text_type = 'time';
-                                    }
-                                    else if(data["inputs_group"][data["label_holder"][i]][j][0].split('REMARK').length == 2)
-                                    {
-                                        text_type = 'textarea';
-                                    }
-                                    else
-                                    {
-                                        text_type = 'text';
-                                    }
-
-                                    if(text_type != 'textarea')
-                                    {
-                                        inputs_holder += '<tr hidden style="background-color: lightblue;" class="hide_'+i+'">' +
-                                            '<td>'+data["inputs_group"][data["label_holder"][i]][j][0]+'</td>' +
-                                            '<td><input type="'+text_type+'" class="form-control data_to_save" id="'+data["inputs_group"][data["label_holder"][i]][j][1]+'" name="'+data["inputs_group"][data["label_holder"][i]][j][0]+'"></td>' +
-                                            '</tr>';
-                                    }
-                                    else
-                                    {
-                                        inputs_holder += '<tr hidden style="background-color: lightblue;" class="hide_'+i+'">' +
-                                            '<td>'+data["inputs_group"][data["label_holder"][i]][j][0]+'</td>' +
-                                            '<td><textarea class="form-control data_to_save" id="'+data["inputs_group"][data["label_holder"][i]][j][1]+'" name="'+data["inputs_group"][data["label_holder"][i]][j][0]+'"></textarea></td>' +
-                                            '</tr>';
-                                    }
-                                }
-
-
-
-                            }
-                            //POPULATE TABLE ROWS
-                            inputs_labels += '<tr style="background-color: pink;">' +
-                                '<td colspan="2"><center>'+data["label_holder"][i]+'<button type="button" val=".hide_'+i+'" class="btn_en_hide btn btn-sm pull-right"><i class="fa fa-plus"></i></button></center></td>' +
-                                '</tr>' + inputs_holder;
-                        }
-                        else
-                        {
-                            //THIS IS ONLY A HEADER WITHOUT HIDE BUTTON AND GROUPED INPUTS
-                            inputs_labels += '<tr style="background-color: pink;">' +
-                                '<td colspan="2"><center>'+data["label_holder"][i]+'</center></td>' +
-                                '</tr>' + inputs_holder;
-                        }
-                    }
-                }
-
-                //POPULATE THE GATHERED ROWS IN THE LOOP
-                $('#endorse_encode_accountv2').append(TableHeader + inputs_labels);
-            },
-            complete: function()
-            {
-                $('#overlay_load').hide();
-                $('#endorse_encode_accountv2').unbind();
-                $('#endorse_encode_accountv2').on('click', '.btn_en_hide', function()
-                {
-                    $($(this).attr('val')).toggle('fast');
-
-                    if($(this).children(':first-child').attr('class') != 'fa fa-plus')
-                    {
-                        $(this).children(':first-child').attr('class', 'fa fa-minus')
-                    }
-                    else
-                    {
-                        $(this).children(':first-child').attr('class', 'fa fa-plus')
-                    }
-                    // console.log($(this).children(':first-child').attr('class'));
-                });
-
-                $('.data_to_save').unbind();
-                $('.data_to_save').change(function()
-                {
-                    var savee_dataa_temp = '{ "data" : [';
-
-                    $('.data_to_save').each(function()
-                    {
-                        savee_dataa_temp += '{ "label" : "' + $(this).attr('name') + '" , "value" : "' + $(this).val() + '", "point" : "'+$(this).attr('id')+'"},'
-                    });
-
-                    savee_dataa_temp = savee_dataa_temp.slice(0, -1);
-                    savee_dataa_temp += ']}';
-                });
-            },
-            error: function()
-            {
-                $('#overlay_load').hide();
-                alert('Error occured!');
-            }
-        })
-    }
-    else
-    {
-        $('#endorse_encode_accountv2 tbody tr').each(function()
-        {
-            $(this).remove();
-        });
-
-        $('.new_encoding_tempv2').hide();
-    }
-});
-
-$('.btn_encode_savev2').click(function()
-{
-    var saveType = $(this).attr('name');
-    var savee_dataa = '{ "data" : [';
-
-    $('.data_to_save').each(function()
-    {
-        savee_dataa += '{ "label" : "' + $(this).attr('name') + '" , "value" : "' + $(this).val() + '", "point" : "'+$(this).attr('id')+'"},'
-    });
-
-    savee_dataa = savee_dataa.slice(0, -1);
-    savee_dataa += ']}';
-
-    console.log([JSON.parse(jsonEscape(savee_dataa)), savee_dataa]);
-
-    $.ajax({
-        type: 'post',
-        url: 'ci_save_encoding_new_template',
-        data: {
-            'id' : acctID,
-            'dataa' : jsonEscape(savee_dataa)
-        },
-        success: function(data)
-        {
-            console.log(data);
-        }
-    });
-});

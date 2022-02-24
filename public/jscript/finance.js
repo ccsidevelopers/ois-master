@@ -87,10 +87,6 @@ var cc_billing_rep = false;
 var cc_bank_billing_rep = false;
 var cc_billing_report_table = '';
 var cc_bank_billing_report_table = '';
-var cc_billing_table = '';
-var tab_report_cc_table = false;
-var cc_bank_billing_table =''
-var tab_report_cc_bank_table = false;
 
 
 $.ajaxSetup
@@ -3257,9 +3253,9 @@ function billing_report_table()
                 // {data: 'rate', name: 'rate'},
                 {
                     data: function asd(data) {
-
-
-                        if (data.rate === "" || data.rate === "No Rate at this Address" || data.rate === null)
+                        
+                        
+                        if (data.rate === "" || data.rate === "No Rate at this Address")
                         {
                             return '<p style="color: red">No rate at this address.</p>';
                         }
@@ -3271,8 +3267,8 @@ function billing_report_table()
                             {
                                 if(data.endorsement_status_external == 'OVERDUE')
                                 {
-
-                                    n = n - 100;
+                                
+                                     n = n - 100;
 
                                     convertedRate = n.toLocaleString
                                     (
@@ -3280,7 +3276,7 @@ function billing_report_table()
                                         // or use a string like 'en-US' to override it.
                                         {minimumFractionDigits: 2}
                                     );
-
+                                    
                                     return convertedRate + ' Php';
                                 }
                                 else if(data.endorsement_status_external == 'TAT'){
@@ -3296,7 +3292,7 @@ function billing_report_table()
                                 }
                                 else
                                 {
-
+                                    
                                     convertedRate = n.toLocaleString
                                     (
                                         undefined, // leave undefined to use the browser's locale,
@@ -3321,7 +3317,7 @@ function billing_report_table()
                             {
                                 if(data.endorsement_status_external == 'OVERDUE')
                                 {
-
+                                   
 
                                     n = n - 100;
 
@@ -3335,7 +3331,7 @@ function billing_report_table()
                                 }
                                 else if(data.endorsement_status_external == 'TAT')
                                 {
-
+                                    
 
                                     convertedRate = n.toLocaleString
                                     (
@@ -3348,7 +3344,7 @@ function billing_report_table()
                                 }
                                 else
                                 {
-
+                                    
                                     convertedRate = n.toLocaleString
                                     (
                                         undefined, // leave undefined to use the browser's locale,
@@ -3378,7 +3374,7 @@ function billing_report_table()
                             {
                                 if(data.endorsement_status_external == 'OVERDUE')
                                 {
-
+                                 
 
                                     n = n - (n * 0.10);
 
@@ -3392,7 +3388,7 @@ function billing_report_table()
                                 }
                                 else if(data.endorsement_status_external == 'TAT'){
 
-
+                                 
 
                                     convertedRate = n.toLocaleString
                                     (
@@ -3405,7 +3401,7 @@ function billing_report_table()
                                 }
                                 else
                                 {
-
+                                 
                                     convertedRate = n.toLocaleString
                                     (
                                         undefined, // leave undefined to use the browser's locale,
@@ -3435,7 +3431,7 @@ function billing_report_table()
                             {
                                 if(data.endorsement_status_external == 'OVERDUE')
                                 {
-
+                                
                                     n = n - 100;
 
                                     convertedRate = n.toLocaleString
@@ -3448,7 +3444,7 @@ function billing_report_table()
                                 }
                                 else if(data.endorsement_status_external == 'TAT'){
 
-
+                                 
 
                                     convertedRate = n.toLocaleString
                                     (
@@ -3461,7 +3457,7 @@ function billing_report_table()
                                 }
                                 else
                                 {
-
+                                   
                                     convertedRate = n.toLocaleString
                                     (
                                         undefined, // leave undefined to use the browser's locale,
@@ -3479,7 +3475,7 @@ function billing_report_table()
 
                             else
                             {
-
+                                
                                 convertedRate = n.toLocaleString
                                 (
                                     undefined, // leave undefined to use the browser's locale,
@@ -3489,21 +3485,13 @@ function billing_report_table()
                                 return convertedRate + ' Php';
                             }
                         }
-
+                        
                     },
                     "name": 'endorsements.rate'
                 },
                 {data: 're_ci', name: 're_ci'},
                 {data: 'date_forwarded_to_client', name: 'endorsements.date_forwarded_to_client'},
                 {data: 'time_forwarded_to_client', name: 'endorsements.time_forwarded_to_client'},
-                // {data: 'ao_remarks_sent', name: 'endorsements.ao_remarks_sent'},
-                {
-                    data: function ao_sent(data)
-                    {
-                        return '<span id="account_multi_remarks-'+data.id+'"><b>'+data.ao_remarks_sent+'</b></span>';
-                    },
-                    name: 'ao_remarks_sent'
-                },
                 {data: 'bill', name: 'endorsements.bill'},
                 {data: 'appliedrule', name: 'endorsements.appliedrule'}
             ],
@@ -3758,7 +3746,6 @@ function billing_report_table()
                             var get_cobs_id = '';
                             var get_cobs_name = '';
                             var get_cobs_type = '';
-                            var get_remarks = '';
                             nameVal = '';
                             checkName = false;
                             checkuliName = false;
@@ -3784,7 +3771,6 @@ function billing_report_table()
                                     get_cobs_id += '/'+spliteed_cob[1];
                                     get_cobs_name += '/'+spliteed_cob[0];
                                     get_cobs_type += '/'+spliteed_cob[2];
-                                    get_remarks += '/ <b>'+spliteed_cob[3]+'</b>';
 
                                     if(i >= 1)
                                     {
@@ -3819,10 +3805,6 @@ function billing_report_table()
                                 {
                                     $('#id_same_address-'+get_main_id+'').append(get_cobs_id);
                                     $('#account_name_same_address-'+get_main_id+'').html(nameVal);
-                                    if(get_remarks.split("/").join().replace(/,/g, "") != '')
-                                    {
-                                        $('#account_multi_remarks-'+get_main_id+'').append(get_remarks);
-                                    }
                                 }
                                 else
                                 {
@@ -4396,38 +4378,6 @@ $('.fa_billing_class').click(function () {
             }
         }
     }
-    else if (gethref == '#tab_report_cc_table')
-    {
-        if ($('' + gethref + '').hasClass('active')) {
-            console.log('do nothing');
-            activeBilling = 'tab_report_cc_table';
-        }
-        else if (tab_report_cc_table) {
-            console.log('already loaded');
-            activeBilling = 'tab_report_cc_table';
-        }
-        else if (tab_report_cc_table == false) {
-            tab_report_cc_table = true;
-            activeBilling = 'tab_report_cc_table';
-            cc_billing_table_func();
-        }
-    }
-    else if (gethref == '#tab_report_cc_table_bank')
-    {
-        if ($('' + gethref + '').hasClass('active')) {
-            console.log('do nothing');
-            activeBilling = 'tab_report_cc_table_bank';
-        }
-        else if (tab_report_cc_bank_table) {
-            console.log('already loaded');
-            activeBilling = 'tab_report_cc_table_bank';
-        }
-        else if (tab_report_cc_bank_table == false) {
-            tab_report_cc_bank_table = true;
-            activeBilling = 'tab_report_cc_bank_table';
-            cc_bank_billing_table_func();
-        }
-    }
 });
 
 $('#table_fund_req_approved_finance').on('click', '.btn_done_approved', function()
@@ -4591,12 +4541,13 @@ $('#table-finance-expenses-report').on('click', '.btn_view_ci_liq', function()
             for (u = 0; u < data[3].length; u++)
             {
                 var pathToLoop = data[3][u].split('|');
-                var extensionCheck = '';
+
                 for(m = 0; m < (pathToLoop.length -1); m++)
                 {
                     extensionCheck = pathToLoop[m].split('.');
                     var extHolder = extensionCheck.pop();
                     var pathtoLook = btoa(pathToLoop[m]);
+                    console.log(extHolder);
                     if(extHolder == 'jpg' || extHolder == 'jpeg' || extHolder == 'png')
                     {
                         imdDiv +=
@@ -4615,8 +4566,6 @@ $('#table-finance-expenses-report').on('click', '.btn_view_ci_liq', function()
                             '                                                    </a>' +
                             '                                               </div>\n';
                     }
-
-
                 }
 
                 indivRemarks = '<div class = "row" style = "padding-bottom : 20px;">' +
@@ -5429,7 +5378,6 @@ $(document).on('click', '.viewable', function()
 });
 
 $('#datepickermin').change( function() {
-
     var min = $.datepicker.formatDate('yy-mm-dd', $('#datepickermin').datepicker('getDate'));
     $('#min').val(min);
 
@@ -5453,7 +5401,6 @@ $('#datepickermax').change( function() {
     $('#min').val(min);
 
     var max = $.datepicker.formatDate('yy-mm-dd', $('#datepickermax').datepicker('getDate'));
-
     if(max === '')
     {
         $('#max').val(yearmonth+date);
@@ -6601,7 +6548,6 @@ $('#finance_eq_process_done').on('click', '.btnViewRemDone', function()
     $('#view_admin_approve_requi_done_remarks').val($(this).attr('rem'));
 });
 
-
 function cc_billing_rep_table()
 {
     $('#cc_billing_report_table thead tr th').each(function()
@@ -7001,18 +6947,10 @@ $('#cc_billing_report_table').on('click', '.cc_add_accnt_invo', function()
 $('#cc_invoice_list_table').on('click', '.cc_remove_accnt_invo', function()
 {
     var what_id = $(this).attr('position');
-    var legend = $(this).attr('forremove');
 
     $('#cc_invoice_list_table tbody tr').each(function()
     {
-        if($(this).attr('position') == 'N/A')
-        {
-            if($(this).attr('forremove') == legend)
-            {
-                $(this).remove();
-            }
-        }
-        else if($(this).attr('position') == what_id)
+        if($(this).attr('position') == what_id)
         {
             $(this).remove();
             $('#cc_billing_report_table tbody tr td .cc_add_accnt_invo').each(function()
@@ -7393,314 +7331,3 @@ $('#addAccntManuallyBank').click(function()
     $('#manualAccntNameBank').val('');
     $('#manualAccntTorBank').val('');
 });
-
-function cc_billing_table_func()
-{
-    $('#cc_billing_table thead tr th').each(function()
-    {
-        var title = $(this).text();
-        $(this).html(title+'<br><input type="text" placeholder="Search" style="position: relative; width: 100%">');
-    });
-
-    cc_billing_table = $('#cc_billing_table').DataTable
-    ({
-        "responsive" : true,
-        "processing" : true,
-        "serverSide" : true,
-        "ajax":
-            {
-                url: "cc_billing_table",
-                data: function (d)
-                {
-                    d.search_option = $('#select_cc_client_table').val();
-                    d.q_max =  $('#billing_cc_rad_max').val();
-                    d.q_min =  $('#billing_cc_rad_min').val();
-                }
-            },
-        "columns":
-            [
-                {data: 'id', name: 'bi_endorsements.id'},
-                {data: 'date_time_endorse', name: 'bi_endorsements.created_at'},
-                {data: 'account_name', name: 'bi_endorsements.account_name'},
-                {data: 'address', name: 'bi_endorsements.present_address'},
-                {data: 'muni_name', name: 'municipalities.muni_name'},
-                {data: 'prov_name', name: 'provinces.name'},
-                {data: 'status', name: 'bi_endorsements.id', orderable: false, searchable: false},
-                {
-                    data: function date_time(data)
-                    {
-                        if(data.status2 != 10)
-                        {
-                            return 'N/A';
-                        }
-                        else
-                        {
-                            return data.time_sent;
-                        }
-                    },
-                    'name': 'bi_endorsements.date_time_finished'
-                }
-            ],
-        "order" :[[0, 'desc']],
-        "pageLength" : 10,
-        "lengthMenu" : [[2, 10, 25, 50, -1], ['2 rows', '10 rows', '25 rows', '50 rows', 'Show all']],
-        "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull)
-        {
-            if(aData.billing_status == null || aData.billing_status == '')
-            {
-                $('td', nRow).css('background-color', '');
-            }
-            else if(aData.billing_status != null || aData.billing_status != '')
-            {
-                $('td', nRow).css('background-color', '#b3ffb3');
-            }
-        },
-        initComplete: function()
-        {
-            var api = this.api();
-
-            // Apply the search
-            api.columns().every(function() {
-                var that = this;
-
-                $('input', this.header()).on('keyup change', function(e)
-                {
-                    if($(this).is(':focus'))
-                    {
-                        if(e.keyCode === 13)
-                        {
-                            if (that.search() !== this.value) {
-                                that
-                                    .search(this.value)
-                                    .draw();
-                            }
-                        }
-                        else if (e.keyCode === 8)
-                        {
-                            if (this.value == '') {
-                                that
-                                    .search(this.value)
-                                    .draw();
-                            }
-                        }
-                    }
-                });
-            });
-        }
-    });
-
-    $('#cc_billing_table_filter input').unbind();
-    $('#cc_billing_table_filter input').bind('keyup change', function(e)
-    {
-        if($(this).is(':focus'))
-        {
-            if (e.keyCode === 13) {
-                cc_billing_table.search($(this).val()).draw();
-            }
-            else if (e.keyCode === 8)
-            {
-                if ($(this).val() == '') {
-                    cc_billing_table.search($(this).val()).draw();
-                }
-            }
-        }
-    });
-
-    $('.billing_cc_rad').change(function()
-    {
-        var date = new Date();
-        var day = date.getDate();
-        var month = (date.getMonth() + 1);
-        if(day <= 9)
-        {
-            day = '0'+day;
-        }
-
-        if(month <= 9)
-        {
-            month = '0'+month;
-        }
-
-        var newdate = date.getFullYear() + '-' + month + '-' + day;
-        console.log($(this).attr('id'));
-        if($(this).attr('id') == 'billing_cc_rad_all')
-        {
-            $('#billing_cc_range_holder').hide();
-            $('#billing_cc_rad_max').val('6000-01-01');
-            $('#billing_cc_rad_min').val('2015-01-01');
-        }
-        else
-        {
-            $('#billing_cc_range_holder').show();
-            $('#billing_cc_rad_max').val(newdate);
-            $('#billing_cc_rad_min').val(newdate);
-        }
-
-        cc_billing_table.draw();
-    });
-
-    $('#select_cc_client_table').change(function()
-    {
-        cc_billing_table.draw();
-    });
-
-    $('.billing_cc_date').change(function()
-    {
-        cc_billing_table.draw();
-    });
-}
-
-
-function cc_bank_billing_table_func()
-{
-    $('#cc_bank_billing_table thead tr th').each(function()
-    {
-        var title = $(this).text();
-        $(this).html(title+'<br><input type="text" placeholder="Search" style="position: relative; width: 100%">');
-    });
-
-    cc_bank_billing_table = $('#cc_bank_billing_table').DataTable
-    ({
-        "responsive" : true,
-        "processing" : true,
-        "serverSide" : true,
-        "ajax":
-            {
-                url: "cc_bank_billing_table",
-                data: function (d)
-                {
-                    d.search_option = $('#select_cc_bank_client_table').val();
-                    d.q_max =  $('#billing_cc_bank_rad_max').val();
-                    d.q_min =  $('#billing_cc_bank_rad_min').val();
-                }
-            },
-        "columns":
-            [
-                {data: 'id', name: 'bi_endorsements.id'},
-                {data: 'date_time_endorse', name: 'bi_endorsements.created_at'},
-                {data: 'account_name', name: 'bi_endorsements.account_name'},
-                {data: 'tor', name: 'bi_endorsements.type_of_endorsement_bank'},
-                {data: 'status', name: 'bi_endorsements.id', orderable: false, searchable: false},
-                {
-                    data: function date_time(data)
-                    {
-                        if(data.status2 != 10)
-                        {
-                            return 'N/A';
-                        }
-                        else
-                        {
-                            return data.time_sent;
-                        }
-                    },
-                    'name': 'bi_endorsements.date_time_finished'
-                }
-            ],
-        "order" :[[0, 'desc']],
-        "pageLength" : 10,
-        "lengthMenu" : [[2, 10, 25, 50, -1], ['2 rows', '10 rows', '25 rows', '50 rows', 'Show all']],
-        "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull)
-        {
-            if(aData.billing_status == null || aData.billing_status == '')
-            {
-                $('td', nRow).css('background-color', '');
-            }
-            else if(aData.billing_status != null || aData.billing_status != '')
-            {
-                $('td', nRow).css('background-color', '#b3ffb3');
-            }
-        },
-        initComplete: function()
-        {
-            var api = this.api();
-
-            // Apply the search
-            api.columns().every(function() {
-                var that = this;
-
-                $('input', this.header()).on('keyup change', function(e)
-                {
-                    if($(this).is(':focus'))
-                    {
-                        if(e.keyCode === 13)
-                        {
-                            if (that.search() !== this.value) {
-                                that
-                                    .search(this.value)
-                                    .draw();
-                            }
-                        }
-                        else if (e.keyCode === 8)
-                        {
-                            if (this.value == '') {
-                                that
-                                    .search(this.value)
-                                    .draw();
-                            }
-                        }
-                    }
-                });
-            });
-        }
-    });
-
-    $('#cc_bank_billing_table_filter input').unbind();
-    $('#cc_bank_billing_table_filter input').bind('keyup change', function(e)
-    {
-        if($(this).is(':focus'))
-        {
-            if (e.keyCode === 13) {
-                cc_bank_billing_table.search($(this).val()).draw();
-            }
-            else if (e.keyCode === 8)
-            {
-                if ($(this).val() == '') {
-                    cc_bank_billing_table.search($(this).val()).draw();
-                }
-            }
-        }
-    });
-
-    $('.billing_cc_bank_rad').change(function()
-    {
-        var date = new Date();
-        var day = date.getDate();
-        var month = (date.getMonth() + 1);
-        if(day <= 9)
-        {
-            day = '0'+day;
-        }
-
-        if(month <= 9)
-        {
-            month = '0'+month;
-        }
-
-        var newdate = date.getFullYear() + '-' + month + '-' + day;
-        console.log($(this).attr('id'));
-        if($(this).attr('id') == 'billing_cc_bank_rad_all')
-        {
-            $('#billing_cc_bank_range_holder').hide();
-            $('#billing_cc_bank_rad_max').val('6000-01-01');
-            $('#billing_cc_bank_rad_min').val('2015-01-01');
-        }
-        else
-        {
-            $('#billing_cc_bank_range_holder').show();
-            $('#billing_cc_bank_rad_max').val(newdate);
-            $('#billing_cc_bank_rad_min').val(newdate);
-        }
-
-        cc_bank_billing_table.draw();
-    });
-
-    $('#select_cc_bank_client_table').change(function()
-    {
-        cc_bank_billing_table.draw();
-    });
-
-    $('.billing_cc_bank_date').change(function()
-    {
-        cc_bank_billing_table.draw();
-    });
-}
