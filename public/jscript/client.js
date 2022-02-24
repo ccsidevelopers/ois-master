@@ -17,7 +17,6 @@ var tableFinishAccount;
 var tableHoldAccount;
 var tableCancelAccount;
 var tableRevisedAccount;
-var tableReturnAccount;
 var countDownTime;
 var muniID;
 var originalMuniID;
@@ -28,7 +27,6 @@ var titleee2=[];
 var titleee3=[];
 var titleee4=[];
 var titleee5=[];
-var titleee6=[];
 var titleee=[];
 var title;
 var i1 = 0;
@@ -36,7 +34,6 @@ var i2 = 0;
 var i3 = 0;
 var i4 = 0;
 var i5 = 0;
-var i6 = 0;
 var splitter = '';
 var splitterdata = '';
 var checkercountcoob = 0;
@@ -51,7 +48,6 @@ var click_tab2 = false;
 var click_tab3 = false;
 var click_tab4 = false;
 var click_tab5 = false;
-var click_tab6 = false;
 var tr_id_paypal = '';
 var req_checker = '';
 var check_if_direct = false;
@@ -88,22 +84,6 @@ autocompleteCob();
 
 
 function pending_accounts_table() {
-
-    $('#client-history-table thead th').each(function() {
-        titleee1[i1] = $(this).text();
-        i1++;
-        var title = $(this).text();
-        $(this).unbind();
-        if(title == 'Actions')
-        {
-
-        }
-        else
-        {
-            $(this).html(title+'<br><input type="text" placeholder="Search" style="position: relative; width: 100%">');
-        }
-    });
-
     table = $('#client-history-table').DataTable
     ({
         "responsive": true,
@@ -174,7 +154,7 @@ function pending_accounts_table() {
                     }
                 }
             ],
-        "columns":provinces
+        "columns":
             [
                 {data: 'id', name: 'endorsements.id'},
                 {data: 'account_name', name: 'endorsements.account_name',"className": "text-center"},
@@ -184,6 +164,9 @@ function pending_accounts_table() {
                 {data: 'muni_name', name: 'municipalities.muni_name', "className": "text-center"},
                 {data: 'name', name: 'provinces.name',"className": "text-center"},
                 {data: 'type_of_request', name: 'endorsements.type_of_request'},
+                {data: 'type_of_loan', name: 'endorsements.type_of_loan'},
+                {data: 'dealer_name', name: 'endorsements.dealer_name'},
+                {data: 'contract_number', name: 'endorsements.contract_number'},
                 // {
                 //
                 //     data: function actions(data) {
@@ -224,10 +207,6 @@ function pending_accounts_table() {
                         else if(data.acct_status == 5)
                         {
                             return '<a class="btn btn-xs btn-primary btn-block" data-toggle="modal" data-target="#dispatch_modal" disabled><i class="glyphicon glyphicon-remove"></i> CANCEL ACCT</a>';
-                        }
-                        else if(data.acct_status == 6)
-                        {
-                            return '<a class="btn btn-xs btn-info btn-block" data-toggle="modal" data-target="#dispatch_modal" disabled><i class="fa fa-rotate-left"></i> RETURN ACCT</a>';
                         }
                     },
                     'orderable' : false,
@@ -289,8 +268,8 @@ function pending_accounts_table() {
                 {
                     data: function notes(data)
                     {
-                        return '<a class="btn btn-xs btn-warning btn-block edit_req11" href="'+data.id+'" data-toggle="modal">EDIT ENDORSEMENT</a>' +
-                            '<a href="'+ data.id + '" class="btn btn-xs btn-primary btn-block" id="btnFullViewInfo" data-toggle="modal" data-target="#modal-view-info-client">VIEW INFO</a>';
+                        // return '<a class="btn btn-xs btn-warning btn-block edit_req11" href="'+data.id+'" data-toggle="modal">EDIT ENDORSEMENT</a>' +
+                           return '<a href="'+ data.id + '" class="btn btn-xs btn-primary btn-block" id="btnFullViewInfo" data-toggle="modal" data-target="#modal-view-info-client">VIEW INFO</a>';
                     },
                     'orderable' : false,
                     'searchable' : false,
@@ -316,7 +295,20 @@ function pending_accounts_table() {
         "deferRender": true,
         initComplete: function()
         {
+            $('#client-history-table thead th').each(function() {
+                titleee1[i1] = $(this).text();
+                i1++;
+                var title = $(this).text();
+                $(this).unbind();
+                if(title == 'Actions')
+                {
 
+                }
+                else
+                {
+                    $(this).html(title+'<br><input type="text" placeholder="Search" style="position: relative; width: 100%">');
+                }
+            });
 
             var api = this.api();
 
@@ -371,20 +363,6 @@ function pending_accounts_table() {
 }
 
 function finish_accounts_table_read() {
-
-    $('#client-finish-read thead th').each(function() {
-        tableFinishAccountReadTitle[tableFinishAccountReadTitleCount] = $(this).text();
-        tableFinishAccountReadTitleCount++;
-        var title = $(this).text();
-        if(title == 'Actions')
-        {
-
-        }
-        else {
-            $(this).html(title + '<br><input type="text" placeholder="Search" style="position: relative; width: 100%">');
-        }
-    });
-
     tableFinishAccountRead = $('#client-finish-read').DataTable
     ({
         "responsive": true,
@@ -465,6 +443,7 @@ function finish_accounts_table_read() {
                 {data: 'muni_name', name: 'municipalities.muni_name',"className": "text-center"},
                 {data: 'name', name: 'provinces.name',"className": "text-center"},
                 {data: 'type_of_request', name: 'endorsements.type_of_request'},
+                {data: 'type_of_loan', name: 'endorsements.type_of_loan'},
                 // {
                 //
                 //     data: function actions(data) {
@@ -506,11 +485,6 @@ function finish_accounts_table_read() {
                         {
                             return '<a class="btn btn-xs btn-primary btn-block" data-toggle="modal" data-target="#dispatch_modal" disabled><i class="glyphicon glyphicon-remove"></i> CANCEL ACCT</a>';
                         }
-
-                        else if(data.acct_status == 6)
-                        {
-                            return '<a class="btn btn-xs btn-info btn-block" data-toggle="modal" data-target="#dispatch_modal" disabled><i class=" fa-rotate-left"></i> RETURN ACCT</a>';
-                        }
                     },
                     'orderable' : false,
                     'searchable' : false,
@@ -539,12 +513,6 @@ function finish_accounts_table_read() {
                         {
                             return '<a class="btn btn-xs btn-primary btn-block" data-toggle="modal" data-target="#dispatch_modal" disabled><i class="glyphicon glyphicon-remove"></i> CANCEL ACCT</a>';
                         }
-
-                        else if(data.acct_status == 6)
-                        {
-                            return '<a class="btn btn-xs btn-info btn-block" data-toggle="modal" data-target="#dispatch_modal" disabled><i class="fa fa-rotate-left"></i> RETURN ACCT</a>';
-                        }
-
                         else if(data.endorsement_status_external==="OVERDUE")
                         {
                             countDownTime = '<button class="btn btn-danger btn-xs btn-block" disabled>OVERDUE</button>';
@@ -614,7 +582,18 @@ function finish_accounts_table_read() {
         "deferRender": true,
         initComplete: function()
         {
+            $('#client-finish-read thead th').each(function() {
+                tableFinishAccountReadTitle[tableFinishAccountReadTitleCount] = $(this).text();
+                tableFinishAccountReadTitleCount++;
+                var title = $(this).text();
+                if(title == 'Actions')
+                {
 
+                }
+                else {
+                    $(this).html(title + '<br><input type="text" placeholder="Search" style="position: relative; width: 100%">');
+                }
+            });
 
             var api = this.api();
 
@@ -653,20 +632,6 @@ function finish_accounts_table_read() {
 }
 
 function finish_accounts_table_downloaded() {
-
-    $('#client-finish-downlaoded thead th').each(function() {
-        tableFinishAccountDownloadedTitle[tableFinishAccountDownloadedCount] = $(this).text();
-        tableFinishAccountDownloadedCount++;
-        var title = $(this).text();
-        if(title == 'Actions')
-        {
-
-        }
-        else {
-            $(this).html(title + '<br><input type="text" placeholder="Search" style="position: relative; width: 100%">');
-        }
-    });
-
     tableFinishAccountDownloaded = $('#client-finish-downlaoded').DataTable
     ({
         "responsive": true,
@@ -747,6 +712,7 @@ function finish_accounts_table_downloaded() {
                 {data: 'muni_name', name: 'municipalities.muni_name',"className": "text-center"},
                 {data: 'name', name: 'provinces.name',"className": "text-center"},
                 {data: 'type_of_request', name: 'endorsements.type_of_request'},
+                {data: 'type_of_loan', name: 'endorsements.type_of_loan'},
                 // {
                 //
                 //     data: function actions(data) {
@@ -790,10 +756,6 @@ function finish_accounts_table_downloaded() {
                             toShow = '<a class="btn btn-xs btn-primary btn-block" data-toggle="modal" data-target="#dispatch_modal" disabled><i class="glyphicon glyphicon-remove"></i> CANCEL ACCT</a>';
                         }
 
-                        else if(data.acct_status == 6)
-                        {
-                            toShow = '<a class="btn btn-xs btn-info btn-block" data-toggle="modal" data-target="#dispatch_modal" disabled><i class="fa fa-rotate-left"></i> RETURN ACCT</a>';
-                        }
                         return toShow + '<br><span>Date and Time Sent:</span><br><br><span><b>'+data.date_forward+' '+data.time_forward+'</b></span>';
                     },
                     'orderable' : false,
@@ -895,7 +857,18 @@ function finish_accounts_table_downloaded() {
         "deferRender": true,
         initComplete: function()
         {
+            $('#client-finish-downlaoded thead th').each(function() {
+                tableFinishAccountDownloadedTitle[tableFinishAccountDownloadedCount] = $(this).text();
+                tableFinishAccountDownloadedCount++;
+                var title = $(this).text();
+                if(title == 'Actions')
+                {
 
+                }
+                else {
+                    $(this).html(title + '<br><input type="text" placeholder="Search" style="position: relative; width: 100%">');
+                }
+            });
 
             var api = this.api();
 
@@ -935,20 +908,6 @@ function finish_accounts_table_downloaded() {
 
 function finish_accounts_table()
 {
-
-    $('#client-finish-account thead th').each(function() {
-        titleee2[i2] = $(this).text();
-        i2++;
-        var title = $(this).text();
-        if(title == 'Actions')
-        {
-
-        }
-        else {
-            $(this).html(title + '<br><input type="text" placeholder="Search" style="position: relative; width: 100%">');
-        }
-    });
-
 
 
     tableFinishAccount = $('#client-finish-account').DataTable
@@ -1035,6 +994,8 @@ function finish_accounts_table()
                 {data: 'muni_name', name: 'municipalities.muni_name',"className": "text-center"},
                 {data: 'name', name: 'provinces.name',"className": "text-center"},
                 {data: 'type_of_request', name: 'endorsements.type_of_request'},
+                {data: 'type_of_loan', name: 'endorsements.type_of_loan'},
+               
                 // {
                 //
                 //     data: function actions(data) {
@@ -1174,7 +1135,18 @@ function finish_accounts_table()
         "deferRender": true,
         initComplete: function()
         {
+            $('#client-finish-account thead th').each(function() {
+                titleee2[i2] = $(this).text();
+                i2++;
+                var title = $(this).text();
+                if(title == 'Actions')
+                {
 
+                }
+                else {
+                    $(this).html(title + '<br><input type="text" placeholder="Search" style="position: relative; width: 100%">');
+                }
+            });
 
             var api = this.api();
 
@@ -1213,23 +1185,6 @@ function finish_accounts_table()
 }
 
 function hold_accounts_table() {
-
-    $('#client-hold-account thead th').each(function() {
-        titleee3[i3] = $(this).text();
-        $(this).unbind();
-        i3++;
-        var title = $(this).text();
-        if(title == 'Actions')
-        {
-
-        }
-        else
-        {
-            $(this).html(title+'<br><input type="text" placeholder="Search" style="position: relative; width: 100%">');
-        }
-    });
-
-
     tableHoldAccount = $('#client-hold-account').DataTable
     ({
         "responsive": true,
@@ -1310,6 +1265,7 @@ function hold_accounts_table() {
                 {data: 'muni_name', name: 'municipalities.muni_name',"className": "text-center"},
                 {data: 'name', name: 'provinces.name',"className": "text-center"},
                 {data: 'type_of_request', name: 'endorsements.type_of_request'},
+                {data: 'type_of_loan', name: 'endorsements.type_of_loan'},
                 // {
                 //
                 //     data: function actions(data) {
@@ -1438,7 +1394,20 @@ function hold_accounts_table() {
         "deferRender": true,
         initComplete: function()
         {
+            $('#client-hold-account thead th').each(function() {
+                titleee3[i3] = $(this).text();
+                $(this).unbind();
+                i3++;
+                var title = $(this).text();
+                if(title == 'Actions')
+                {
 
+                }
+                else
+                {
+                    $(this).html(title+'<br><input type="text" placeholder="Search" style="position: relative; width: 100%">');
+                }
+            });
 
             var api = this.api();
 
@@ -1493,23 +1462,6 @@ function hold_accounts_table() {
 }
 
 function cancelled_accounts_table() {
-
-    $('#client-cancel-account thead th').each(function() {
-        titleee4[i4] = $(this).text();
-        $(this).unbind();
-        i4++;
-        var title = $(this).text();
-        if(title == 'Actions')
-        {
-
-        }
-        else
-        {
-            $(this).html(title+'<br><input type="text" placeholder="Search" style="position: relative; width: 100%">');
-        }
-
-    });
-
     tableCancelAccount = $('#client-cancel-account').DataTable
     ({
         "responsive": true,
@@ -1590,6 +1542,7 @@ function cancelled_accounts_table() {
                 {data: 'muni_name', name: 'municipalities.muni_name',"className": "text-center"},
                 {data: 'name', name: 'provinces.name',"className": "text-center"},
                 {data: 'type_of_request', name: 'endorsements.type_of_request'},
+                {data: 'type_of_loan', name: 'endorsements.type_of_loan'},
                 // {
                 //
                 //     data: function actions(data) {
@@ -1631,10 +1584,6 @@ function cancelled_accounts_table() {
                         {
                             return '<a class="btn btn-xs btn-primary btn-block" data-toggle="modal" data-target="#dispatch_modal" disabled><i class="glyphicon glyphicon-remove"></i> CANCEL ACCT</a>';
                         }
-                        else if(data.acct_status == 6)
-                        {
-                            return '<a class="btn btn-xs btn-info btn-block" data-toggle="modal" data-target="#dispatch_modal" disabled><i class="fa fa-rotate-left"></i> RETURN ACCT</a>';
-                        }
                     },
                     'orderable' : false,
                     'searchable' : false,
@@ -1662,10 +1611,6 @@ function cancelled_accounts_table() {
                         else if(data.acct_status == 5)
                         {
                             return '<a class="btn btn-xs btn-primary btn-block" data-toggle="modal" data-target="#dispatch_modal" disabled><i class="glyphicon glyphicon-remove"></i> CANCEL ACCT</a>';
-                        }
-                        else if(data.acct_status == 6)
-                        {
-                            return '<a class="btn btn-xs btn-info btn-block" data-toggle="modal" data-target="#dispatch_modal" disabled><i class="fa fa-rotate-left"></i> RETURN ACCT</a>';
                         }
                         else if(data.endorsement_status_external==="OVERDUE")
                         {
@@ -1726,7 +1671,21 @@ function cancelled_accounts_table() {
         "deferRender": true,
         initComplete: function()
         {
+            $('#client-cancel-account thead th').each(function() {
+                titleee4[i4] = $(this).text();
+                $(this).unbind();
+                i4++;
+                var title = $(this).text();
+                if(title == 'Actions')
+                {
 
+                }
+                else
+                {
+                    $(this).html(title+'<br><input type="text" placeholder="Search" style="position: relative; width: 100%">');
+                }
+
+            });
 
             var api = this.api();
 
@@ -1782,315 +1741,7 @@ function cancelled_accounts_table() {
 
 }
 
-function return_accounts_table() {
-
-    $('#client-return-account thead th').each(function() {
-        titleee6[i6] = $(this).text();
-        $(this).unbind();
-        i6++;
-        var title = $(this).text();
-        if(title == 'Actions')
-        {
-
-        }
-        else
-        {
-            $(this).html(title+'<br><input type="text" placeholder="Search" style="position: relative; width: 100%">');
-        }
-
-    });
-
-    tableReturnAccount = $('#client-return-account').DataTable
-    ({
-        "responsive": true,
-        "processing": true,
-        "serverSide": true,
-        "ajax":
-            {
-                url: "/client-get-return-account",
-                data: function (d)
-                {
-                    d.min_date_endorsed = $('#minReturn').val();
-                    d.max_date_endorsed = $('#maxReturn').val();
-                }
-            },
-        dom: 'Blfrtip',
-        buttons:
-            [
-                {
-                    extend: 'pdf',
-                    orientation: 'landscape',
-                    pageSize: 'LEGAL',
-                    exportOptions:
-                        {
-                            columns: ':visible',
-                            format:
-                                {
-                                    header:  function (dt, idx, title)
-                                    {
-                                        return titleee6[(idx)];
-                                    }
-                                }
-                        }
-                },
-                {
-                    extend: 'excel',
-                    exportOptions:
-                        {
-                            columns: ':visible',
-                            format:
-                                {
-                                    header:  function (dt, idx, title)
-                                    {
-                                        return titleee6[(idx)];
-                                    }
-                                }
-                        }
-                },
-                {
-                    extend: 'print',
-                    exportOptions:
-                        {
-                            columns: ':visible',
-                            format:
-                                {
-                                    header:  function (dt, idx, title)
-                                    {
-                                        return titleee6[(idx)];
-                                    }
-                                }
-                        }
-                },
-                {
-                    extend: 'colvis',
-                    text: 'Show/Hide Column',
-                    columnText: function (dt, idx, title)
-                    {
-                        return titleee6[(idx)];
-                    }
-                }
-            ],
-        "columns":
-            [
-                {data: 'id', name: 'endorsements.id'},
-                {data: 'account_name', name: 'endorsements.account_name',"className": "text-center"},
-                {data: 'date_endorsed', name: 'endorsements.date_endorsed',"className": "text-center"},
-                {data: 'time_endorsed', name: 'endorsements.time_endorsed',"className": "text-center"},
-                {data: 'address', name: 'endorsements.address'},
-                {data: 'muni_name', name: 'municipalities.muni_name',"className": "text-center"},
-                {data: 'name', name: 'provinces.name',"className": "text-center"},
-                {data: 'type_of_request', name: 'endorsements.type_of_request'},
-                // {
-                //
-                //     data: function actions(data) {
-                //
-                //         clearTimeout(times);
-                //         fetchOtherInro('client-cancel-account');
-                //         return '<span id="otherinfo'+data.id+'">'+data.type_of_request+'</span>';
-                //
-                //     },
-                //     'name' : 'endorsements.type_of_request'
-                // },
-                {data: 'requestor_name', name: 'endorsements.requestor_name', "className": "text-center"},
-                {data: 'client_remarks', name: 'endorsements.client_remarks', "className": "text-center"},
-                {data: 're_ci', name: 'endorsements.re_ci', "className": "text-center"},
-                {
-                    data: function acctStatus(data)
-                    {
-                        if(data.acct_status == '')
-                        {
-                            return '<a class="btn btn-xs btn-success btn-block" data-toggle="modal" data-target="#dispatch_modal" disabled><i class="glyphicon glyphicon-ok"></i> RECEIVED</a>';
-                        }
-                        else if(data.acct_status == 1)
-                        {
-                            return '<a class="btn btn-xs btn-warning btn-block" data-toggle="modal" data-target="#dispatch_modal" disabled><i class="glyphicon glyphicon-retweet"></i> ON FIELD</a>';
-                        }
-                        else if(data.acct_status == 2)
-                        {
-                            return '<a class="btn btn-xs btn-warning btn-block" data-toggle="modal" data-target="#dispatch_modal" disabled><i class="glyphicon glyphicon-retweet"></i> FOR SENDING</a>';
-                        }
-                        else if(data.acct_status == 3)
-                        {
-                            return '<a class="btn btn-xs btn-success btn-block" data-toggle="modal" data-target="#dispatch_modal" disabled><i class="glyphicon glyphicon-envelope"></i> SENT</a>';
-                        }
-                        else if(data.acct_status == 4)
-                        {
-                            return '<a class="btn btn-xs btn-primary btn-block" data-toggle="modal" data-target="#dispatch_modal" disabled><i class="glyphicon glyphicon-remove"></i> HOLD ACCT</a>';
-                        }
-                        else if(data.acct_status == 5)
-                        {
-                            return '<a class="btn btn-xs btn-primary btn-block" data-toggle="modal" data-target="#dispatch_modal" disabled><i class="glyphicon glyphicon-remove"></i> CANCEL ACCT</a>';
-                        }
-                        else if(data.acct_status == 6)
-                        {
-                            return '<a class="btn btn-xs btn-info btn-block" data-toggle="modal" data-target="#dispatch_modal" disabled><i class="fa fa-rotate-left"></i> RETURN ACCT</a>';
-                        }
-                    },
-                    'orderable' : false,
-                    'searchable' : false,
-                    "name": 'acct_status',
-                    "className": "text-center"
-                },
-                {
-                    data: function externalStatus(data)
-                    {
-                        var countDownDate = new Date(data.date_due+' '+data.time_due);
-                        var now = new Date();
-                        var distance = countDownDate - now;
-
-                        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-                        countDownTime = '<button class="btn btn-success btn-xs btn-block" disabled>'+ days + "D " + hours + "H " + minutes + "M "+'</button>';
-
-                        if(data.acct_status == 4)
-                        {
-                            return '<a class="btn btn-xs btn-primary btn-block" data-toggle="modal" data-target="#dispatch_modal" disabled><i class="glyphicon glyphicon-remove"></i> HOLD ACCT</a>';
-                        }
-                        else if(data.acct_status == 5)
-                        {
-                            return '<a class="btn btn-xs btn-primary btn-block" data-toggle="modal" data-target="#dispatch_modal" disabled><i class="glyphicon glyphicon-remove"></i> CANCEL ACCT</a>';
-                        }
-                        else if(data.acct_status == 6)
-                        {
-                            return '<a class="btn btn-xs btn-info btn-block" data-toggle="modal" data-target="#dispatch_modal" disabled><i class="fa fa-rotate-left"></i> RETURN ACCT</a>';
-                        }
-                        else if(data.endorsement_status_external==="OVERDUE")
-                        {
-                            countDownTime = '<button class="btn btn-danger btn-xs btn-block" disabled>OVERDUE</button>';
-                            return countDownTime;
-                        }
-                        else if(data.endorsement_status_external==="TAT")
-                        {
-                            countDownTime = '<button class="btn btn-success btn-xs btn-block" disabled>ON TAT</button>';
-                            return countDownTime;
-                        }
-                        else if(isNaN(minutes))
-                        {
-                            countDownTime = '<a class="btn btn-xs btn-success btn-block" data-toggle="modal" data-target="#dispatch_modal" disabled><i class="glyphicon glyphicon-ok"></i> RECEIVED</a>';
-                            return countDownTime;
-                        }
-                        else if(minutes<0)
-                        {
-                            countDownTime = '<button class="btn btn-warning btn-xs btn-block" disabled>UPDATING INFO..</button>';
-                            return countDownTime;
-                        }
-                        else
-                        {
-                            return countDownTime;
-                        }
-                    },
-                    'orderable' : false,
-                    'searchable' : true,
-                    "name": 'endorsements.endorsement_status_external',
-                    "className": "text-center"
-                },
-                {
-                    data: function notes(data)
-                    {
-                        return '<a href="'+ data.id + '" class="btn btn-xs btn-primary btn-block" id="btnFullViewInfo" data-toggle="modal" data-target="#modal-view-info-client">VIEW INFO</a>';
-                    },
-                    'orderable' : false,
-                    'searchable' : false,
-                    "name": 'nonotes',
-                    "className": "text-center"
-                }
-            ],
-        "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull)
-        {
-            if ( aData.endorsement_status_external == "TAT" )
-            {
-                $('td', nRow).css('background-color', '#66ff66');
-            }
-            else if(aData.endorsement_status_external == "OVERDUE")
-            {
-                $('td', nRow).css('background-color', '#ff9980');
-            }
-        },
-        "order": [[0, 'desc']],
-        "pageLength": 10,
-        "lengthMenu": [[2, 10, 25, 50, -1], ['2 rows', '10 rows', '25 rows', '50 rows', 'Show all']],
-        "bSortClasses": false,
-        "deferRender": true,
-        initComplete: function()
-        {
-
-
-            var api = this.api();
-
-            // Apply the search
-            api.columns().every(function() {
-                var that = this;
-
-                $('input', this.header()).on('keyup change', function(e)
-                {
-                    if($(this).is(':focus'))
-                    {
-                        if(e.keyCode === 13)
-                        {
-                            if (that.search() !== this.value) {
-                                that
-                                    .search(this.value)
-                                    .draw();
-                            }
-                        }
-                        else if (e.keyCode === 8)
-                        {
-                            if (this.value == '') {
-                                that
-                                    .search(this.value)
-                                    .draw();
-                            }
-                        }
-                    }
-                });
-            });
-        }
-
-    });
-
-
-    $('#client-return-account_filter input').unbind();
-    $('#client-return-account_filter input').bind('keyup change',function (e) {
-    console.log('nagsearch ako');
-
-        if($(this).is(':focus'))
-        {
-            if (e.keyCode == 13) {
-                tableReturnAccount.search($(this).val()).draw();
-            }
-            else if (e.keyCode === 8)
-            {
-                if ($(this).val() == '') {
-                    tableReturnAccount.search($(this).val()).draw();
-                }
-            }
-        }
-    });
-
-
-}
-
 function revised_accounts_table() {
-
-    $('#client-revised-account thead th').each(function() {
-        titleee5[i5] = $(this).text();
-        $(this).unbind();
-        i5++;
-        var title = $(this).text();
-        if(title == 'Actions')
-        {
-
-        }
-        else
-        {
-            $(this).html(title+'<br><input type="text" placeholder="Search" style="position: relative; width: 100%">');
-        }
-
-    });
-
     tableRevisedAccount = $('#client-revised-account').DataTable
     ({
         "responsive": true,
@@ -2171,6 +1822,7 @@ function revised_accounts_table() {
                 {data: 'muni_name', name: 'municipalities.muni_name',"className": "text-center"},
                 {data: 'name', name: 'provinces.name',"className": "text-center"},
                 {data: 'type_of_request', name: 'endorsements.type_of_request'},
+                {data: 'type_of_loan', name: 'endorsements.type_of_loan'},
                 // {
                 //
                 //     data: function actions(data) {
@@ -2227,12 +1879,6 @@ function revised_accounts_table() {
                         {
                             return '<a class="btn btn-xs btn-primary btn-block" data-toggle="modal" data-target="#dispatch_modal" disabled><i class="glyphicon glyphicon-remove"></i> CANCEL ACCT</a>';
                         }
-                        else if(data.acct_status == 6)
-                        {
-                            return '<a class="btn btn-xs btn-info btn-block" data-toggle="modal" data-target="#dispatch_modal" disabled><i class="fa fa-rotate-left"></i> RETURN ACCT</a>';
-                        }
-
-
                         else if(data.endorsement_status_external==="OVERDUE")
                         {
                             countDownTime = '<button class="btn btn-danger btn-xs btn-block" disabled>OVERDUE</button>';
@@ -2293,7 +1939,21 @@ function revised_accounts_table() {
         "deferRender": true,
         initComplete: function()
         {
+            $('#client-revised-account thead th').each(function() {
+                titleee5[i5] = $(this).text();
+                $(this).unbind();
+                i5++;
+                var title = $(this).text();
+                if(title == 'Actions')
+                {
 
+                }
+                else
+                {
+                    $(this).html(title+'<br><input type="text" placeholder="Search" style="position: relative; width: 100%">');
+                }
+
+            });
 
             var api = this.api();
 
@@ -2528,10 +2188,6 @@ $(document).ready(function()
     $('#maxRevised').val('6000-01-01');
 
 
-    $('#minReturn').val('2015-01-01');
-    $('#maxReturn').val('6000-01-01');
-
-
 
 
     // table.draw();
@@ -2552,7 +2208,6 @@ $(document).ready(function()
                 $('.viewable#rad_all3').prop('checked',true);
                 $('.viewable#rad_all4').prop('checked',true);
                 $('.viewable#rad_all5').prop('checked',true);
-                $('.viewable#rad_all6').prop('checked',true);
                 $('.viewable#rad_allread').prop('checked',true);
                 $('.viewable#rad_alldownload').prop('checked',true);
 
@@ -2580,9 +2235,6 @@ $(document).ready(function()
 
                 $('#minRevised').val('2015-01-01');
                 $('#maxRevised').val('6000-01-01');
-
-                $('#minReturn').val('2015-01-01');
-                $('#maxReturn').val('6000-01-01');
 
                 if(click_tab1)
                 {
@@ -2618,10 +2270,6 @@ $(document).ready(function()
                 {
                     tableRevisedAccount.draw();
                 }
-                else if(click_tab6)
-                {
-                    tableReturnAccount.draw();
-                }
                 // else if(new_accounts_tab)
                 // {
                 //     tableFinishAccount.draw();
@@ -2643,7 +2291,6 @@ $(document).ready(function()
                 $('.viewable#rad_daterange3').prop('checked',true);
                 $('.viewable#rad_daterange4').prop('checked',true);
                 $('.viewable#rad_daterange5').prop('checked',true);
-                $('.viewable#rad_daterange6').prop('checked',true);
                 $('.viewable#rad_daterangeread').prop('checked',true);
                 $('.viewable#rad_daterangedownload').prop('checked',true);
 
@@ -2711,11 +2358,6 @@ $(document).ready(function()
                 $( "#datepickerminRevised" ).datepicker({ dateFormat: 'yy-mm-dd' });
                 $( "#datepickermaxRevised" ).datepicker({ dateFormat: 'yy-mm-dd' });
 
-
-                $("#datepickerminReturn").datepicker({ dateFormat: 'yy-mm-dd' });
-                $("#datepickermaxReturn").datepicker({ dateFormat: 'yy-mm-dd' });
-
-
                 $('#datepicker').val(month+dateyear);
                 $('#datepickermax').val(month+dateyear);
 
@@ -2734,16 +2376,8 @@ $(document).ready(function()
                 $('#datepickerminCancelled').val(month+dateyear);
                 $('#datepickermaxCancelled').val(month+dateyear);
 
-                $('#datepickerminReturn').val(month+dateyear);
-                $('#datepickermaxReturn').val(month+dateyear);
-
-
-
-                $( "#datepickerminRevised" ).val(month+dateyear);
-                $( "#datepickermaxRevised" ).val(month+dateyear);
-
-
-
+                $( "#datepickerminRevised" ).datepicker({ dateFormat: 'yy-mm-dd' });
+                $( "#datepickermaxRevised" ).datepicker({ dateFormat: 'yy-mm-dd' });
 
                 $('#min').val(yearmonth+date);
                 $('#max').val(yearmonth+date);
@@ -2767,10 +2401,6 @@ $(document).ready(function()
 
                 $('#minRevised').val(yearmonth+date);
                 $('#maxRevised').val(yearmonth+date);
-
-
-                $('#minReturn').val(yearmonth+date);
-                $('#maxReturn').val(yearmonth+date);
 
 
                 if(click_tab1)
@@ -2807,10 +2437,6 @@ $(document).ready(function()
                 {
                     tableRevisedAccount.draw();
                 }
-                else if(click_tab6)
-                {
-                    tableReturnAccount.draw();
-                }
                 // else if(new_accounts_tab)
                 // {
                 //     tableFinishAccount.draw();
@@ -2835,7 +2461,6 @@ $(document).ready(function()
 
         var min = $.datepicker.formatDate('yy-mm-dd', $('#datepicker').datepicker('getDate'));
         console.log(min);
-
         $('#min').val(min);
 
         var max = $.datepicker.formatDate('yy-mm-dd', $('#datepickermax').datepicker('getDate'));
@@ -2852,8 +2477,6 @@ $(document).ready(function()
         table.draw();
 
     });
-
-
     $('#datepickermax').change( function() {
 
         var min = $.datepicker.formatDate('yy-mm-dd', $('#datepicker').datepicker('getDate'));
@@ -2981,8 +2604,6 @@ $(document).ready(function()
         tableCancelAccount.draw();
 
     } );
-
-
     $('#datepickermaxCancelled').change( function() {
 
         var minCan = $.datepicker.formatDate('yy-mm-dd', $('#datepickerminCancelled').datepicker('getDate'));
@@ -3015,6 +2636,7 @@ $(document).ready(function()
 
         var maxRev = $.datepicker.formatDate('yy-mm-dd', $('#datepickermaxRevised').datepicker('getDate'));
         console.log(maxRev);
+
         if(maxRev === '')
         {
             $('#maxRevised').val(yearmonth+date);
@@ -3028,80 +2650,6 @@ $(document).ready(function()
         tableRevisedAccount.draw();
 
     } );
-
-    /*('#datepickerminRevised').change( function() {
-
-        var minRev = $.datepicker.formatDate('yy-mm-dd', $('#datepickerminRevised').datepicker('getDate'));
-        console.log(minRev);
-        $('#minRevised').val(minRev);
-
-        var maxRev = $.datepicker.formatDate('yy-mm-dd', $('#datepickermaxRevised').datepicker('getDate'));
-        console.log(maxRev);
-        if(maxRev === '')
-        {
-            $('#maxRevised').val(yearmonth+date);
-
-        }
-        else {
-            $('#maxRevised').val(maxRev);
-
-        }
-
-        tableRevisedAccount.draw();
-
-    } );*/
-
-    //return datepicker
-    $('#datepickermaxReturn').change( function() {
-
-        var min_return = $.datepicker.formatDate('yy-mm-dd', $('#datepickerminReturn').datepicker('getDate'));
-        console.log(min_return);
-
-        $('#minReturn').val(min_return);
-
-        var max_return = $.datepicker.formatDate('yy-mm-dd', $('#datepickermaxReturn').datepicker('getDate'));
-        console.log(max_return);
-
-        if(max_return === '')
-        {
-            $('#maxReturn').val(yearmonth+date);
-
-        }
-        else {
-            $('#maxReturn').val(max_return);
-
-        }
-
-        tableReturnAccount.draw();
-
-    } );
-
-    $('#datepickerminReturn').change( function() {
-
-        var min_return = $.datepicker.formatDate('yy-mm-dd', $('#datepickerminReturn').datepicker('getDate'));
-        console.log(min_return);
-
-        $('#minReturn').val(min_return);
-
-        var max_return = $.datepicker.formatDate('yy-mm-dd', $('#datepickermaxReturn').datepicker('getDate'));
-        console.log(max_return);
-
-        if(max_return === '')
-        {
-            $('#maxReturn').val(yearmonth+date);
-
-        }
-        else {
-            $('#maxReturn').val(max_return);
-
-        }
-
-        tableReturnAccount.draw();
-
-    } );
-
-
-
     $('#datepickermaxCancelled').change( function() {
 
         var minRev = $.datepicker.formatDate('yy-mm-dd', $('#datepickerminCancelled').datepicker('getDate'));
@@ -3131,7 +2679,6 @@ $(document).ready(function()
     $('.viewable#rad_all3').prop('checked',true);
     $('.viewable#rad_all4').prop('checked',true);
     $('.viewable#rad_all5').prop('checked',true);
-    $('.viewable#rad_all6').prop('checked',true);
     $('.viewable#rad_allread').prop('checked',true);
     $('.viewable#rad_alldownload').prop('checked',true);
 
@@ -3162,10 +2709,6 @@ $(document).ready(function()
             {
                 tableRevisedAccount.ajax.reload(null, false);
             }
-            else if(click_tab6)
-            {
-                tableReturnAccount.ajax.reload(null, false);
-            }
         }
     },60000);
 
@@ -3181,7 +2724,6 @@ $(document).ready(function()
             click_tab3 = false;
             click_tab4 = false;
             click_tab5 = false;
-            click_tab6 = false;
         }
 
     });
@@ -3199,7 +2741,6 @@ $(document).ready(function()
             click_tab3 = false;
             click_tab4 = false;
             click_tab5 = false;
-            click_tab6 = false;
         }
 
 
@@ -3218,7 +2759,6 @@ $(document).ready(function()
             click_tab3 = true;
             click_tab4 = false;
             click_tab5 = false;
-            click_tab6 = false;
         }
 
     });
@@ -3236,7 +2776,6 @@ $(document).ready(function()
             click_tab3 = false;
             click_tab4 = true;
             click_tab5 = false;
-            click_tab6 = false;
         }
 
     });
@@ -3254,27 +2793,7 @@ $(document).ready(function()
             click_tab3 = false;
             click_tab4 = false;
             click_tab5 = true;
-            click_tab6 = false;
         }
-    });
-
-    $('#client_tab6').click(function () {
-        if(click_tab6)
-        {
-            console.log('already loaded');
-        }
-        else
-        {
-            return_accounts_table();
-            // tableCancelAccount.ajax.reload(null, false);
-            click_tab1 = false;
-            click_tab2 = false;
-            click_tab3 = false;
-            click_tab4 = false;
-            click_tab5 = false;
-            click_tab6 = true;
-        }
-
     });
 
     $('.client_a').click(function () {
@@ -3335,6 +2854,15 @@ function fetchTemp()
                 if(data[2][0].user_branch == '356' || data[2][0].user_branch == '9' || data[2][0].user_branch == '130' || data[2][0].user_branch == '289' || data[2][0].user_branch == '290')
                 {
                     tol += '<option value= "KYC">KYC</option>';
+                }
+                else if(data[2][0].user_branch == '1006')
+                {
+                    tol = '<option value= "SME/Business">SME/Business</option>'+
+                    '<option value= "Housing">Housing</option>'+
+                    '<option value= "Jewelry">Jewelry</option>'+
+                    '<option value= "Microfinance">Microfinance</option>'+
+                    '<option value= "Auto">Auto</option>'+
+                    '<option value= "Salary">Salary</option>';
                 }
             }
 
@@ -3595,12 +3123,11 @@ function fetchTemp()
 
 function clearInputsSuccess(data)
 {
+    document.getElementById("btnModalCloseSending").click();
     var stopTimer = setInterval(function ()
     {
-        // document.getElementById("btnModalCloseSending").click();
         if(data.errors)
         {
-            document.getElementById("btnModalCloseSending").click();
             console.log(data.errors);
             $('#modal-filluperror').modal('show');
             var timerDanger = setInterval(function()
@@ -3655,22 +3182,20 @@ function clearInputsSuccess(data)
                 $('#provinceBus'+i).val('');
             }
 
-            autoDispatching(data[0]);
+            $('#modal-sentsuccess').modal('show');
 
-            // $('#modal-sentsuccess').modal('show');
-            //
-            // var timerSuccess = setInterval(function()
-            // {
-            //     $('#modal-sentsuccess').modal('hide');
-            //     clearInterval(timerSuccess);
-            //
-            //     var sessionModal = setInterval(function ()
-            //     {
-            //         $('#modal-load-session').modal();
-            //         clearInterval(sessionModal);
-            //     },1000)
-            //
-            // }, 2000);
+            var timerSuccess = setInterval(function()
+            {
+                $('#modal-sentsuccess').modal('hide');
+                clearInterval(timerSuccess);
+
+                var sessionModal = setInterval(function ()
+                {
+                    $('#modal-load-session').modal();
+                    clearInterval(sessionModal);
+                },1000)
+
+            }, 2000);
 
             $("#endorseSend").attr("disabled", false);
         }
@@ -4370,10 +3895,7 @@ function final_endorse(it_is_direct) {
                 beforeSend: function () {
                     $('#modal-sendingrequest').modal('show');
                 },
-                success: function (data)
-                {
-                    console.log(data);
-
+                success: function (data) {
                     clearInputsSuccess(data);
                 },
                 error: function () {
@@ -4490,121 +4012,13 @@ function final_endorse(it_is_direct) {
             }
         }
     }
-    else if($('#btnSelectForm').val() === 'TRADE CHECKING' || req_checker == 'TRADE CHECKING')
-    {
-        if(checkercountcoob > 0)
-        {
-
-            $("#endorseSend").attr("disabled", false);
-
-            alert('Please fill up all information in \"CO-BORROWER\" but if there\'s none, Change the \"Number of Coborrower\" into \'0\' or maybe the input information is doubled.');
-
-
-        }
-        else if(checkercountbvr > 0)
-        {
-
-            $("#endorseSend").attr("disabled", false);
-
-            alert('Please fill up all information in \"Business\" or the input information is doubled.\'');
-        }
-        else
-        {
-            if ($("#personalRequest").is(":checked"))
-            {
-                //proceed to endorse
-                $.ajax
-                ({
-                    type: 'post',
-                    url: 'add-endorsement-tc',
-                    data:
-                        {
-                            'acctFName': acctFName,
-                            'acctMName': acctMName,
-                            'acctLName': acctLName,
-                            'address': address,
-                            'municipality': municipality,
-                            'provinceName': provinceName,
-                            'txtClientRemarks': txtClientRemarks,
-                            'clientName': clientName,
-                            'requestorName': requestorName,
-                            'loanType': loanType,
-                            'requestType': requestType,
-                            'busInfo': busInfo,
-                            'coborInfo': coborInfo,
-                            'countcoob' : $('#ddCoborrower').val(),
-                            'prioritize': prioritize,
-                            'ReCi' : ReCi,
-                            'verifythrough': verifythrough,
-                            'subjectName': subjectName,
-                            'subjectID': $('#txtSubjectName').attr('name'),
-                            'tos': tos,
-                            '_token': _token,
-                            'paypal_tr_id' : tr_id_paypal,
-                            'it_is_direct' : it_is_direct,
-                            'dealer_name' : dealer_num_end,
-                            'contract_number' : contract_num_end
-                        },
-                    beforeSend: function ()
-                    {
-                        $('#modal-sendingrequest').modal('show');
-                    },
-                    success: function (data) {
-                        console.log(data);
-                        // clearInputsSuccess(data);
-                    },
-                    error: function () {
-                        clearInputsError();
-                    }
-                });
-            }
-            else
-            {
-                //proceed to endorse
-                $.ajax
-                ({
-                    type: 'post',
-                    url: 'add-endorsement-tc',
-                    data:
-                        {
-                            'corp': 'corp',
-                            'address': address,
-                            'municipality': municipality,
-                            'provinceName': provinceName,
-                            'txtClientRemarks': txtClientRemarks,
-                            'clientName': clientName,
-                            'requestorName': requestorName,
-                            'loanType': loanType,
-                            'requestType': requestType,
-                            'busInfo': busInfo,
-                            'coborInfo': coborInfo,
-                            'prioritize': prioritize,
-                            'ReCi' : ReCi,
-                            'verifythrough': verifythrough,
-                            'subjectName': subjectName,
-                            'tos': tos,
-                            '_token': _token
-                        },
-                    beforeSend: function ()
-                    {
-                        $('#modal-sendingrequest').modal('show');
-                    },
-                    success: function (data) {
-                        clearInputsSuccess(data);
-                    },
-                    error: function () {
-                        clearInputsError();
-                    }
-                });
-            }
-        }
-    }
 }
 //END
 
 $('#formContent').on('change', '#ddCoborrower', function ()
 {
     $('#addCob').html('');
+    indi_rate[0] = parseInt(atob($('#idEtar').val()));
 
     for(i=0;i<=$('#ddCoborrower').val()-1;i++)
     {
@@ -4661,9 +4075,6 @@ $('#formContent').on('change', '#ddCoborrower', function ()
         autocompspdrn(i);
         pdrn(i);
     }
-
-    indi_rate[0] = parseInt(atob($('#idEtar').val()));
-
 
 });
 
@@ -5350,134 +4761,6 @@ $('#btnSelectForm').on('change', function ()
             }
         });
     }
-    else if($('#btnSelectForm').val() == 'TRADE CHECKING')
-    {
-        corporatetrigger = false;
-
-        $('#formContent').html('');
-        $('#otherBranchHide').hide();
-        $('#otherAddressHide').show();
-        $('#adjustWidthBvr').addClass('col-md-4');
-        tol = '';
-
-        if(document.getElementById('tosSubject').checked === true)
-        {
-            var pdrnTemplate =
-                '<div class="row">' +
-                '   <div class="col-md-12">' +
-                '       <form action="#">' +
-                acctAddTemp+
-                multiCoborrowerTemp+
-                busInfoTemp+
-                otherInfoTemp+
-                requestorInfoTemp+
-                '           <button type="button" class="btn-lg btn-success pull-right" id="endorseSend">SEND</button>' +
-                '       </form>' +
-                '   </div>' +
-                '</div>';
-        }
-        else if(document.getElementById('tosCob').checked === true)
-        {
-            if(checkercountcoob>0)
-            {
-                alert('test');
-            }
-            else
-            {
-                var pdrnTemplate =
-                    '<div class="row">' +
-                    '   <div class="col-md-12">' +
-                    '       <form action="#">' +
-                    acctAddTemp+
-                    busInfoTemp+
-                    otherInfoTemp+
-                    requestorInfoTemp+
-                    '           <button type="button" class="btn-lg btn-success pull-right" id="endorseSend">SEND</button>' +
-                    '       </form>' +
-                    '   </div>' +
-                    '</div>';
-            }
-        }
-
-        $('#formContent').append(pdrnTemplate);
-
-        if(document.getElementById('tosSubject').checked === true)
-        {
-            $('#loanType').attr('disabled',false);
-        }
-        else if(document.getElementById('tosCob').checked === true)
-        {
-            $('#loanType').attr('disabled',true);
-        }
-
-        fetchMuni();
-
-        $('#municipality').on('change',function ()
-        {
-            setTimeout(function () {
-                if(isEmptyOrSpaces($('#municipality').val())||$('#municipality').val()=='')
-                {
-                    $('#province').val('');
-                }
-                if(isEmptyOrSpaces($('#province').val())||$('#province').val()=='')
-                {
-                    alert("Please choose City/Municipality Under Suggestion List");
-                    $('#municipality').focus();
-                }
-            },2000);
-
-        });
-
-        $('#municipality').focusout(function ()
-        {
-            if($('#municipality').val() === '')
-            {
-                $('#province').val('');
-            }
-            else
-            {
-                $.ajax
-                ({
-                    method: 'get',
-                    url: '/fetch-city-muniv2',
-                    data:
-                        {
-                            'muniname' : $('#municipality').val()
-                        },
-                    success: function (data)
-                    {
-                        $('#idMuni').val(data[0].province_id);
-                        $('#idMuniOriginal').val(data[0].id);
-                        fetchProv();
-
-                        setTimeout(function () {
-                            $('#municipality').val(data[0].muni_name)
-                        },1000);
-                    },
-                });
-            }
-        });
-
-        $.ajax
-        ({
-            method: 'get',
-            url: 'gen-session-info',
-            success: function (data)
-            {
-                if(data[0]!=null)
-                {
-                    $('#modal-load-session').modal();
-                }
-            },
-            complete:function()
-            {
-                if($('#dealer_name').length > 0 && $('#contract_number').length > 0)
-                {
-                    $('#loanType').val('Auto Loan');
-                }
-            }
-        });
-    }
     else
     {
         $('#formContent').html('');
@@ -5803,7 +5086,7 @@ $('#btnNewSession').click(function ()
     });
 });
 
-$('#client-history-table , #client-revised-account , #client-finish-account , #client-hold-account , #client-cancel-account, #client-return-account').on('click', '#btnFullViewInfo', function (e)
+$('#client-history-table , #client-revised-account , #client-finish-account , #client-hold-account , #client-cancel-account').on('click', '#btnFullViewInfo', function (e)
 {
     acctID = '';
     acctID = $(this).attr("href");
@@ -7560,7 +6843,7 @@ $('#btnTestClientUpload').click(function()
                                     optionsPrin += '<option name = "'+ countI +'" value = "'+namesRes2[1] +' '+namesRes2[2]+' '+namesRes2[0]+'">'+namesRes2[1] +' '+namesRes2[2]+' '+namesRes2[0]+'</option>';
                                 }
 
-                                test2 = '<select class = "excelLoop checkCobSel" id = "excelData-'+ countI + '_' + j +'"  style = "font-size: 1.3em; width: 95%" href = "'+ countI + '_' + j +'"><option name = "'+ countI +'" value = "N/A">Please select the principal borrower</option>'+optionsPrin+'</select>';
+                                    test2 = '<select class = "excelLoop checkCobSel" id = "excelData-'+ countI + '_' + j +'"  style = "font-size: 1.3em; width: 95%" href = "'+ countI + '_' + j +'"><option name = "'+ countI +'" value = "N/A">Please select the principal borrower</option>'+optionsPrin+'</select>';
                             }
                             else
                             {
@@ -7720,14 +7003,14 @@ $('#btnTestClientUpload').click(function()
 
 $('#testExcelTable').on('click', '.clickToDelRow', function()
 {
-    var id = $(this).closest('tr').attr('name');
+   var id = $(this).closest('tr').attr('name');
 
-    if(confirm('Are you sure to remove this row?'))
-    {
-        $('#removeMe-'+id+'').remove();
+   if(confirm('Are you sure to remove this row?'))
+   {
+       $('#removeMe-'+id+'').remove();
 
-        bulkExcelRed()
-    }
+       bulkExcelRed()
+   }
 });
 
 function bulkExcelRed()
@@ -8459,44 +7742,34 @@ $('#client-history-table').on('click', '.edit_req11', function()
         },
         success: function(data)
         {
-            if(data != 'exceeded')
+            $('#EditEndorsementClient').attr('href', btoa(endo_id));
+            $('.edit_endo_roll').each(function()
             {
-                $('#EditEndorsementClient').attr('href', btoa(endo_id));
-                $('.edit_endo_roll').each(function()
+                var what = $(this).attr('identifier');
+                if($(this).attr('name') != null)
                 {
-                    var what = $(this).attr('identifier');
-                    if($(this).attr('name') != null)
+                    if(data[1][0][what].split(" ").length > 2)
                     {
-                        if(data[1][0][what].split(" ").length > 2)
-                        {
-                            if($(this).attr('name') <= 2)
-                            {
-                                $(this).val(data[1][0][what].split(" ")[$(this).attr('name')]);
-                            }
-                        }
-                        else
+                        if($(this).attr('name') <= 2)
                         {
                             $(this).val(data[1][0][what].split(" ")[$(this).attr('name')]);
                         }
                     }
                     else
                     {
-                        $(this).val(data[1][0][what]);
+                        $(this).val(data[1][0][what].split(" ")[$(this).attr('name')]);
                     }
-                });
-                $('#modal-edit-endorsement-details').modal('show');
-
-            }
-            else
-            {
-                alert('Exceeded the allotted time to edit this endorsements details');
-            }
-
+                }
+                else
+                {
+                    $(this).val(data[1][0][what]);
+                }
+            });
         },
-        // complete: function()
-        // {
-        //     $('#modal-edit-endorsement-details').modal('show');
-        // },
+        complete: function()
+        {
+            $('#modal-edit-endorsement-details').modal('show');
+        },
         error: function(e)
         {
             alert('Error occured contact the web developer for assistance. Thank you');
@@ -8558,40 +7831,3 @@ $('#edit_lname, #edit_fname, #edit_mname').on('keyup change', function()
     $('#account_name_edit_client').val($('#edit_lname').val() + ' ' + $('#edit_fname').val() + ' ' + $('#edit_mname').val());
     console.log($('#account_name_edit_client').val());
 });
-
-function autoDispatching(id)
-{
-    $.ajax
-    ({
-        type : 'get',
-        url : 'client_endorse_auto_dispatching',
-        data :
-            {
-                'id' : id
-            },
-        success : function(data)
-        {
-            console.log(data)
-        },
-        complete : function(data)
-        {
-            document.getElementById("btnModalCloseSending").click();
-            $('#modal-sentsuccess').modal('show');
-
-            var timerSuccess = setInterval(function()
-            {
-                $('#modal-sentsuccess').modal('hide');
-                clearInterval(timerSuccess);
-
-                var sessionModal = setInterval(function ()
-                {
-                    $('#modal-load-session').modal();
-                    clearInterval(sessionModal);
-                },1000)
-
-            }, 2000);
-
-            $("#endorseSend").attr("disabled", false);
-        }
-    });
-}

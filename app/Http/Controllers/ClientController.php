@@ -113,12 +113,9 @@ class ClientController extends Controller
                 $timeStamp = $dataDashboard[3];
                 $tatAccounts = $dataDashboard[4];
                 //            END
-                
-                //Added $provinces variable
-                $provinces = Province::all();
                 $tors = TypeOfRequest::all();
                 $tols = TypeOfLoan::all();
-                // $provinces = Province::all(); ADDED ON LIVE FEB 14,2022
+                $provinces = Province::all();
 
                 $javs = DB::table('javascript_magic')
                     ->select('unique')
@@ -133,6 +130,7 @@ class ClientController extends Controller
                     'overdueAccount',
                     'tatAccounts',
                     'javs',
+                    //marked
                     'provinces',
                     'tors',
                     'tols'

@@ -762,7 +762,7 @@ tr:first-child > td > .fc-day-grid-event {
 
 a.fc-more {
 	margin: 1px 3px;
-	font-size: 1em;
+	font-size: .85em;
 	cursor: pointer;
 	text-decoration: none;
 }

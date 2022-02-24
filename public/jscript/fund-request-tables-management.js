@@ -55,7 +55,7 @@ function fund_manage_init()
                             }
                             else
                             {
-                                return data.disp_date;
+                                return data.sao_date;
                             }
                         },
                         "searchable" : false,
@@ -82,7 +82,7 @@ function fund_manage_init()
                             }
                             else
                             {
-                                return data.name_disp;
+                                return '';
                             }
                         },
                         "searchable" : false,
@@ -108,7 +108,6 @@ function fund_manage_init()
                         data: function actions(data)
                         {
                             var nameRem = '';
-                            var reimbursementBtn = '';
 
                             if(data.tor == 'NORMAL REQUEST')
                             {
@@ -118,15 +117,10 @@ function fund_manage_init()
                             {
                                 nameRem = data.remarks;
                             }
-                            else if(data.tor == 'REIMBURSEMENT')
-                            {
-                                nameRem = data.ci_reimburse_remarks;
-                                reimbursementBtn = '<button class="btnViewMainLiq btn btn-xs btn-block bg-teal-active color-palette" href="'+data.id+'">VIEW LIQUIDATION</button>';
-                            }
 
                             return '  <button href="' + data.id + '" class="btn btn-xs btn-info btn-block" data-toggle="modal" id="BtnApproved" style="width: 100%" name = "'+data.amount+'">APPROVE REQUEST</button>' +
                                 '<button href="' + data.id + '" class="btn btn-xs btn-warning btn-block" data-toggle="modal" id="BtnDeclined" style="width: 100%">DISAPPROVE REQUEST</button>' +
-                                '<button class = "btnViewReqRem btn btn-xs btn-primary btn-block" style = "width : 100%" name = "'+nameRem+'">VIEW REQUESTOR REMARKS</button>' + reimbursementBtn;
+                                '<button class = "btnViewReqRem btn btn-xs btn-primary btn-block" style = "width : 100%" name = "'+nameRem+'">VIEW REQUESTOR REMARKS</button>';
 
                         },
                         "orderable": false,
@@ -221,7 +215,6 @@ function fund_manage_init()
     });
 
     function initTable_pending(tableId, data) {
-        console.log(data.tor);
         $('#' + tableId).DataTable({
             processing: true,
             serverSide: true,
@@ -231,8 +224,7 @@ function fund_manage_init()
                 {
                     url: "/sao_pending_fund_details_endorsements",
                     data: function (e) {
-                        e.id = data.id;
-                        e.tor = data.tor;
+                        e.id = data.id
                     }
                 },
             columns: [
@@ -474,7 +466,6 @@ function app_table()
                     url: "/sao_app_fund_details_endorsements",
                     data : function (e) {
                         e.id = data.id
-                        e.tor = data.tor
                     }
                 },
             columns: [
@@ -560,7 +551,7 @@ function dec_table()
                             }
                             else
                             {
-                                return data.name_disp;
+                                return data.name_disp + data.name_sao;;
                             }
                         },
                         "searchable" : false,
@@ -708,7 +699,6 @@ function dec_table()
                     url: "/sao_dec_fund_details_endorsements",
                     data : function (e) {
                         e.id = data.id
-                        e.tor = data.tor
                     }
                 },
             columns: [
@@ -733,35 +723,6 @@ function dec_table()
     }
 }
 
-$('#table_fund_req').on('click', '.btnViewMainLiq', function()
-{
-    $.ajax({
-        type: 'get',
-        url: 'management_view_main_liquidation',
-        data:{
-            'id': $(this).attr('href')
-        },
-        beforeSend: function()
-        {
-            $('#modal-loading-redirect').modal('show');
-        },
-        success: function(data)
-        {
-            $('#clickFAToAccess').click();
-            $('.ci_expense_range').each(function()
-            {
-                if($(this).attr('value') == 'All')
-                {
-                    $(this).click();
-                    $(this).prop("checked", true);
-                    tableFundFa.search(data).draw();
-                }
-            });
-        },
-        complete: function()
-        {
-            $('#modal-loading-redirect').modal('hide');
-        }
-    });
 
-});
+
+

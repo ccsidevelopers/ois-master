@@ -428,17 +428,18 @@ function get_general_table()
                 {data: 'project', name: 'bi_endorsements.project'}, //7
                 {data: 'account_name', name: 'bi_endorsements.account_name'}, //8
                 {data: 'package', name: 'bi_endorsements.package'}, //9
-                {data: 'check', name: 'bi_endorsements_checkings.checking_name'}, //10
+                {data: 'check', name: 'bi_endorsements.id'}, //10
                 {data: 'poc', name: 'bi_endorsements.endorser_poc'}, //11
                 {data: 'attachments', name: 'bi_endorsements.attach_1'}, //12
                 {data: 'site', name: 'bi_endorsements.bi_account_name'}, //13
-
                 {
                     data: function contact_details(data)
                     {
-                        if(data.tele_stat == 'Contacted')
+                          if(data.tele_stat == 'Contacted')
                         {
-                            if(data.contact_details == null)
+                            console.log(data.tele_stat);
+
+                            if(data.contact_details == null || data.contact_details == '')
                             {
                                 return 'N/A';
                             }
@@ -449,6 +450,18 @@ function get_general_table()
                             else if(data.contact_details == 'Verified applying')
                             {
                                 return '<p style="font-style: italic">'+data.contact_details+'</p>';
+                            }
+                            else
+                            {
+                                return '<p style="font-style: italic">'+data.contact_details+'</p>';
+                            }
+                        }
+                        else if(data.tele_stat == 'Uncontacted')
+                        {
+
+                            if(data.contact_details == null || data.contact_details == '')
+                            {
+                                return 'N/A';
                             }
                             else
                             {
@@ -468,10 +481,12 @@ function get_general_table()
                 {
                     data: function d_t_f(data)
                     {
-                        if(data.date_time_finished != '')
+                        
+                        
+                        if(data.date_time_finished != null)
                         {
                             var date_time = data.date_time_finished;
-
+                            
                             var split = date_time.split(' ');
 
                             var time = split[1].split(':');
@@ -597,6 +612,240 @@ function get_general_table()
 
 }
 
+// function get_general_table()
+// {
+//     $('#bi_client_general_table thead th').each(function()
+//     {
+//         title_general[general_count] = $(this).text();
+//         general_count++;
+//         var title = $(this).text();
+//         $(this).html(title+'<br><input type="text" placeholder="Search" style="position: relative; width: 100%">');
+//     });
+
+//     table_general = $('#bi_client_general_table').DataTable
+//     ({
+//         "responsive": true,
+//         "processing": true,
+//         "serverSide": true,
+//         "ajax" : 'tfs_bi_client_get_general_table',
+//         // "ajax":
+//         //     {
+//         //         url: "/client-get-finish-account",
+//         //         data: function (d)
+//         //         {
+//         //             d.min_date_endorsed = $('#minFinish').val();
+//         //             d.max_date_endorsed = $('#maxFinish').val();
+//         //         }
+//         //     },
+//         dom: 'Blfrtip',
+//         buttons:
+//             [
+
+//                 {
+//                     extend: 'excel',
+//                     exportOptions:
+//                         {
+//                             columns: ':visible',
+//                             format:
+//                                 {
+//                                     header:  function (dt, idx, title)
+//                                     {
+//                                         return title_general[(idx)];
+//                                     }
+//                                 }
+//                         },
+//                     customize: function ( xlsx ){
+//                         var sheet = xlsx.xl.worksheets['sheet1.xml'];
+
+//                         var loop = 0;
+//                         $('row', sheet).each(function () {
+
+//                             $(this).find("c").attr('s', '55');
+//                             $('row:first c', sheet).attr('s', '51');
+//                             loop++;
+//                         });
+//                     }
+//                 }
+//                 // {
+//                 //     extend: 'colvis',
+//                 //     text: 'Show/Hide Column',
+//                 //     columnText: function (dt, idx, title)
+//                 //     {
+//                 //         return title_general[(idx)];
+//                 //     }
+//                 // }
+//             ],
+//         "columns":
+//             [
+//                 {data: 'endorse_id', name: 'bi_endorsements.id'},
+//                 {data: 'party_num', name: 'bi_endorsements.party_num', visible:false},
+//                 {data: 'contract_num', name: 'bi_endorsements.contract_num', visible:false},
+//                 {data: 'site', name: 'bi_endorsements.bi_account_name'},
+//                 {data: 'tor', name: 'bi_endorsements.type_of_endorsement_bank'},
+//                 // {data: 'date_time_endorsed', name: 'bi_endorsements.created_at'},
+//                 {
+//                     data : function d_t(data)
+//                     {
+//                         var date_time = data.date_time_endorsed;
+
+//                         var split = date_time.split(' ');
+
+//                         var time = split[1].split(':');
+
+//                         var final = time[0] + ':' + time[1];
+
+//                         return split[0] + ' ' +final;
+//                     },
+//                     name : 'bi_endorsements.created_at'
+//                 },
+//                 {data: 'project', name: 'bi_endorsements.project'},
+//                 {data: 'account_name', name: 'bi_endorsements.account_name'},
+//                 {data: 'package', name: 'bi_endorsements.package'},
+//                 {data: 'check', name: 'bi_endorsements_checkings.checking_name'},
+//                 {data: 'poc', name: 'bi_endorsements.endorser_poc'},
+//                 {data: 'attachments', name: 'bi_endorsements.attach_1'},
+//                 {data: 'due', name: 'bi_endorsements.date_time_due'},
+//                 {
+//                     data: function contact_details(data)
+//                     {
+//                         if(data.tele_stat == 'Contacted')
+//                         {
+//                             if(data.contact_details == null)
+//                             {
+//                                 return 'N/A';
+//                             }
+//                             else if(data.contact_details == 'Refused to be interviewed')
+//                             {
+//                                 return '<p style="font-style: italic">'+data.contact_details+'</p>';
+//                             }
+//                             else if(data.contact_details == 'Verified applying')
+//                             {
+//                                 return '<p style="font-style: italic">'+data.contact_details+'</p>';
+//                             }
+//                             else
+//                             {
+//                                 return '<p style="font-style: italic">'+data.contact_details+'</p>';
+//                             }
+//                         }
+//                         else
+//                         {
+//                             return 'N/A';
+//                         }
+//                     },
+//                     'name': 'bi_endorsements.verify_tele_status_details',
+//                     'orderable' : false,
+//                     'visible' : false
+//                 },
+//                 {data: 'button_edit', name: 'bi_endrosements.id', "searchable": false}
+//                 // {
+//                 //     data : function action(data)
+//                 //     {
+//                 //         var addCancel = '';
+//                 //
+//                 //         if(data.cancel_status == '' || data.cancel_status == null)
+//                 //         {
+//                 //             if(data.status == 10 || data.status == 4)
+//                 //             {
+//                 //                 addCancel = '';
+//                 //             }
+//                 //             else
+//                 //             {
+//                 //                 addCancel = '<button class="btn btn-xs btn-danger btn-block client_req_cancel" id="'+data.endorse_id+'" data-toggle="modal" data-target="#modal-bi-cancel-request" name="req_cancel"><i class="glyphicon glyphicon-ban-circle"></i> Request Account Cancellation</button>';
+//                 //             }
+//                 //         }
+//                 //         else if(data.cancel_status == 'Cancelled' || data.cancel_status == 'Pending')
+//                 //         {
+//                 //             addCancel = '<button class="btn btn-xs btn-danger btn-block client_revoke_cancel" id="'+data.endorse_id+'" data-toggle="modal" data-target="#modal-bi-cancel-request" name="req_revoke"><i class="glyphicon glyphicon-ban-circle"></i> Revoke Cancellation</button>' ;
+//                 //         }
+//                 //         else if(data.cancel_status == 'Pending Cancelled' || data.cancel_status == 'Pending Revoke')
+//                 //         {
+//                 //             addCancel = '';
+//                 //         }
+//                 //
+//                 //         return addCancel + '<a id="'+data.endorse_id+'" class="btn_view_information_bi btn btn-xs btn-info btn-block" data-toggle="modal" data-target="" ><i class="glyphicon glyphicon-film"></i> View Information</a>';
+//                 //     },
+//                 //     'name' : 'action',
+//                 //     'searchable' : false
+//                 // }
+//             ],
+
+//         "order": [[0, 'desc']],
+//         "pageLength": 10,
+//         "lengthMenu": [[2, 10, 25, 50, -1], ['2 rows', '10 rows', '25 rows', '50 rows', 'Show all']],
+//         "bSortClasses": false,
+//         "deferRender": true,
+//         initComplete: function()
+//         {
+//             var api = this.api();
+
+//             // Apply the search
+//             api.columns().every(function() {
+//                 var that = this;
+
+//                 $('input', this.header()).on('keyup change', function(e)
+//                 {
+//                     if($(this).is(':focus'))
+//                     {
+//                         if(e.keyCode === 13)
+//                         {
+//                             if (that.search() !== this.value) {
+//                                 that
+//                                     .search(this.value)
+//                                     .draw();
+//                             }
+//                         }
+//                         else if (e.keyCode === 8)
+//                         {
+//                             if (this.value == '') {
+//                                 that
+//                                     .search(this.value)
+//                                     .draw();
+//                             }
+//                         }
+//                     }
+//                 });
+//             });
+
+//             if(what_to_submit =='cc_bank')
+//             {
+//                 // table_general.column(1).visible(true);
+//                 table_general.column(6).visible(false);
+//                 // table_general.column(7).visible(true);
+//                 table_general.column(9).visible(false);
+//                 table_general.column(8).visible(false);
+//                 table_general.column(13).visible(true);
+//             }
+//             else
+//             {
+//                 // table_general.column(1).visible(false);
+//                 table_general.column(4).visible(false);
+//                 table_general.column(6).visible(true);
+//                 // table_general.column(7).visible(true);
+//                 table_general.column(8).visible(true);
+//                 table_general.column(13).visible(false);
+//             }
+//         }
+//     })
+
+//     $('#bi_client_general_table_filter input').unbind();
+//     $('#bi_client_general_table_filter input').bind('keyup change',function (e) {
+
+//         if($(this).is(':focus'))
+//         {
+//             if (e.keyCode == 13) {
+//                 table_general.search($(this).val()).draw();
+//             }
+//             else if (e.keyCode === 8)
+//             {
+//                 if ($(this).val() == '') {
+//                     table_general.search($(this).val()).draw();
+//                 }
+//             }
+//         }
+//     });
+
+// }
+
 function get_pending_table() {
 
     $('#bi_client_pending_table thead th').each(function() {
@@ -682,7 +931,7 @@ function get_pending_table() {
                 {data: 'project', name: 'bi_endorsements.project'},
                 {data: 'account_name', name: 'bi_endorsements.account_name'},
                 {data: 'package', name: 'bi_endorsements.package'},
-                {data: 'check', name: 'bi_endorsements_checkings.checking_name'},
+                {data: 'check', name: 'bi_endorsements.id'},
                 {data: 'poc', name: 'bi_endorsements.endorser_poc'},
                 {data: 'attachments', name: 'bi_endorsements.attach_1'},
                 {data: 'due', name: 'bi_endorsements.due'},
@@ -771,6 +1020,181 @@ function get_pending_table() {
     });
 
 }
+
+// function get_pending_table() {
+
+//     $('#bi_client_pending_table thead th').each(function() {
+//         title_pending[pending_count] = $(this).text();
+//         pending_count++;
+//         var title = $(this).text();
+//         $(this).html(title+'<br><input type="text" placeholder="Search" style="position: relative; width: 100%">');
+//     });
+
+//     table_pending = $('#bi_client_pending_table').DataTable
+//     ({
+//         "responsive": true,
+//         "processing": true,
+//         "serverSide": true,
+//         "ajax" : 'tfs_bi_client_get_pending_table',
+//         // "ajax":
+//         //     {
+//         //         url: "/client-get-finish-account",
+//         //         data: function (d)
+//         //         {
+//         //             d.min_date_endorsed = $('#minFinish').val();
+//         //             d.max_date_endorsed = $('#maxFinish').val();
+//         //         }
+//         //     },
+//         dom: 'Blfrtip',
+//         buttons:
+//             [
+//                 {
+//                     extend: 'excel',
+//                     exportOptions:
+//                         {
+//                             columns: ':visible',
+//                             format:
+//                                 {
+//                                     header:  function (dt, idx, title)
+//                                     {
+//                                         return title_pending[(idx)];
+//                                     }
+//                                 }
+//                         },
+//                     customize: function ( xlsx ){
+//                         var sheet = xlsx.xl.worksheets['sheet1.xml'];
+
+//                         var loop = 0;
+//                         $('row', sheet).each(function () {
+
+//                             $(this).find("c").attr('s', '55');
+//                             $('row:first c', sheet).attr('s', '51');
+//                             loop++;
+//                         });
+//                     }
+//                 }
+//             ],
+//         "columns":
+//             [
+//                 {data: 'endorse_id', name: 'bi_endorsements.id'},
+//                 {data: 'site', name: 'bi_endorsements.bi_account_name'},
+//                 {data: 'tor', name: 'bi_endorsements.type_of_endorsement_bank'},
+//                 // {data: 'date_time_endorsed', name: 'bi_endorsements.created_at'},
+//                 {
+//                     data : function d_t(data)
+//                     {
+//                         var date_time = data.date_time_endorsed;
+
+//                         var split = date_time.split(' ');
+
+//                         var time = split[1].split(':');
+
+//                         var final = time[0] + ':' + time[1];
+
+//                         return split[0] + ' ' +final;
+//                     },
+//                     name : 'bi_endorsements.created_at'
+//                 },
+//                 {data: 'project', name: 'bi_endorsements.project'},
+//                 {data: 'account_name', name: 'bi_endorsements.account_name'},
+//                 {data: 'package', name: 'bi_endorsements.package'},
+//                 {data: 'check', name: 'bi_endorsements_checkings.checking_name'},
+//                 {data: 'poc', name: 'bi_endorsements.endorser_poc'},
+//                 {data: 'attachments', name: 'bi_endorsements.attach_1'},
+//                 {data: 'due', name: 'bi_endorsements.due'},
+//                 {
+//                     data : function action(data) {
+//                         return '<button class="btn btn-warning btn-xs btn-block client_edit_req" id="'+data.endorse_id+'"><span class="glyphicon glyphicon-pencil"></span>Edit Endorsement Details</button>' +
+//                             '<a id="'+data.endorse_id+'" class="btn_view_information_bi btn btn-xs btn-info btn-block" data-toggle="modal" data-target="" ><i class="glyphicon glyphicon-film"></i> View Information</a>';
+//                     },
+//                     'name' : 'action',
+//                     'searchable' : false,
+//                     'orderable' : false
+//                 }
+//             ],
+//         // "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull)
+//         // {
+//         //     if ( aData.endorsement_status_external == "TAT" )
+//         //     {
+//         //         $('td', nRow).css('background-color', '#66ff66');
+//         //     }
+//         //     else if(aData.endorsement_status_external == "OVERDUE")
+//         //     {
+//         //         $('td', nRow).css('background-color', '#ff9980');
+//         //     }
+//         // },
+//         "order": [[0, 'desc']],
+//         "pageLength": 10,
+//         "lengthMenu": [[2, 10, 25, 50, -1], ['2 rows', '10 rows', '25 rows', '50 rows', 'Show all']],
+//         "bSortClasses": false,
+//         "deferRender": true,
+//         initComplete: function()
+//         {
+//             var api = this.api();
+
+//             // Apply the search
+//             api.columns().every(function() {
+//                 var that = this;
+
+//                 $('input', this.header()).on('keyup change', function(e)
+//                 {
+//                     if($(this).is(':focus'))
+//                     {
+//                         if(e.keyCode === 13)
+//                         {
+//                             if (that.search() !== this.value) {
+//                                 that
+//                                     .search(this.value)
+//                                     .draw();
+//                             }
+//                         }
+//                         else if (e.keyCode === 8)
+//                         {
+//                             if (this.value == '') {
+//                                 that
+//                                     .search(this.value)
+//                                     .draw();
+//                             }
+//                         }
+//                     }
+//                 });
+//             });
+
+//             if(what_to_submit =='cc_bank')
+//             {
+//                 table_pending.column(1).visible(false);
+//                 table_pending.column(6).visible(false);
+//                 table_pending.column(7).visible(false);
+//             }
+//             else
+//             {
+//                 table_pending.column(1).visible(true);
+//                 table_pending.column(2).visible(false);
+//                 table_pending.column(6).visible(true);
+//                 table_pending.column(7).visible(true);
+//             }
+//         }
+//     });
+
+
+//     $('#bi_client_pending_table_filter input').unbind();
+//     $('#bi_client_pending_table_filter input').bind('keyup change',function (e) {
+
+//         if($(this).is(':focus'))
+//         {
+//             if (e.keyCode == 13) {
+//                 table_pending.search($(this).val()).draw();
+//             }
+//             else if (e.keyCode === 8)
+//             {
+//                 if ($(this).val() == '') {
+//                     table_pending.search($(this).val()).draw();
+//                 }
+//             }
+//         }
+//     });
+
+// }
 
 function get_return_table() {
 
@@ -861,7 +1285,7 @@ function get_return_table() {
                 {data: 'project', name: 'bi_endorsements.project'},
                 {data: 'account_name', name: 'bi_endorsements.account_name'},
                 {data: 'package', name: 'bi_endorsements.package'},
-                {data: 'check', name: 'bi_endorsements_checkings.checking_name'},
+                {data: 'check', name: 'bi_endorsements.id'},
                 {data: 'poc', name: 'bi_endorsements.endorser_poc'},
                 {data: 'attachments', name: 'bi_endorsements.attach_1'},
                 {
@@ -979,6 +1403,214 @@ function get_return_table() {
     });
 
 }
+
+// function get_return_table() {
+
+//     $('#bi_client_return_table thead th').each(function() {
+//         title_return[return_count] = $(this).text();
+//         return_count++;
+//         var title = $(this).text();
+//         $(this).html(title+'<br><input type="text" placeholder="Search" style="position: relative; width: 100%">');
+//     });
+
+//     table_return = $('#bi_client_return_table').DataTable
+//     ({
+//         "responsive": true,
+//         "processing": true,
+//         "serverSide": true,
+//         "ajax" : 'tfs_bi_client_get_return_table',
+//         // "ajax":
+//         //     {
+//         //         url: "/client-get-finish-account",
+//         //         data: function (d)
+//         //         {
+//         //             d.min_date_endorsed = $('#minFinish').val();
+//         //             d.max_date_endorsed = $('#maxFinish').val();
+//         //         }
+//         //     },
+//         dom: 'Blfrtip',
+//         buttons:
+//             [
+//                 {
+//                     extend: 'excel',
+//                     exportOptions:
+//                         {
+//                             columns: ':visible',
+//                             format:
+//                                 {
+//                                     header:  function (dt, idx, title)
+//                                     {
+//                                         return title_return[(idx)];
+//                                     }
+//                                 }
+//                         },
+//                     customize: function ( xlsx ){
+//                         var sheet = xlsx.xl.worksheets['sheet1.xml'];
+
+//                         var loop = 0;
+//                         $('row', sheet).each(function () {
+
+//                             $(this).find("c").attr('s', '55');
+//                             $('row:first c', sheet).attr('s', '51');
+//                             loop++;
+//                         });
+//                     }
+//                 }
+//             ],
+//         "columns":
+//             [
+//                 {data: 'endorse_id', name: 'bi_endorsements.id'},
+//                 {data: 'site', name: 'bi_endorsements.bi_account_name'},
+//                 {data: 'tor', name: 'bi_endorsements.type_of_endorsement_bank'},
+//                 // {data: 'date_time_endorsed', name: 'bi_endorsements.created_at'},
+//                 {
+//                     data : function d_t(data)
+//                     {
+//                         var date_time = data.date_time_endorsed;
+
+//                         var split = date_time.split(' ');
+
+//                         var time = split[1].split(':');
+
+//                         var final = time[0] + ':' + time[1];
+
+//                         return split[0] + ' ' +final;
+//                     },
+//                     name : 'bi_endorsements.created_at'
+//                 },
+//                 {data: 'project', name: 'bi_endorsements.project'},
+//                 {data: 'account_name', name: 'bi_endorsements.account_name'},
+//                 {data: 'package', name: 'bi_endorsements.package'},
+//                 {data: 'check', name: 'bi_endorsements_checkings.checking_name'},
+//                 {data: 'poc', name: 'bi_endorsements.endorser_poc'},
+//                 {data: 'attachments', name: 'bi_endorsements.attach_1'},
+//                 {
+//                     data : function action(data) {
+
+//                         if(data.status == 20)
+//                         {
+//                             return '<a class="btn btn-xs btn-warning btn-block" data-toggle="modal" data-target="" disabled><i class="glyphicon glyphicon-repeat"></i> Returned Upon Endorsement</a>';
+//                         }
+//                         else if(data.status == 22)
+//                         {
+//                             return '<a class="btn btn-xs btn-danger btn-block" data-toggle="modal" data-target="" disabled><i class="glyphicon glyphicon-repeat"></i> Returned During Endorsement</a>';
+//                         }
+//                         else if(data.status == 23)
+//                         {
+//                             return '<a class="btn btn-xs btn-warning btn-block" data-toggle="modal" data-target="" disabled><i class="glyphicon glyphicon-repeat"></i> Returned After Endorsement</a>';
+//                         }
+//                         else if(data.status == 25)
+//                         {
+//                             return '<a class="btn btn-xs btn-warning btn-block" data-toggle="modal" data-target="" disabled><i class="glyphicon glyphicon-repeat"></i> Returned After Endorsement</a>';
+//                         }
+//                         else if (data.status == 21)
+//                         {
+//                             return '<a class="btn btn-xs btn-danger btn-block" data-toggle="modal" data-target="" disabled><i class="glyphicon glyphicon-envelope"></i> Returned Enodrsement</a>';
+//                         }
+//                         else if(data.status == 24)
+//                         {
+//                             return '<a class="btn btn-xs btn-danger btn-block" data-toggle="modal" data-target="" disabled><i class="glyphicon glyphicon-repeat"></i> Returned After Endorsement</a>';
+//                         }
+
+//                     },
+//                     'name' : 'bi_endorsements.status',
+//                 },
+//                 {
+//                     data : function action(data) {
+
+//                         return '<a class="btn_re_endorse_edit btn btn-xs btn-warning btn-block" id="'+data.endorse_id+'" data-toggle="modal" data-target="" ><i class="glyphicon glyphicon-plus"></i> Add/Remove Attachment</a>' +
+//                             '<a class="btn_re_endorse btn btn-xs btn-warning btn-block" style="display: none;" id="'+data.endorse_id+'" data-toggle="modal" data-target="" name="'+data.status+'"><i class="glyphicon glyphicon-refresh"></i> Re Endorse / Upload</a>' +
+//                             '<a class="btn btn-xs btn-danger btn-block btn_viewReason"data-toggle="modal" data-target="" name ="'+data.endorse_id+'"><i class="glyphicon glyphicon-eye-open"></i> View Reason</a>'+
+//                             '<a class="btn_re_endorse_edit_cancel btn btn-xs btn-danger btn-block" style="display: none;" id="'+data.endorse_id+'" data-toggle="modal" data-target="" ><i class="glyphicon glyphicon-remove"></i> Cancel</a>' +
+//                             '<br><a id="'+data.endorse_id+'" class="btn_view_information_bi btn btn-xs btn-info btn-block" data-toggle="modal" data-target="" ><i class="glyphicon glyphicon-film"></i> View Information</a>';
+//                     },
+//                     'name' : 'action',
+//                     'searchable' : false,
+//                     'orderable' : false
+//                 }
+//             ],
+//         // "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull)
+//         // {
+//         //     if ( aData.endorsement_status_external == "TAT" )
+//         //     {
+//         //         $('td', nRow).css('background-color', '#66ff66');
+//         //     }
+//         //     else if(aData.endorsement_status_external == "OVERDUE")
+//         //     {
+//         //         $('td', nRow).css('background-color', '#ff9980');
+//         //     }
+//         // },
+//         "order": [[0, 'desc']],
+//         "pageLength": 10,
+//         "lengthMenu": [[2, 10, 25, 50, -1], ['2 rows', '10 rows', '25 rows', '50 rows', 'Show all']],
+//         "bSortClasses": false,
+//         "deferRender": true,
+//         initComplete: function()
+//         {
+//             var api = this.api();
+
+//             // Apply the search
+//             api.columns().every(function() {
+//                 var that = this;
+
+//                 $('input', this.header()).on('keyup change', function(e)
+//                 {
+//                     if($(this).is(':focus'))
+//                     {
+//                         if(e.keyCode === 13)
+//                         {
+//                             if (that.search() !== this.value) {
+//                                 that
+//                                     .search(this.value)
+//                                     .draw();
+//                             }
+//                         }
+//                         else if (e.keyCode === 8)
+//                         {
+//                             if (this.value == '') {
+//                                 that
+//                                     .search(this.value)
+//                                     .draw();
+//                             }
+//                         }
+//                     }
+//                 });
+//             });
+
+//             if(what_to_submit =='cc_bank')
+//             {
+//                 table_return.column(1).visible(false);
+//                 table_return.column(6).visible(false);
+//                 table_return.column(7).visible(false);
+//             }
+//             else
+//             {
+//                 table_return.column(1).visible(true);
+//                 table_return.column(2).visible(false);
+//                 table_return.column(6).visible(true);
+//                 table_return.column(7).visible(true);
+//             }
+//         }
+//     });
+
+//     $('#bi_client_return_table_filter input').unbind();
+//     $('#bi_client_return_table_filter input').bind('keyup change',function (e) {
+
+//         if($(this).is(':focus'))
+//         {
+//             if (e.keyCode == 13) {
+//                 table_return.search($(this).val()).draw();
+//             }
+//             else if (e.keyCode === 8)
+//             {
+//                 if ($(this).val() == '') {
+//                     table_return.search($(this).val()).draw();
+//                 }
+//             }
+//         }
+//     });
+
+// }
 
 $('#bi_check_same_address').on('change',function(e)
 {
@@ -1519,11 +2151,11 @@ $('#btn_bi_submit_endorsement').click(function ()
 
         if(!required_fieldBool)
         {
-            required_field = if_no_check === 0 || if_no_attachment === 0 || $('#bi_account_tat').val() == '-' || $('#acct_last').val() == '' || $('#acct_first').val() == '' || $('#acct_endorsedby').val() == '' || $('#bi_present_address').val() == '' || $('#bi_present_municipality').val() == '' || $('#bi_permanent_address').val() == '' || $('#bi_permanent_municipality').val() == '' ||
+            required_field = if_no_check === 0 || $('#acct_last').val() == '' || $('#acct_first').val() == '' || $('#acct_endorsedby').val() == '' || $('#bi_present_address').val() == '' || $('#bi_present_municipality').val() == '' || $('#bi_permanent_address').val() == '' || $('#bi_permanent_municipality').val() == '' ||
                 $('#bi_permanent_municipality').val() == '' || $('#acct_birthdate_day').val() == '-' || $('#acct_birthdate_month').val() == '-' || $('#acct_birthdate_year').val() == '-';
         }
         else {
-            required_field = if_no_check === 0 || if_no_attachment === 0 || $('#bi_account_tat').val() == '-' || $('#acct_last').val() == '' || $('#acct_first').val() == '' || $('#acct_endorsedby').val() == '' || $('#acct_birthdate_day').val() == '-' || $('#acct_birthdate_month').val() == '-' || $('#acct_birthdate_year').val() == '-';
+            required_field = if_no_check === 0 || $('#acct_last').val() == '' || $('#acct_first').val() == '' || $('#acct_endorsedby').val() == '' || $('#acct_birthdate_day').val() == '-' || $('#acct_birthdate_month').val() == '-' || $('#acct_birthdate_year').val() == '-';
         }
 
         if(what_to_submit == 'cc_bi')
@@ -2367,7 +2999,8 @@ $('#btn_bi_submit_endorsement').click(function ()
         }
         else
         {
-            alert('Please upload a file');
+             endorseAccountFunc();
+            // alert('Please upload a file');
             // console.log('do nothing di mageendorse');
         }
     }
@@ -2922,24 +3555,21 @@ function bi_finish()
                 {data: 'contract_num', name: 'bi_endorsements.contract_num'},
                 {data: 'dealer_num', name: 'bi_endorsements.dealer_num'},
                 {data: 'account_name', name: 'bi_endorsements.account_name'},
-                // {data: 'date_time_endorsed', name: 'bi_endorsements.created_at'},
                 {
-                    data : function d_t(data)
-                    {
-                        var date_time = data.date_time_endorsed;
-
-                        var split = date_time.split(' ');
-
-                        var time = split[1].split(':');
-
-                        var final = time[0] + ':' + time[1];
-
-                        return split[0] + ' ' +final;
+                        data : function d_t(data)
+                        {
+                            var date_time = data.date_time_endorsed;
+    
+                            var split = date_time.split(' ');
+    
+                            var time = split[1].split(':');
+    
+                            var final = time[0] + ':' + time[1];
+    
+                            return split[0] + ' ' +final;
+                        },
+                        name : 'bi_endorsements.created_at'
                     },
-                    name : 'bi_endorsements.created_at'
-
-                },
-
                 {data : 'status' , name : 'bi_endorsements.date_time_finished', 'orderable' : false},
                 {
                     data : function d_t(data)
@@ -2978,21 +3608,44 @@ function bi_finish()
                 {
                     data: function contact_details(data)
                     {
-                        if(data.tele_stat == 'Contacted')
+                          if(data.tele_stat == 'Contacted')
                         {
-                            if(data.contact_details == null)
+                            console.log(data.tele_stat);
+
+                            if(data.contact_details == null || data.contact_details == '')
+                            {
+                                return 'N/A';
+                            }
+                            else if(data.contact_details == 'Refused to be interviewed')
+                            {
+                                return '<p style="font-style: italic">'+data.contact_details+'</p>';
+                            }
+                            else if(data.contact_details == 'Verified applying')
+                            {
+                                return '<p style="font-style: italic">'+data.contact_details+'</p>';
+                            }
+                            else
+                            {
+                                return '<p style="font-style: italic">'+data.contact_details+'</p>';
+                            }
+                        }
+                        else if(data.tele_stat == 'Uncontacted')
+                        {
+
+                            if(data.contact_details == null || data.contact_details == '')
                             {
                                 return 'N/A';
                             }
                             else
                             {
-                                return data.contact_details;
+                                return '<p style="font-style: italic">'+data.contact_details+'</p>';
                             }
                         }
                         else
                         {
                             return 'N/A';
                         }
+                        
                     },
                     'name': 'bi_endorsements.verify_tele_status_details',
                     'orderable' : false
@@ -3152,6 +3805,344 @@ function bi_finish()
         }
     });
 }
+
+// function bi_finish()
+// {
+//     $('#bi_client_finished_table thead th').each(function() {
+//         title_finished_h[title_finished_counts] = $(this).text();
+//         title_finished_counts++;
+//         var title = $(this).text();
+//         $(this).html(title+'<br><input type="text" placeholder="Search" style="position: relative; width: 100%">');
+//     });
+
+//     table_finished = $('#bi_client_finished_table').DataTable
+//     ({
+//         "responsive": true,
+//         "processing": true,
+//         "serverSide": true,
+//         "ajax" : 'tfs_bi-client-table-finished',
+//         // "ajax":
+//         //     {
+//         //         url: "/client-get-finish-account",
+//         //         data: function (d)
+//         //         {
+//         //             d.min_date_endorsed = $('#minFinish').val();
+//         //             d.max_date_endorsed = $('#maxFinish').val();
+//         //         }
+//         //     },
+//         dom: 'Blfrtip',
+//         buttons:
+//             [
+//                 {
+//                     extend: 'excel',
+//                     exportOptions:
+//                         {
+//                             columns: ':visible',
+//                             format:
+//                                 {
+//                                     header:  function (dt, idx, title)
+//                                     {
+//                                         return title_finished_h[(idx)];
+//                                     }
+//                                 }
+//                         },
+//                     customize: function (xlsx)
+//                     {
+//                         var sheet = xlsx.xl.worksheets['sheet1.xml'];
+
+//                         var loop = 0;
+//                         $('row', sheet).each(function ()
+//                         {
+//                             $(this).find("c").attr('s', '55');
+//                             $('row:first c', sheet).attr('s', '51');
+//                             loop++;
+//                         });
+//                     }
+//                 }
+//             ],
+//         "columns":
+//             [
+//                 {data: 'endorse_id', name: 'date_time_finished'},
+//                 {data: 'contract_num', name: 'bi_endorsements.contract_num'},
+//                 {data: 'dealer_num', name: 'bi_endorsements.dealer_num'},
+//                 {data: 'account_name', name: 'bi_endorsements.account_name'},
+//                 // {data: 'date_time_endorsed', name: 'bi_endorsements.created_at'},
+//                 {
+//                     data : function d_t(data)
+//                     {
+//                         var date_time = data.date_time_endorsed;
+
+//                         var split = date_time.split(' ');
+
+//                         var time = split[1].split(':');
+
+//                         var final = time[0] + ':' + time[1];
+
+//                         return split[0] + ' ' +final;
+//                     },
+//                     name : 'bi_endorsements.created_at'
+//                 },
+//                 {data : 'status' , name : 'bi_endorsements.date_time_finished', 'orderable' : false},
+//                 {
+//                     data : function d_t(data)
+//                     {
+//                         var date_time = data.finish;
+
+//                         var split = date_time.split(' ');
+
+//                         var time = split[1].split(':');
+
+//                         var final = time[0] + ':' + time[1];
+
+//                         return split[0] + ' ' +final;
+//                     },
+//                     'name' : 'bi_endorsements.date_time_finished'
+//                 },
+//                 {
+//                     data : function tat(data)
+//                     {
+//                         if(data.status_report == 'Contacted' || data.status_report == 'Complete')
+//                         {
+//                             return '<a  id="'+data.endorse_id+'" class="btn btn-xs btn-info btn-block" disabled><i class="fa fa-fw fa-check-square"></i>'+data.status_report+'</a>';
+//                         }
+//                         else if(data.status_report == 'Uncontacted' || data.status_report == 'Partial')
+//                         {
+//                             return '<a  id="'+data.endorse_id+'" class="btn btn-xs btn-warning btn-block" disabled><i class="fa fa-fw fa-spinner"></i>'+data.status_report+'</a>';
+//                         }
+//                     },
+//                     'name' : 'tat',
+//                     'searchable' : false,
+//                     'orderable' : false
+
+//                 },
+//                 {data: 'attachments', name: 'bi_endorsements.attach_1'},
+//                 {
+//                     data: function contact_details(data)
+//                     {
+//                         if(data.tele_stat == 'Contacted')
+//                         {
+//                             if(data.contact_details == null)
+//                             {
+//                                 return 'N/A';
+//                             }
+//                             else
+//                             {
+//                                 return data.contact_details;
+//                             }
+//                         }
+//                         else
+//                         {
+//                             return 'N/A';
+//                         }
+//                     },
+//                     'name': 'bi_endorsements.verify_tele_status_details',
+//                     'orderable' : false
+//                 },
+//                 // {data: 'date_time_endorsed', name: 'bi_endorsements.created_at'},
+//                 // {data: 'project', name: 'bi_endorsements.project'},
+//                 // {data: 'account_name', name: 'bi_endorsements.account_name'},
+//                 // {data: 'package', name: 'bi_endorsements.package'},
+//                 // {data: 'check', name: 'bi_endorsements_checkings.checking_name'},
+//                 // {data: 'poc', name: 'bi_endorsements.endorser_poc'},
+//                 // {
+//                 //     data : function tat(data)
+//                 //     {
+//                 //         if(data.status_report == 'Contacted' || data.status_report == 'Complete')
+//                 //         {
+//                 //             return '<a  id="'+data.endorse_id+'" class="btn btn-xs btn-info btn-block" disabled><i class="fa fa-fw fa-check-square"></i>'+data.status_report+'</a>';
+//                 //         }
+//                 //         else if(data.status_report == 'Uncontacted' || data.status_report == 'Partial')
+//                 //         {
+//                 //             return '<a  id="'+data.endorse_id+'" class="btn btn-xs btn-warning btn-block" disabled><i class="fa fa-fw fa-spinner"></i>'+data.status_report+'</a>';
+//                 //         }
+//                 //     },
+//                 //     'name' : 'tat',
+//                 //     'searchable' : false,
+//                 //     'orderable' : false
+//                 //
+//                 // },
+
+
+//                 {
+//                     data : function action(data)
+//                     {
+//                         var viewFile_button = '<a class="btn_view_report_file btn btn-xs btn-primary btn-block" href="bi_client_view_finished_file?id='+btoa(data.endorse_id)+'" target="_blank"><i class="glyphicon glyphicon-eye-open"></i> View Report File</a>';
+//                         if(data.type_user == 'cc_bank')
+//                         {
+//                             if(data.status_report == 'Contacted')
+//                             {
+//                                 var act = '<a class="btn_down_report btn btn-xs btn-success btn-block" id="'+data.endorse_id+'"><i class="fa fa-fw fa-download"></i> Download Report File</a>' +
+//                                     '<a  id="'+data.endorse_id+'" class="btn_view_report_remarks btn btn-xs btn-warning btn-block"><i class="fa fa-fw fa-eye"></i>View Remarks</a>' +
+//                                     '<a  id="'+data.endorse_id+'" class="btn_return_after btn btn-xs btn-danger btn-block" name="'+data.status1+'"><i class="fa fa-fw fa-repeat"></i> Return</a>' +
+//                                     '<a  id="'+data.endorse_id+'" class="btn_view_information_bi btn btn-xs btn-info btn-block" data-toggle="modal" data-target="" ><i class="glyphicon glyphicon-film"></i> View Information</a>' +
+//                                     '<span id = "downReport"></span>';
+//                             }
+//                             else if(data.status_report == 'Uncontacted')
+//                             {
+//                                 var act = '<a class="btn_down_report btn btn-xs btn-success btn-block" id="'+data.endorse_id+'"><i class="fa fa-fw fa-download"></i> Download Report File</a>' +
+//                                     '<a  id="'+data.endorse_id+'" class="btn_view_report_remarks btn btn-xs btn-warning btn-block"><i class="fa fa-fw fa-eye"></i>View Remarks</a>' +
+//                                     '<a  id="'+data.endorse_id+'" class="btn_return_after btn btn-xs btn-danger btn-block" name="'+data.status1+'"><i class="fa fa-fw fa-repeat"></i> Return for Update</a>' +
+//                                     '<a  id="'+data.endorse_id+'" class="btn_view_information_bi btn btn-xs btn-info btn-block" data-toggle="modal" data-target="" ><i class="glyphicon glyphicon-film"></i> View Information</a>' +
+//                                     '<span id = "downReport"></span>';
+//                             }
+//                         }
+//                         else
+//                         {
+//                             if(data.status_report == 'Complete')
+//                             {
+//                                 var act = '<a class="btn_down_report btn btn-xs btn-success btn-block" id="'+data.endorse_id+'"><i class="fa fa-fw fa-download"></i> Download Report File</a>' +
+//                                     '<a  id="'+data.endorse_id+'" class="btn_view_report_remarks btn btn-xs btn-warning btn-block"><i class="fa fa-fw fa-eye"></i>View Remarks</a>' +
+//                                     '<a  id="'+data.endorse_id+'" class="btn_return_after btn btn-xs btn-danger btn-block" name="'+data.status1+'"><i class="fa fa-fw fa-repeat"></i> Return</a>' +
+//                                     '<a  id="'+data.endorse_id+'" class="btn_view_information_bi btn btn-xs btn-info btn-block" data-toggle="modal" data-target="" ><i class="glyphicon glyphicon-film"></i> View Information</a>' +
+//                                     '<span id = "downReport"></span>';
+//                             }
+//                             else if(data.status_report == 'Partial')
+//                             {
+//                                 var act = '<a class="btn_down_report btn btn-xs btn-success btn-block" id="'+data.endorse_id+'"><i class="fa fa-fw fa-download"></i> Download Report File</a>' +
+//                                     '<a  id="'+data.endorse_id+'" class="btn_view_report_remarks btn btn-xs btn-warning btn-block"><i class="fa fa-fw fa-eye"></i>View Remarks</a>' +
+//                                     '<a  id="'+data.endorse_id+'" class="btn_return_after btn btn-xs btn-danger btn-block" name="'+data.status1+'"><i class="fa fa-fw fa-repeat"></i> Return for Update</a>' +
+//                                     '<a  id="'+data.endorse_id+'" class="btn_view_information_bi btn btn-xs btn-info btn-block" data-toggle="modal" data-target="" ><i class="glyphicon glyphicon-film"></i> View Information</a>' +
+//                                     '<span id = "downReport"></span>';
+//                             }
+//                         }
+
+//                         return viewFile_button + act;
+//                     },
+//                     'name' : 'action',
+//                     'searchable' : false,
+//                     'orderable' : false
+//                 }
+//             ],
+//         "order": [[0, 'desc']],
+//         "pageLength": 10,
+//         "lengthMenu": [[2, 10, 25, 50, -1], ['2 rows', '10 rows', '25 rows', '50 rows', 'Show all']],
+//         "bSortClasses": false,
+//         "deferRender": true,
+//         initComplete: function()
+//         {
+//             var api = this.api();
+
+//             // Apply the search
+//             api.columns().every(function() {
+//                 var that = this;
+
+//                 $('input', this.header()).on('keyup change', function(e)
+//                 {
+//                     if($(this).is(':focus'))
+//                     {
+//                         if(e.keyCode === 13)
+//                         {
+//                             if (that.search() !== this.value) {
+//                                 that
+//                                     .search(this.value)
+//                                     .draw();
+//                             }
+//                         }
+//                         else if (e.keyCode === 8)
+//                         {
+//                             if (this.value == '') {
+//                                 that
+//                                     .search(this.value)
+//                                     .draw();
+//                             }
+//                         }
+//                     }
+//                 });
+//             });
+
+//             // if(what_to_submit =='cc_bank')
+//             // {
+//             //     table_finished.column(1).visible(false);
+//             //     table_finished.column(6).visible(false);
+//             //     table_finished.column(7).visible(false);
+//             //     table_finished.column(12).visible(true);
+//             // }
+//             // else
+//             // {
+//             //     table_finished.column(1).visible(true);
+//             //     table_finished.column(2).visible(false);
+//             //     table_finished.column(6).visible(true);
+//             //     table_finished.column(7).visible(true);
+//             //     table_finished.column(12).visible(false);
+//             // }
+//         }
+//     });
+
+
+//     $('#bi_client_finished_table tbody').on('click', 'tr', function ()
+//     {
+//         var target1 = $(event.target);
+
+//         if($(this).hasClass('selected'))
+//         {
+//             if (target1.is('a'))
+//             {
+//                 console.log('away')
+//             }
+//             else
+//             {
+//                 $(this).removeClass('selected');
+//                 var cntLaman = $.map(table_finished.rows('.selected').data(),function (item) {
+//                     return atob(item.endorse_id)
+//                 });
+
+//                 if(cntLaman.length > 1)
+//                 {
+//                     $('#dlCountFinished').html(cntLaman.length);
+//                     $('#hideShowDlReports').fadeIn();
+//                 }
+//                 else
+//                 {
+//                     $('#hideShowDlReports').fadeOut();
+//                 }
+//             }
+//         }
+//         else
+//         {
+//             if (target1.is('a'))
+//             {
+//                 console.log('away')
+//             }
+//             else
+//             {
+//                 $(this).addClass('selected');
+
+//                 var cntLaman = $.map(table_finished.rows('.selected').data(),function (item) {
+//                     return atob(item.endorse_id)
+//                 });
+
+//                 if(cntLaman.length > 1)
+//                 {
+//                     $('#dlCountFinished').html(cntLaman.length);
+//                     $('#hideShowDlReports').fadeIn();
+//                 }
+//                 else
+//                 {
+//                     $('#hideShowDlReports').fadeOut();
+//                 }
+//             }
+//         }
+
+//     });
+
+
+//     $('#bi_client_finished_table_filter input').unbind();
+//     $('#bi_client_finished_table_filter input').bind('keyup change',function (e) {
+
+//         if($(this).is(':focus'))
+//         {
+//             if (e.keyCode == 13) {
+//                 table_finished.search($(this).val()).draw();
+//             }
+//             else if (e.keyCode === 8)
+//             {
+//                 if ($(this).val() == '') {
+//                     table_finished.search($(this).val()).draw();
+//                 }
+//             }
+//         }
+//     });
+// }
 
 
 $('#bi_client_finished_table').on('click', '.btn_view_report_remarks', function()
@@ -3374,22 +4365,6 @@ $('.bi_client_side_class').click(function () {
             });
             getDash();
             get_general_table();
-        }
-    }
-    else if (gethref == '#bi_client_billing') {
-
-        if ($('' + gethref + '').hasClass('active')) {
-            console.log('do nothing');
-            activeBiSide = 'bi_client_billing';
-        }
-        else if (billing_cc_bool) {
-            console.log('already loaded');
-            activeBiSide = 'bi_client_billing';
-        }
-        else if (billing_cc_bool == false) {
-            bi_side_en = true;
-            activeBiSide = 'bi_client_billing';
-            getBillingTable();
         }
     }
 });
@@ -4847,7 +5822,6 @@ function cancelTable()
                 {data: 'dealer_num', name: 'bi_endorsements.dealer_num'},
                 {data: 'site',name: 'bi_endorsements.bi_account_name'},
                 {data: 'tor', name: 'bi_endorsements.type_of_endorsement_bank'},
-                // {data: 'date_time_endorsed', name: 'bi_endorsements.created_at'},
                 {
                     data : function d_t(data)
                     {
@@ -4866,9 +5840,10 @@ function cancelTable()
                 {data: 'project', name: 'bi_endorsements.project'},
                 {data: 'account_name', name: 'bi_endorsements.account_name'},
                 {data: 'package', name: 'bi_endorsements.package'},
-                {data: 'check', name: 'bi_endorsements.id', orderable: "false", searchable: "false"},
+                {data: 'check', name: 'bi_endorsements.id'},
                 {data: 'poc', name: 'bi_endorsements.endorser_poc'},
-                {data: 'endorse_id', name: 'bi_endorsements.id'}
+                {data: 'endorse_id', name: 'bi_endorsements.id'},
+
             ],
 
         "order" :[[0, 'desc']],
@@ -4944,6 +5919,163 @@ function cancelTable()
     });
 }
 
+// function cancelTable()
+// {
+//     $('#bi_client_cancel_table thead th').each(function ()
+//     {
+//         title_cancel[title_cancel_counts] = $(this).text();
+//         title_cancel_counts++
+//         var title = $(this).text();
+//         $(this).html(title+'<br><input type="text" placeholder="Search" style="position: relative; width: 100%;"> ')
+//     });
+
+//     table_cancel = $('#bi_client_cancel_table').DataTable
+//     ({
+//         "responsive" : true,
+//         "processing" : true,
+//         "serverSide" : true,
+//         "ajax" : 'tfs_bi-client-cancel-table',
+
+//         dom: 'Blfrtip',
+//         buttons:
+//             [
+//                 {
+//                     extend: 'excel',
+//                     exportOptions:
+//                         {
+//                             columns: ':visible',
+//                             format:
+//                                 {
+//                                     header:  function (dt, idx, title)
+//                                     {
+//                                         return title_cancel[(idx)];
+//                                     }
+//                                 }
+//                         },
+//                     customize: function (xlsx)
+//                     {
+//                         var sheet = xlsx.xl.worksheets['sheet1.xml'];
+
+//                         var loop = 0;
+//                         $('row', sheet).each(function ()
+//                         {
+//                             $(this).find("c").attr('s', '55');
+//                             $('row:first c', sheet).attr('s', '51');
+//                             loop++;
+//                         });
+//                     }
+//                 }
+//             ],
+//         "columns":
+//             [
+//                 {data: 'endorse_id', name: 'bi_endorsements.id'},
+//                 {data: 'site',name: 'bi_endorsements.bi_account_name'},
+//                 {data: 'tor', name: 'bi_endorsements.type_of_endorsement_bank'},
+//                 // {data: 'date_time_endorsed', name: 'bi_endorsements.created_at'},
+//                 {
+//                     data : function d_t(data)
+//                     {
+//                         var date_time = data.date_time_endorsed;
+
+//                         var split = date_time.split(' ');
+
+//                         var time = split[1].split(':');
+
+//                         var final = time[0] + ':' + time[1];
+
+//                         return split[0] + ' ' +final;
+//                     },
+//                     name : 'bi_endorsements.created_at'
+//                 },
+//                 {data: 'project', name: 'bi_endorsements.project'},
+//                 {data: 'account_name', name: 'bi_endorsements.account_name'},
+//                 {data: 'package', name: 'bi_endorsements.package'},
+//                 {data: 'check', name: 'bi_endorsements_checkings.checking_name'},
+//                 {data: 'poc', name: 'bi_endorsements.endorser_poc'},
+//                 {
+//                     data: function action(data)
+//                     {
+//                         return  '<a id="'+data.endorse_id+'" class="btn_view_information_bi btn btn-xs btn-info btn-block" data-toggle="modal" data-target="" ><i class="glyphicon glyphicon-film"></i> View Information</a>';
+//                     },
+//                     'name' : 'bi_endorsements.status',
+//                     'searchable' : false,
+//                     'orderable' : false
+//                 }
+//             ],
+
+//         "order" :[[0, 'desc']],
+//         "pageLength" : 10,
+//         "lengthMenu" : [[2, 10, 25, 50, -1], ['2 rows', '10 rows', '25 rows', '50 rows', 'Show all']],
+//         "bSortClasses" : false,
+//         "deferRender" : true,
+//         initComplete : function ()
+//         {
+//             var api = this.api();
+
+//             //Apply the search
+//             api.column().every(function()
+//             {
+//                 var that = this;
+
+//                 $('input', this.header()).on('keyup change', function(e)
+//                 {
+//                     if($(this).is(':focus'))
+//                     {
+//                         if(e.keyCode === 13)
+//                         {
+//                             if (that.search() !== this.value) {
+//                                 that
+//                                     .search(this.value)
+//                                     .draw();
+//                             }
+//                         }
+//                         else if (e.keyCode === 8)
+//                         {
+//                             if (this.value == '') {
+//                                 that
+//                                     .search(this.value)
+//                                     .draw();
+//                             }
+//                         }
+//                     }
+//                 });
+//             });
+
+//             if(what_to_submit =='cc_bank')
+//             {
+//                 table_cancel.column(1).visible(false);
+//                 table_cancel.column(6).visible(false);
+//                 table_cancel.column(7).visible(false);
+//             }
+//             else
+//             {
+//                 table_cancel.column(1).visible(true);
+//                 table_cancel.column(2).visible(false);
+//                 table_cancel.column(6).visible(true);
+//                 table_cancel.column(7).visible(true);
+//             }
+//         }
+
+//     });
+
+//     $('#bi_client_cancel_table_filter input').unbind();
+//     $('#bi_client_cancel_table_filter input').bind('keyup change', function(e)
+//     {
+//         if($(this).is(':focus'))
+//         {
+//             if (e.keyCode == 13) {
+//                 table_cancel.search($(this).val()).draw();
+//             }
+//             else if (e.keyCode === 8)
+//             {
+//                 if ($(this).val() == '') {
+//                     table_cancel.search($(this).val()).draw();
+//                 }
+//             }
+//         }
+//     });
+// }
+
 function holdTable()
 {
     $('#bi_client_hold_table thead th').each(function () {
@@ -5016,7 +6148,7 @@ function holdTable()
                 {data: 'project', name: 'bi_endorsements.project'},
                 {data: 'account_name', name: 'bi_endorsements.account_name'},
                 {data: 'package', name: 'bi_endorsements.package'},
-                {data: 'check', name: 'bi_endorsements_checkings.checking_name'},
+                {data: 'check', name: 'bi_endorsements.id'},
                 {data: 'poc', name: 'bi_endorsements.endorser_poc'},
                 {data: 'endorse_id', name: 'bi_endorsements.id'},
 
@@ -7614,17 +8746,23 @@ function getContactNumbers()
         "responsive" : true,
         "processing" : true,
         "serverSide" : true,
-        "ajax" : 'bi_client_get_pending_applicants',
+        "ajax" : 'tfs_bi_client_get_pending_applicants',
         "columns":
             [
-                {data: 'id', name: 'bi_direct_pivot.id'},
-                {data: 'created_at', name: 'bi_direct_pivot.created_at'},
-                {data: 'direct_name', name: 'bi_direct_pivot'},
-                {data: 'attachments', name: 'bi_direct_pivot.id'},
+                {data: 'id', name: 'bi_direct_encoded_data.id'},
+                {data: 'date_time_endorse', name: 'bi_direct_encoded_data.created_at'},
                 {
                     data: function(data)
                     {
-                        if(data.direct_status == 0)
+                        return data.accnt_surname + ', ' + data.accnt_fname + ', ' + data.accnt_mname;
+                    },
+                    name: 'bi_direct_encoded_data.accnt_surname'
+                },
+                {data: 'attachments', name: 'bi_direct_encoded_data.id'},
+                {
+                    data: function(data)
+                    {
+                        if(data.status == 0)
                         {
                             return '<label class="bg-yellow color-palette" style="padding: 8px; border-radius: 8px">PENDING</label>';
                         }
@@ -7637,9 +8775,9 @@ function getContactNumbers()
                     data:function action(data)
                     {
                         return '' +
-                            '<button class="btn btn-sm btn-primary btn_acknowledge_encoded" id="'+btoa(data.id)+'" name="'+data.direct_type+'" data-toggle="modal" data-target="#modal-acknowledge-encoded"><i class="glyphicon glyphicon-ok"></i>  Acknowledge</button>';
+                            '<button class="btn btn-sm btn-primary btn_acknowledge_encoded" id="'+btoa(data.id)+'" data-toggle="modal" data-target="#modal-acknowledge-encoded"><i class="glyphicon glyphicon-ok"></i>  Acknoledge</button>';
                     },
-                    'name' : 'bi_direct_pivot.id',
+                    'name' : 'bi_direct_encoded_data.id',
                     searchable : false,
                     orderable : false
                 }
@@ -7670,8 +8808,7 @@ function getContactNumbers()
 $('#applicant_encoded_table').on('click', '.btn_acknowledge_encoded', function()
 {
     var id = $(this).attr('id');
-    var name = $(this).attr('name');
-    $('#ack_encoded').attr('idtoSend', id).attr('name', name);
+    $('#ack_encoded').attr('id', id);
 });
 
 $('.client_bi_endorsement_class').click(function()

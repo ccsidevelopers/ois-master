@@ -1471,7 +1471,7 @@ $('#cc_sao_accounts_table').on('click','.btn_acknowledge',function ()
                     }
 
                     $('#tat_date_due').val(final_date[0]);
-
+                    
                     $('#tat_time_due').val(data[4]);
                 }
             }
@@ -2110,7 +2110,7 @@ function acknowledgewithandwithout(btn, typeee, time_due_b)
             },
         success: function(data)
         {
-            if(data == 'ok')
+           if(data == 'ok')
             {
                 alert('Account Successfully Acknowledge');
             }
@@ -2678,7 +2678,6 @@ $('#btnUpdateSaoToTele').click(function()
     }
 });
 
-
 todiy();
 function todiy()
 {
@@ -2717,15 +2716,15 @@ function getGeneralsearch()
         "serverSide" : true,
         // "ajax" : 'cc-sao-generaltbl-search',
         "ajax":
+        {
+            url: "cc-sao-generaltbl-search",
+            data: function (d)
             {
-                url: "cc-sao-generaltbl-search",
-                data: function (d)
-                {
-                    d.min_date_endorsed = $('#gen_search_min').val();
-                    d.max_date_endorsed = $('#gen_search_max').val();
-                    d.search_methodd = $('input[name="gen_search_rad"]:checked').val();
-                }
-            },
+                d.min_date_endorsed = $('#gen_search_min').val();
+                d.max_date_endorsed = $('#gen_search_max').val();
+                d.search_methodd = $('input[name="gen_search_rad"]:checked').val();
+            }
+        },
         dom: 'Blfrtip',
         buttons:
             [
@@ -3050,8 +3049,6 @@ function get_assigned_table()
         "processing": true,
         "serverSide": true,
         "ajax" : 'cc-sao-get-assigned-table',
-        
-
 
         dom: 'Blfrtip',
         buttons:
@@ -3095,8 +3092,7 @@ function get_assigned_table()
                 {data: 'endorse_id', name: 'bi_endorsements.id'},
                 {data: 'site', name: 'bi_endorsements.bi_account_name'},
                 {data: 'bank', name: 'bi_endorsements.type_of_endorsement_bank'},
-                //chano ref
-                {   
+                {
                     data : function d_t(data)
                     {
                         var date_time = data.date_time_endorsed;
@@ -3107,18 +3103,10 @@ function get_assigned_table()
 
                         var final = time[0] + ':' + time[1];
 
-                        // console.log(split);
-                        // console.log(time);
-                        // console.log(final);
-                        // console.log(date_time);
-
                         return split[0] + ' ' +final;
-                        
                     },
                     name : 'bi_endorsements.created_at'
-                    
                 },
-                {data: 'updated_endorsed', name: 'bi_endorsements.updated_date_time_endorsed'},
                 {data: 'project', name: 'bi_endorsements.project'},
                 {data: 'account_name', name: 'bi_endorsements.account_name'},
                 {data: 'package', name: 'bi_endorsements.package'},
@@ -3143,17 +3131,15 @@ function get_assigned_table()
                         var act =
                             '<a id="'+data.endorse_id+'" class="btn_tele_encode_transfer btn btn-xs btn-danger btn-block" data-toggle="modal" data-target="#modal-transfer-tele" data-backdrop="static"><i class="fa fa-exchange"></i> Tele-Encoder Transfer</a>'
                             + assignStat1 +
-                            '<a id="'+data.endorse_id+'" class="btn_cancel btn btn-xs btn-warning btn-block" data-toggle="modal" data-target="" name="new" href="cancel this account"><i class="glyphicon glyphicon-remove"></i> Cancel Account</a>' +
-                            '<a id="'+data.endorse_id+'" class="btn_view_information_bi btn btn-xs btn-info btn-block" data-toggle="modal" data-target=""><i class="glyphicon glyphicon-film"></i> View Information</a>' +
-                            //chano
-                            '<a id="'+data.endorse_id+'" class="btn btn-xs btn-success btn-block due_date_update_btn" data-toggle="modal" data-target="#update_due_date_modal"><i class="glyphicon glyphicon-film"></i> Update due date!</a>' ;
+                            '<a class="btn_cancel btn btn-xs btn-warning btn-block" data-toggle="modal" id="'+data.endorse_id+'" data-target="" name="new" href="cancel this account"><i class="glyphicon glyphicon-remove"></i> Cancel Account</a>' +
+                            '<a  id="'+data.endorse_id+'" class="btn_view_information_bi btn btn-xs btn-info btn-block" data-toggle="modal" data-target="" ><i class="glyphicon glyphicon-film"></i> View Information</a>';
+
                         return act;
                     },
                     'name' : 'bi_endorsements.status',
                     'searchable' : false,
                     'orderable' : false
                 }
-                
             ],
         "order": [[0, 'desc']],
         "pageLength": 10,
@@ -3191,90 +3177,8 @@ function get_assigned_table()
                     }
                 });
             });
-        },
-    });
-
-    // chano
-    // fetching dynamic id of action button (.due_date_update_btn) in ajax above code
-    // (#cc_sao_assigned_table) id of table in blade 
-    // .on click means you're about to click a button within the (#cc_sao_assigned_table)
-    // and assign the same id value of your action button to your modal button
-    
-    $('#cc_sao_assigned_table').on('click', '.due_date_update_btn', function() {
-        var due_date_id = $(this).attr('id');
-
-        //id of modal button update assigning the same id of your clicked update due date button
-        $('.update_new_due_date_modal_btn').attr('name', due_date_id);
-    });
-
-    // chano
-    // assigning your modal button update to do something when clicked!
-
-    $('.update_new_due_date_modal_btn').click(function() {
-        var updateNewDueDateModalId = $(this).attr('name');
-        var inputUpdateNewDueDateModal = $('#current_due_date').val();
-
-        if(confirm('Are you sure do you want to update?')) {
-            
-            $.ajax({
-
-                type: "get",
-                url: "cc_srao_due_date_update",
-                data: {
-                    'modal_id': updateNewDueDateModalId,
-                    'modal_due_date': inputUpdateNewDueDateModal,
-                },
-
-                success: function(data) {
-                    alert('Done updating!');
-                    table_assigned.draw()
-                }
-            }); 
-            
         }
-        
     });
-
-    //Chano
-    $('#cc_sao_assigned_table').on('click', '.modal_logs_class', function() {
-        var modal_logs_id = $(this).attr('name');
-        
-        
-
-        $('#due_date_modal_logs_table tbody tr').each(function() {
-            $(this).remove();
-        });
-
-        $.ajax({
-            type: 'get',
-            url: 'updated_due_date_logs',
-            data: {'modal_id': modal_logs_id,},
-                    
-                    
-                success: function(data) {
-                    var modal_logs_append='';
-                        console.log(data);
-                    if (data.length > 0) {
-                        for(var i = 0; i <  data.length; i++) {
-                            modal_logs_append += '<tr>' +
-                            '<td>'+data[i].due_date_user+'</td>' +
-                            '<td>'+data[i].due_date_activity+'</td>' +
-                            '<td>'+data[i].due_date_created_at+'</td>' +
-                            '</tr>';
-                        }
-                    } else {
-                        modal_logs_append = '<tr>' +
-                        '<td colspan="3">No Records Found</td>' +
-                        + '</tr>';
-                    }
-                    $('#due_date_modal_logs_table tbody').append(modal_logs_append);
-                }
-        });
-    });
-
-
-    
-    
 
     $('#cc_sao_assigned_table_filter input').unbind();
     $('#cc_sao_assigned_table_filter input').bind('keyup change',function (e) {
@@ -3415,7 +3319,7 @@ $('#btnTransferAccttoTele').click(function()
                         $('#btnTransferAccttoTele').attr("disabled", false);
                     },
                     complete: function(){
-                        refTables();
+                       refTables();
                         $('#lodadingAssignTele').html('');
                     }
                 })

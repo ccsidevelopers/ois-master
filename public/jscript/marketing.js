@@ -3797,7 +3797,8 @@ function calendar_trigger() {
 
         },
         eventClick: function(event) {
-            console.log(event);
+            // console.log(event);
+
             event_id = event.id;
             $('#cal_title').val(event.title);
             $('#cal_description').val(event.desc);
@@ -3805,6 +3806,9 @@ function calendar_trigger() {
             $('#cal_date_end').html(event.end_text);
             // console.log(event.start_text);
             $('#modal_view_info_calendar').modal('show');
+
+
+
             // alert(event.desc);
         },
         editable  : false,

@@ -23,10 +23,7 @@ var countUnderCC = 0;
 var table_acc_under_prod_cc;
 var boolacctsUnderCC = false;
 var checkPosCC;
-
-
-
-
+var attendance_sched = true;
 
 
 
@@ -67,123 +64,11 @@ var checkPosCC;
 $(window).load(function() {
     // Animate loader off screen
     $(".se-pre-con").fadeOut("slow");
-    $.ajax({
-        type: 'get',
-        url: 'memo_status_checker',
-        success: function(data)
-        {
-            console.log('memo');
-            if(data[1] <= 0)
-            {
-                $('#modal_memo_lock_window').modal({backdrop : 'static'});
-                $('#memo_subject_allEmp').html(data[0][0].issuance_subject);
-                $('#memo_content_view').html(data[0][0].issuance_content);
-                $('#confirm_memo_procedure').attr('href', btoa(data[0][0].id))
-            }
-            else
-            {
-                console.log('wala');
-            }
-        },
-        complete: function()
-        {
-            $('#check_memo_indicator').change(function()
-            {
-                if($(this).is(':checked'))
-                {
-                    $('#confirm_memo_procedure').attr('disabled', false);
-                }
-                else
-                {
-                    $('#confirm_memo_procedure').attr('disabled', true);
-                }
-            });
-
-
-            $('#confirm_memo_procedure').click(function()
-            {
-                var idHolder = atob($(this).attr('href'));
-
-                $.ajax({
-                    type: 'get',
-                    url:'memo_emloyee_acknowledge',
-                    data: {
-                        'memo_id' : idHolder,
-                        'emp_feedback' : $('#memo_feedback_emp').val()
-                    },
-                    success: function(data)
-                    {
-                        if(data == 'success')
-                        {
-                            $('#modal_memo_lock_window').modal('hide');
-                        }
-                    }
-                });
-            });
-        }
-    });
 });
-
-
 
 $(document).ready(function ()
 {
     // $("#overlay").hide();
-    // $.ajax({
-    //     type: 'get',
-    //     url: 'memo_status_checker',
-    //     success: function(data)
-    //     {
-    //         console.log('memo');
-    //         if(data[1] <= 0)
-    //         {
-    //             $('#modal_memo_lock_window').modal({backdrop : 'static'});
-    //             $('#memo_subject_allEmp').html(data[0][0].issuance_subject);
-    //             $('#memo_content_view').html(data[0][0].issuance_content);
-    //             $('#confirm_memo_procedure').attr('href', btoa(data[0][0].id))
-    //         }
-    //         else
-    //         {
-    //             console.log('wala');
-    //         }
-    //     },
-    //     complete: function()
-    //     {
-    //         $('#check_memo_indicator').change(function()
-    //         {
-    //             if($(this).is(':checked'))
-    //             {
-    //                 $('#confirm_memo_procedure').attr('disabled', false);
-    //             }
-    //             else
-    //             {
-    //                 $('#confirm_memo_procedure').attr('disabled', true);
-    //             }
-    //         });
-    //
-    //
-    //         $('#confirm_memo_procedure').click(function()
-    //         {
-    //             var idHolder = atob($(this).attr('href'));
-    //
-    //             $.ajax({
-    //                 type: 'get',
-    //                 url:'memo_emloyee_acknowledge',
-    //                 data: {
-    //                     'memo_id' : idHolder,
-    //                     'emp_feedback' : $('#memo_feedback_emp').val()
-    //                 },
-    //                 success: function(data)
-    //                 {
-    //                     if(data == 'success')
-    //                     {
-    //                         $('#modal_memo_lock_window').modal('hide');
-    //                     }
-    //                 }
-    //             });
-    //         });
-    //     }
-    // });
     $('#btnAddItem').click(function()
     {
         $.ajax
@@ -382,6 +267,9 @@ $(document).ready(function ()
     });
 });
 
+
+
+
 // function setup() {
 //     this.addEventListener("mousemove", logout_cliet_stop, false);
 //     this.addEventListener("mousedown", logout_cliet_stop, false);
@@ -560,18 +448,18 @@ $('#brandItemsTable').on('click', '.btnToAddBrand', function()
 {
     brandInc++;
 
-    $('#appBrand').append('<tr id = "removeBrand-'+brandInc+'">\n' +
-        '                                <td colspan="1"> <textarea class = "form-control toLoopBrandDetails" rows ="2"></textarea></td>\n' +
-        '                                <td colspan="1"><input type="number" class="form-control toLoopBrandDetails" ></td>\n' +
-        '                                <td colspan="1"><input type="number" class="form-control toLoopBrandDetails" ></td>\n' +
-        '                                <td colspan="1">   <div class="input-group input-group-sm"><input type="number" class="form-control toLoopBrandDetails amntToSum" >\n' +
-        '                                        <span class="input-group-btn">\n' +
-        '                                            <button type="button" class="btn btn-danger btn-sm btnRemoveRow" name="'+brandInc+'">\n' +
-        '                                            <i class = "fa fa-fw fa-minus"></i></button>\n' +
-        '                                        </span>\n' +
-        '                                    </div>\n' +
-        '                                </td>\n' +
-        '                            </tr>');
+   $('#appBrand').append('<tr id = "removeBrand-'+brandInc+'">\n' +
+       '                                <td colspan="1"> <textarea class = "form-control toLoopBrandDetails" rows ="2"></textarea></td>\n' +
+       '                                <td colspan="1"><input type="number" class="form-control toLoopBrandDetails"></td>\n' +
+       '                                <td colspan="1"><input type="number" class="form-control toLoopBrandDetails"></td>\n' +
+       '                                <td colspan="1">   <div class="input-group input-group-sm"><input type="number" class="form-control toLoopBrandDetails amntToSum" >\n' +
+       '                                        <span class="input-group-btn">\n' +
+       '                                            <button type="button" class="btn btn-danger btn-sm btnRemoveRow" name="'+brandInc+'">\n' +
+       '                                            <i class = "fa fa-fw fa-minus"></i></button>\n' +
+       '                                        </span>\n' +
+       '                                    </div>\n' +
+       '                                </td>\n' +
+       '                            </tr>');
 });
 
 $('#brandItemsTable').on('click', '.btnRemoveRow', function()
@@ -714,6 +602,8 @@ $('#sendRequisitionToAdmin').click(function()
                     btn.attr('disabled', false);
                 }
             });
+
+
         }
     }
     else if(requestedRequiFor == '' || requestedRequiFor.toUpperCase() == 'NONE' || requestedRequiFor.toUpperCase() == 'NO RECORD')
@@ -778,37 +668,37 @@ function getUserName(stat)
 }
 
 
-// $('#requestedRequiFor').focusout(function ()
-//    {
-//        if($('#ciMuni').val() === '')
-//        {
-//            $('#ciProv').val('');
-//        }
-//        else
-//        {
-//            $.ajax
-//            ({
-//                method: 'get',
-//                url: '/fetch-city-muniv2',
-//                data:
-//                    {
-//                        'muniname' : $('#ciMuni').val()
-//                    },
-//                success: function (data)
-//                {
-//                    console.log(data[0].id);
-//                    $('#idProvince').val(data[0].province_id);
-//                    $('#idMunicipality').val(data[0].id);
-//                    fetchProv();
-//
-//                    setTimeout(function ()
-//                    {
-//                        $('#ciMuni').val(data[0].muni_name);
-//                    },1000);
-//                }
-//            });
-//        }
-//    });
+ // $('#requestedRequiFor').focusout(function ()
+ //    {
+ //        if($('#ciMuni').val() === '')
+ //        {
+ //            $('#ciProv').val('');
+ //        }
+ //        else
+ //        {
+ //            $.ajax
+ //            ({
+ //                method: 'get',
+ //                url: '/fetch-city-muniv2',
+ //                data:
+ //                    {
+ //                        'muniname' : $('#ciMuni').val()
+ //                    },
+ //                success: function (data)
+ //                {
+ //                    console.log(data[0].id);
+ //                    $('#idProvince').val(data[0].province_id);
+ //                    $('#idMunicipality').val(data[0].id);
+ //                    fetchProv();
+ //
+ //                    setTimeout(function ()
+ //                    {
+ //                        $('#ciMuni').val(data[0].muni_name);
+ //                    },1000);
+ //                }
+ //            });
+ //        }
+ //    });
 
 $('#requestedRequiFor').autocomplete
 ({
@@ -836,7 +726,10 @@ $('#requestedRequiForID').autocomplete
     }
 });
 
-
+$('#requi_approval_btn').click(function()
+{
+   $('#modal_requisition_approval').modal('show');
+});
 
 $('#passRequi').click(function()
 {
@@ -889,8 +782,8 @@ $('.attendance_date_range').click(function()
     var todayv2 = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate() + '';
     if($(this).val() == 'Today')
     {
-        //     $('#generate_attendance_allCi').attr('href', 'generate-excel-attendace-ci?start=' + todayv2 + '&' + 'end=' + todayv2);
-        //     $('#generate_attendance_allCi').attr('target', '_blank');
+    //     $('#generate_attendance_allCi').attr('href', 'generate-excel-attendace-ci?start=' + todayv2 + '&' + 'end=' + todayv2);
+    //     $('#generate_attendance_allCi').attr('target', '_blank');
         // $('#generate_attendance_allCi').show();
 
         $('#attendance_date_rangePicker_holder').hide();
@@ -1279,7 +1172,7 @@ function ciListGenra()
         url : 'sao-get-ci-list',
         success : function(data)
         {
-            // console.log(data)
+            console.log(data)
             var h;
 
             var optionCiData2 = '';
@@ -1325,7 +1218,7 @@ function checkAccessforProd()
         url : 'gen_check_user_productivity',
         success : function(data)
         {
-            // console.log(data);
+            console.log(data);
             if(data[0].dept != '' && data[0].dept != null)
             {
                 $('#showAccessForDepartment').show();
@@ -2130,6 +2023,8 @@ function acc_under_emp_cc_table()
 
 }
 
+
+
 $('#cc_productivity_table').on('click', '.showAccountsEmpProdCC', function()
 {
     $('#sortByToTableCC').val($(this).attr('name'));
@@ -2180,84 +2075,96 @@ function getAttendanceInfoGeneral()
             $(this).remove();
         }
     });
-        $.ajax({
-            type: 'get',
-            url: 'gen_attendance_in_out_check',
-            data: {
-                'date_inputted': null
-            },
-            success: function (data) {
-                var to_append = '';
-                // console.log(data);
-                if (data[0].length > 0) {
-                    var dateFormater = '';
-                    var timeFormater = '';
-                    for (var i = 0; i < data[0].length; i++) {
-                        dateFormater = new Date(data[0][i].created_at).toDateString();
-                        to_append += '<tr>\n' +
-                            '<td>' + dateFormater + '</td>\n' +
-                            '<td>' + DisplayCurrentTime(data[0][i].time_in) + '</t>\n' +
-                            '<td>' + data[0][i].type + '</td>\n' +
-                            '</tr>';
-                    }
+    $.ajax({
+        type: 'get',
+        url: 'gen_attendance_in_out_check',
+        data: {
+            'date_inputted' : null
+        },
+        success: function (data)
+        {
+            var to_append = '';
+            // console.log(data);
+            if(data[0].length > 0)
+            {
+                var dateFormater = '';
+                var timeFormater = '';
+                for(var i = 0; i < data[0].length; i++)
+                {
+                    dateFormater = new Date(data[0][i].created_at).toDateString();
+                    to_append += '<tr>\n' +
+                        '<td>'+dateFormater+'</td>\n' +
+                        '<td>'+DisplayCurrentTime(data[0][i].time_in)+'</t>\n' +
+                        '<td>'+data[0][i].type+'</td>\n' +
+                        '</tr>';
                 }
-                else {
-                    to_append = '<tr>\n' +
-                        '<td colspan="3">NO RECORDS FOUND</td>\n' +
-                        '</tr>'
-                }
-
-                if (data[2] == false) {
-                    $('.attendance_all_click').attr('disabled', true);
-                }
-                else {
-                    $('.attendance_all_click').attr('disabled', false);
-                }
-
-                if (data[1][0].work_start != null && data[1][0].work_end != null || data[1][0].work_start != '' && data[1][0].work_end != '') {
-                    var $timeIN = data[1][0].work_start.split(':');
-                    var $timeIN2 = data[1][0].work_start.split(':');
-                    var $timeAmPM = data[1][0].work_start.split(' ');
-
-                    var $timeOUT = data[1][0].work_end.split(':');
-                    var $timeOUT2 = data[1][0].work_end.split(':');
-                    var $timeAmPMOUT = data[1][0].work_end.split(' ');
-
-                    $('.time_in_class_val[name="0"]').val($timeIN[0]);
-                    $('.time_in_class_val[name="1"]').val($timeIN2[1].split(' ')[0]);
-                    $('.time_in_class_val[name="2"]').val($timeAmPM[1]);
-
-                    $('.time_out_class_val[name="0"]').val($timeOUT[0]);
-                    $('.time_out_class_val[name="1"]').val($timeOUT2[1].split(' ')[0]);
-                    $('.time_out_class_val[name="2"]').val($timeAmPMOUT[1]);
-
-                    // $('.time_out_class_val[name="0"]').val(data[1][0].work_end.split(':')[0]);
-                    // $('.time_out_class_val[name="1"]').val(data[1][0].work_end.split(':')[1]);
-                    // $('.time_out_class_val[name="2"]').val(data[1][0].work_end.split(' ')[1]);
-
-                    $('#attendance_work_start').val(data[1][0].work_start);
-                    $('#attendance_work_end').val(data[1][0].work_end);
-                }
-                else {
-                    $('.time_in_class_val[name="0"]').val(0);
-                    $('.time_in_class_val[name="1"]').val(1);
-                    // $('.time_in_class_val[name="2"]').val($timeAmPM[1]);
-
-                    $('.time_out_class_val[name="0"]').val(0);
-                    $('.time_out_class_val[name="1"]').val(0);
-                    // $('.time_out_class_val[name="2"]').val($timeAmPMOUT[1]);
-                }
-
-
-                $('.general_attendance_logs').append(to_append);
             }
-        });
+            else
+            {
+                to_append = '<tr>\n' +
+                    '<td colspan="3">NO RECORDS FOUND</td>\n' +
+                    '</tr>'
+            }
+
+            if(data[2] == false)
+            {
+                $('.attendance_all_click').attr('disabled', true);
+            }
+            else
+            {
+                $('.attendance_all_click').attr('disabled', false);
+            }
+
+            if(data[1][0].work_start != null && data[1][0].work_end != null || data[1][0].work_start != '' && data[1][0].work_end != '')
+            {
+                // console.log(data[1][0].work_start);
+                // console.log(data[1][0].work_end);
+                var $timeIN = data[1][0].work_start.split(':');
+                var $timeIN2 = data[1][0].work_start.split(':');
+                var $timeAmPM = data[1][0].work_start.split(' ');
+
+                var $timeOUT = data[1][0].work_end.split(':');
+                var $timeOUT2 = data[1][0].work_end.split(':');
+                var $timeAmPMOUT = data[1][0].work_end.split(' ');
+
+                $('.time_in_class_val[name="0"]').val($timeIN[0]);
+                $('.time_in_class_val[name="1"]').val($timeIN2[1].split(' ')[0]);
+                $('.time_in_class_val[name="2"]').val($timeAmPM[1]);
+
+                $('.time_out_class_val[name="0"]').val($timeOUT[0]);
+                $('.time_out_class_val[name="1"]').val($timeOUT2[1].split(' ')[0]);
+                $('.time_out_class_val[name="2"]').val($timeAmPMOUT[1]);
+
+                // $('.time_out_class_val[name="0"]').val(data[1][0].work_end.split(':')[0]);
+                // $('.time_out_class_val[name="1"]').val(data[1][0].work_end.split(':')[1]);
+                // $('.time_out_class_val[name="2"]').val(data[1][0].work_end.split(' ')[1]);
+
+                $('#attendance_work_start').val(data[1][0].work_start);
+                $('#attendance_work_end').val(data[1][0].work_end);
+            }
+            else
+            {
+                $('.time_in_class_val[name="0"]').val(0);
+                $('.time_in_class_val[name="1"]').val(1);
+                // $('.time_in_class_val[name="2"]').val($timeAmPM[1]);
+
+                $('.time_out_class_val[name="0"]').val(0);
+                $('.time_out_class_val[name="1"]').val(0);
+                // $('.time_out_class_val[name="2"]').val($timeAmPMOUT[1]);
+            }
+
+
+
+            $('.general_attendance_logs').append(to_append);
+        }
+    });
+
 }
 
 $(document).on('click', '.attendance_general_modal', function()
 {
     $('#modal-attendance-general').modal('show');
-    // $('.attendance_all_click').attr('disabled', true);
+    $('.attendance_all_click').attr('disabled', true);
     getAttendanceInfoGeneral();
 });
 
@@ -2266,108 +2173,43 @@ $('.attendance_all_click').click(function()
     var $type = $(this).attr('what');
     var btn = $(this);
 
-    if($type == 'TIME-IN')
-    {
-        $('#attendance_emp_status_bro').show();
-    }
-    else{
-
-    }
-
     if($('#attendance_work_start').val() != '' && $('#attendance_work_end').val() != '')
     {
-            if (confirm('Are you sure to ' + $type + ' ?')) {
-                $('.attendance_all_click').hide();
-
-                btn.attr('disabled', true);
-
-                $.ajax({
-                    type: 'get',
-                    url: 'gen_emp_time_in_and_time_out',
-                    data: {
-                        'type': $type
-                    },
-                    success: function (data) {
-                        console.log(data);
-                        if (data == 'success') {
-                            alert($type + ' Captured');
-                            getAttendanceInfoGeneral();
-
-                        }
-                        else if (data == 'no sched') {
-                            alert('Time Failed to Captured Check if the Daily Schedule is already saved then try again.');
-                        }
-                        btn.attr('disabled', false);
-                    },
-                    error: function (e) {
-                        btn.attr('disabled', false);
-                        alert('Error occured contact web dev for assistance. Thank you.');
+        if(confirm('Are you sure to ' + $type + ' ?'))
+        {
+            btn.attr('disabled', true);
+            $.ajax({
+                type: 'get',
+                url: 'gen_emp_time_in_and_time_out',
+                data: {
+                    'type' : $type
+                },
+                success: function(data)
+                {
+                    console.log(data);
+                    if(data == 'success')
+                    {
+                        alert($type + ' Captured');
+                        getAttendanceInfoGeneral();
                     }
-                });
-            }
+                    else if(data == 'no sched')
+                    {
+                        alert('Time Failed to Captured Check if the Daily Schedule is already saved then try again.');
+                    }
+                    btn.attr('disabled', false);
+                },
+                error: function(e)
+                {
+                    btn.attr('disabled', false);
+                    alert('Error occured contact web dev for assistance. Thank you.');
+                }
+            });
+        }
     }
     else
     {
         alert('Specify your schedule in the fields above. Thank you');
     }
-
-});
-
-// $('#work_status_hrgrr').click(function ()
-// {
-//     $('#attendance_emp_status_bro').show();
-// });
-
-$('#wfh_work_status').on('click',function () {
-    var request_id = $(this).attr('what');
-    if(confirm('Are you sure?'))
-    {
-        $('#attendance_emp_status_bro').hide();
-
-        $.ajax({
-            url: 'get_employee_work_status',
-            type: 'get',
-            data:
-                {
-                    'id':request_id,
-                    'status':"WORK-FROM-HOME"
-                },
-            success:function (data) {
-                console.log(data)
-            }
-        });
-    }
-    else
-    {}
-
-});
-
-$('#office_work_status').on('click',function () {
-    var request_id = $(this).attr('what');
-    if(confirm('Are you sure?'))
-    {
-        $('#attendance_emp_status_bro').hide();
-
-        $.ajax({
-            url: 'get_employee_work_status',
-            type: 'get',
-            data:
-                {
-                    'id':request_id,
-                    'status':"OFFICE-BASED"
-                },
-            success:function (data) {
-                console.log(data)
-            }
-        });
-    }
-    else
-    {}
-
-});
-
-$('#hbm_stats_close').on('click', function () {
-   $('#attendance_emp_status_bro').hide();
 });
 
 $('#save_attendance_schedule').click(function()
@@ -2394,7 +2236,6 @@ $('#save_attendance_schedule').click(function()
                     {
                         console.log(data);
                         alert('Daily Schedule Updated Successfully');
-                        getAttendanceInfoGeneral();
                         btn.attr('disabled', false);
                     },
                     error: function(e)
@@ -2498,7 +2339,6 @@ $('.time_out_class_val').change(function()
     // console.log(timeVal);
 });
 
-
 $('.gen_att_tabs').click(function()
 {
     var id = $(this).attr('href');
@@ -2506,24 +2346,15 @@ $('.gen_att_tabs').click(function()
 
     if(id == '#gen_att_tab2')
     {
-        $('.hide_me_attendance_btn').hide();
         $('.attendance_all_click').hide();
-    }
-    else if(id == '#gen_att_tab3'){
-        $('.hide_me_attendance_btn').hide();
-        $('.attendance_all_click').hide();
-    }
-    else if(id == '#gen_att_tab4'){
-        $('.hide_me_attendance_btn').hide();
-        $('.attendance_all_click').hide();
+        // getAttendanceInfoGeneralAll();
     }
     else
     {
-        $('.hide_me_attendance_btn').show();
+        $('.attendance_all_click').show();
     }
     console.log(id);
 });
-
 
 function getAttendanceInfoGeneralAll()
 {
@@ -2539,7 +2370,7 @@ function getAttendanceInfoGeneralAll()
         type: 'get',
         url: 'gen_attendance_in_out_check',
         data: {
-            'date_inputted' : $('#attendance_log_all_input').val()
+          'date_inputted' : $('#attendance_log_all_input').val()
         },
         success: function (data)
         {
@@ -2754,7 +2585,6 @@ $('#btnRefreshTableIssuance').click(function()
     tableGenIssuance.ajax.reload(null, false);
 });
 
-
 $('.Acno_ref').click(function()
 {
     $.ajax({
@@ -2764,33 +2594,32 @@ $('.Acno_ref').click(function()
             'id': $(this).attr('href')
         },
         success: function (data) {
-            var i;
-
+            
             $("#tbl_acnoo li").each(function ()
             {
                 if($(this).attr('id') == 'acno_header'){
-
+    
                 }
                 else
                 {
                     $(this).remove();
                 }
             });
-
+            
+            var i;
             for (i=0; i < data.length; i++)
             {
-
                 if(data[i].status != 'Acknowledge')
                 {
                     $('#tbl_acnoo').append(
-                        $('<li class="Acknowledge_Viewer" name="'+btoa(data[i].id)+'" style="cursor: pointer; background-color: #ffc107;"></li>').append(
-                            $('<a  style="text-align: center;"></a>').html('Acknowledge Receipt Dated:' + ' ' + data[i].created_at))
+                        $('<li class="Acknowledge_Viewer" name="'+btoa(data[i].id)+'" style="cursor: pointer; background-color: #ffc107"></li>').append(
+                        $('<a  style="text-align: center"></a>').html('Acknowledge Receipt Dated:' + ' ' + data[i].created_at))
                     );
                 }
                 else {
                     $('#tbl_acnoo').append(
-                        $('<li class="Acknowledge_Viewer" name="'+btoa(data[i].id)+'" style="cursor: pointer; background-color: #28a745;"></li>').append(
-                            $('<a  style="text-align: center;"></a>').html('Acknowledge Receipt Dated:' + ' ' + data[i].created_at))
+                        $('<li class="Acknowledge_Viewer" name="'+btoa(data[i].id)+'" style="cursor: pointer; background-color: #28a745"></li>').append(
+                        $('<a  style="text-align: center"></a>').html('Acknowledge Receipt Dated:' + ' ' + data[i].created_at))
                     );
                 }
             }
@@ -2800,9 +2629,9 @@ $('.Acno_ref').click(function()
 
 
 $('#tbl_acnoo').on('click', '.Acknowledge_Viewer', function ()
-{
-    var id = atob($(this).attr('name'));
-    $('.ar_InputsView').val('');
+    {
+        var id = atob($(this).attr('name'));
+        $('.ar_InputsView').val('');
 
 
     $.ajax({
@@ -2831,15 +2660,15 @@ $('#tbl_acnoo').on('click', '.Acknowledge_Viewer', function ()
             $('#Ar_btnTable').show();
 
             if(data[0][0].status != 'Acknowledge')
-            {
-                $('#btnArToAcknowledge').prop('disabled', false);
-                $('#btnArToAcknowledge').attr('href', btoa(data[0][0].id));
+                {
+                    $('#btnArToAcknowledge').prop('disabled', false);
+                    $('#btnArToAcknowledge').attr('href', btoa(data[0][0].id));
 
-            }
-            else
-            {
-                $('#btnArToAcknowledge').prop('disabled', true);
-            }
+                }
+                else
+                {
+                    $('#btnArToAcknowledge').prop('disabled', true);
+                }
 
             $('#ar_name_view').val(data[0][0].Employee_name);
             $('#ar_loc_dept_view').val(data[0][0].office_loc_dep_pos);
@@ -2857,7 +2686,7 @@ $('#tbl_acnoo').on('click', '.Acknowledge_Viewer', function ()
                     )
                 )
             }
-            for (var j=0; j < attachment_bool.length; j++){
+             for (var j=0; j < attachment_bool.length; j++){
                 if(attachment_bool[j] == 'true')
                 {
                     $('.Check_arView[name="'+j+'"]').prop('checked', true);
@@ -2865,553 +2694,284 @@ $('#tbl_acnoo').on('click', '.Acknowledge_Viewer', function ()
                 else {
                     $('.Check_arView[name="'+j+'"]').prop('checked', false);
                 }
-            }
-        }
-    })
+             }
+       }
+   })
 });
 
-$('#btnArToAcknowledge').on('click', function ()
-    {
-        $('#btnArToAcknowledge').prop('disabled', true);
-        $('#overlay_add_ar_receipt').show();
-
-        $.ajax({
-            url: '/acknowledge-form-status',
-            type: 'get',
-            data: {
-                'id': atob($(this).attr('href'))
-            },
-            success: function (data) {
-                $('.Acno_ref').click();
-                $('#btnArToAcknowledge').prop('disabled', true);
-                $('#overlay_add_ar_receipt').hide();
-                tableArReceipts.ajax.reload(null, false);
-                alert('AR Successfully Acknowledge');
-                console.log(data);
-            }
-        })
-});
-////////////////////////////ROMMEL MANPOWER REQUEST JS
-$('.font-big').css({"font-size":"17px"});
-$('#manpower_submit_btn').click(function()
-{
-    var booleanHolder ='';
-    var reason_cb = $('.manpower_checkbox_grp_1:checked').val();
-    var $this = $(this);
-    $('.manpower_checkbox_grp_2').each(function()
-    {
-        if($(this).is(':checkbox'))
+    $('#btnArToAcknowledge').on('click', function ()
         {
-            if ($(this).is(':checked')) {
-                if($(this).attr('what') != null)
+            $('#btnArToAcknowledge').prop('disabled', true);
+            $.ajax({
+                url: '/acknowledge-form-status',
+                type: 'get',
+                data: {
+                    'id': atob($(this).attr('href'))
+                },
+                success: function (data) {
+                    $('.Acno_ref').click();
+                    $('#btnArToAcknowledge').prop('disabled', true);
+                    alert('AR Successfully Acknowledge');
+                    console.log(data);
+                }
+            })
+    });
+    
+    
+get_user_archipelago();
+
+function get_user_archipelago()
+{
+    $('#table_user_archipelago_table thead tr th').each(function()
+    {
+        $(this).css('background-color', 'black');
+        $(this).css('color', 'white');
+    });
+
+    table_user_archipelogo = $('#table_user_archipelago').DataTable
+    ({
+        "responsive" : true,
+        "processing" : true,
+        "serverSide" : true,
+        "ajax":
+            {
+                url: "get_user_archipelago",
+                data: function (d)
                 {
-                    booleanHolder += $($(this).attr('what')).val()+'||-||';
+                    d.arch = $('#filter_archipelagos_id').find(':selected').val();
+                }
+            },
+        "columns":
+            [
+                {data: 'emp_name', name: 'users.name'},
+                {data: 'province_name', name: 'provinces.name'},
+                {
+                    data:function work_sched(data)
+                    {
+
+                        var workEnd = data.work_end;
+                        var splitAmPm,getHour,FinalOutput,workstart;
+
+                        if(workEnd != null || workEnd != '')
+                        {
+                            console.log('first if');
+                            console.log(workEnd);
+                            if(workEnd == null)
+                            {
+                                FinalOutput = '';
+                            }
+                            else
+                            {
+                                splitAmPm = workEnd.split(' ');
+                                FinalOutput = splitAmPm;
+                            }
+                          
+                        }
+                        else
+                        {
+                            FinalOutput = 'wala laman';
+                        }
+                
+                        if(workEnd != null || workEnd != '' || workEnd != 'NaN:NaN PM')
+                        {
+                            
+                            console.log('second if');
+                            console.log(workEnd);
+                            
+                           if(workEnd == null)
+                            {
+                                FinalOutput = '';
+                            }
+                            else
+                            {
+                                splitAmPm = workEnd.split(' ');
+                           
+                                FinalOutput = (parseInt(splitAmPm[0].split(':')[0]) + 12) + ':' + splitAmPm[0].split(':')[1];
+                            }
+                            
+                           
+                        }
+
+
+                        if(data.work_start == null)
+                        {
+                            var workstart = '';
+                        }
+                        else
+                        {
+                            var workstart = data.work_start.split(' ')[0];
+                        }
+
+                        return  '<div class="input-group"><input type="time" class="form-control  change_sched_input work_start_attend" value="'+workstart+'" name="'+data.id+'" id="'+data.id+'" disabled="true" style="width:47%; margin-right: 5px; margin-top: 5px">'+
+                            '<input type="time" class="form-control change_sched_input work_end_attend" value="'+FinalOutput+'" name="'+data.id+'" id="'+data.id+'"  disabled="true" style="max-width:47%; margin-right: 5px; margin-top: 5px"></div>'
+                    },
+                    'name' : 'name',
+                    searchable : false,
+                    orderable : false
+
+                },
+
+                {
+                    data:function action(data)
+                    {
+                        return'' +
+                            '<button class="btn btn-block btn-success btn-sm save_schedule_time" disabled="true" name="'+data.id+'" href="'+btoa(data.emp_name)+'">Save</button>'+
+                            '<button class="btn btn-block btn-info btn-sm logs_schedule_time" id="'+btoa(data.id)+'" data-target="#modal_users_attendance_logs" name="'+data.id+'" data-toggle="modal" href="'+btoa(data.emp_name)+'"><i class="glyphicon glyphicon-film">Logs</button>'
+                    },
+                    'name' : 'name',
+                    searchable : true,
+                    orderable : false
+                }
+            ],
+        "order" :[[0, 'desc']],
+        "pageLength" : 5,
+        "lengthMenu" : [[2, 10, 25, 50, -1], ['2 rows', '10 rows', '25 rows', '50 rows', 'Show all']],
+        initComplete: function () {
+
+            $('#table_user_archipelago').on('dblclick', '.change_sched_input', function () {
+                var identifier = $(this).attr('name');
+
+                if ($(this).is(":disabled"))
+                {
+                    $('.change_sched_input').each(function () {
+                        if ($(this).attr('name') == identifier) {
+                            $(this).attr("disabled", false);
+                        }
+                    });
+
+                    $('.save_schedule_time').each(function()
+                    {
+                        if ($(this).attr('name') == identifier) {
+                            $(this).attr("disabled", false);
+                        }
+                    });
+
                 }
                 else
                 {
-                    booleanHolder += 'true||-||';
-                }
-            }
-            else {
-                booleanHolder += 'false||-||';
-            }
-        }
-    });
+                    $('.save_schedule_time').each(function () {
+                        if ($(this).attr('name') == identifier) {
+                            $(this).attr("disabled", true);
+                        }
+                    });
 
-    if(confirm('Submit your Manpower Request ?'))
-    {
-        $this.attr('disabled',true);
+                    $('.save_schedule_time').each(function()
+                    {
+                        if ($(this).attr('name') == identifier) {
+                            $(this).attr("disabled", true);
+                        }
+                    });
 
-        $.ajax({
-            url: '/manpower_requisition',
-            type: 'get',
-            data: {
-                'Office_location_department_position': $('#manpower_office_loc').val(),
-                'reason_for_vacancy': reason_cb,
-                'reason_remarks': $('#reason_vacancy_text_area').val(),
-                'job_details_location_dept_pos': $('#manpower_location_dept_pos').val(),
-                'no_of_candidates': $('#manpower_no_candidate').val(),
-                'qualification': $('#manpower_quali_required_desired').val(),
-                'job_offer_salary': $('#job_offer_salary').val(),
-                'equipment_request': booleanHolder,
-                'remark_status': 'Submitted a Manpower request'
-            },
-            success: function (data) {
-                console.log(data);
-            },
-
-            complete: function () {
-                $this.attr('disabled', false);
-                $('#modal-manpower-view').modal('hide');
-                manpower_to_clear_v2();
-                manpower_submit_succes();
-            }
-        });
-
-    }
-    else{
-        $this.attr('disabled', false);
-    }
-});
-function manpower_submit_succes() {
-    setTimeout(function(){$('#modal_submit_success').modal('show');}, 1000);
-}
-
-$('.manpower_checkbox_grp_1').click(function()
-{
-    $('.manpower_checkbox_grp_1').not(this).attr('checked',false);
-    console.log($(this).val())
-});
-
-function manpower_to_clear_v2() {
-
-    $('.manpower_management_toclear').each(function()
-    {
-        if($(this).attr('type') != 'checkbox' && !$(this).is(':disabled'))
-        {
-            $(this).val('');
-        }
-        else
-        {
-            $(this).prop('checked', false);
-        }
-    });
-}
-
-
-$('#leave_send_form').click(function ()
-{
-    $('#overlay_submit_leave_form').show();
-    var request_id = $(this).attr('name');
-    var btn = $(this);
-
-    var leave_type_per = $('#leave_type_per').val();
-    var leave_reason = $('#leave_reason').val();
-    var leave_start = $('#your_leave_start').val();
-    var leave_end = $('#your_leave_end').val();
-    var opt_other = $('#opt_others_leave').val();
-
-    $('.leave_holder').each(function ()
-    {
-       if ($(this).val() != '')
-       {
-           leave_bols = true;
-       }
-       else
-       {
-           console.log($(this));
-           leave_bols = false;
-           alert('Fill-up the required fields');
-           return false;
-       }
-    });
-
-    $('.opt_holder').each(function ()
-    {
-       if($(this).val() != 'Other')
-       {
-        opt_bols = true;
-        $('#opt_others_leave').val('');
-       }
-       else if($('#opt_others_leave').val() != '')
-       {
-           opt_bols = true;
-       }
-       else
-       {
-           console.log($(this));
-           opt_bols = false;
-           alert('Please fill up the required field');
-           return false;
-       }
-    });
-
-    $('.date_holder').each(function () {
-       if(leave_start <= leave_end)
-       {
-            date_bols = true;
-       }
-       else {
-           console.log($(this));
-           date_bols = false;
-           alert('Your Start Date is invalid');
-           return false;
-       }
-    });
-
-
-if(leave_bols && opt_bols && date_bols)
-{
-        if (confirm('Are You Sure You want to Submit Leave?')) {
-            $.ajax({
-                type: 'post',
-                url: 'leave_request_submitTo',
-                data: {
-
-                    'leave_id': request_id,
-                    leave_type_per: leave_type_per,
-                    leave_reason: leave_reason,
-                    leave_start: leave_start,
-                    leave_end: leave_end,
-                    opt_other: opt_other
-
-                },
-                success: function (data) {
-                    $('#leave_type_per').val('');
-                    $('#leave_reason').val('');
-                    $('#your_leave_start').val('');
-                    $('#your_leave_end').val('');
-                    $('#opt_others_leave').val('');
-                    alert('Leave Request has been submitted Successfully');
-
-                    console.log(data);
-                },
-                complete: function () {
-                    table_leave_request.ajax.reload(null, false);
-                    $('#overlay_submit_leave_form').hide();
                 }
             });
-        }
-    }
-});
 
-$('#leave_type_per').change(function () {
-   var type_per  = $('#leave_type_per').val();
+            $('#table_user_archipelago').on('click', '.save_schedule_time', function ()
+            {
+                var inputted_start = '';
+                var inputted_end = '';
+                var user_id = $(this).attr('name');
+                var validatorIfNull = false;
 
-   if(type_per == 'Other')
-   {
-       $('#option_others_leave').show();
-   }
-   else {
-       $('#option_others_leave').hide();
-   }
-   console.log(type_per);
-});
-
-$(document).on('click', '.global_leave_form', function() {
-
-    // $('#table_emp_leave_status thead tr th').each(function()
-    // {
-    //     $(this).css('background-color', 'black');
-    //     $(this).css('color', 'white');
-    // });
-
-    getLeaveStatus();
-
-    function getLeaveStatus() {
-
-        table_leave_request = $('#table_emp_leave_status').DataTable
-        ({
-                // "scrollY":300,
-                // "scrollCollapse": true,
-                // "paging": false,
-                "responsive": true,
-                "processing": true,
-                "serverSide": true,
-                "ajax": "get_emp_leave_request",
-                "columns":
-                    [
-                        {data: 'leave_start', name: 'leave_start'},
-                        {data: 'leave_end', name: 'leave_end'},
-                        {data: 'days_payable', name: 'days_payable'},
-                        {data: 'days_filed', name: 'days_filed'},
-                        {data: 'leave_reason', name: 'leave_reason'},
-                        {data: 'leave_type', name: 'leave_type'},
-                        // {data: 'leave_status', name: 'leave_status'},
+                $('.change_sched_input').each(function () {
+                    if ($(this).attr('name') == user_id) {
+                        if($(this).val() != '')
                         {
-                            data:function leavestatus(data){
-                                if (data.leave_status=='Pending'){
-                                    return '<span class="btn-xs btn-block text-yellow text-uppercase" style="border:1px solid #db8b0b ;">pending</span>'
-                                }
-                                else if(data.leave_status=='APPROVED'){
-                                    return '<span class="btn-xs btn-block text-green text-uppercase" style="border:1px solid #008d4c ;">approved</span>'
-                                }
-                                else if (data.leave_status == 'DISAPPROVED'){
-                                    return '<span class="btn-xs btn-block text-red text-uppercase" style="border:1px solid #d33724 ;">disapproved</span>'
-                                }
-                                else if(data.leave_status == 'CANCELLED'){
-                                    return '<span class="btn-xs btn-block text-uppercase" style="border:1px solid #b5bbc8 ;color:#9198a9;">cancelled</span>'
-                                }
-                            },
-                            name: 'leave_status',
-                            searchable: false,
-                            orderable: false
-                        },
+                            validatorIfNull = true;
+                        }
+                        else
                         {
-                            data:function action_btns(data){
-                                if (data.leave_status == 'Pending'){
-                                    return''+'<button class="btn-block btn btn-sm bg-red leave_cancel_pops" name="'+data.leave_id+'" href="'+btoa(data.leave_id)+'"><i class="fa fa-fw fa-trash"></i> Cancel</button>'
-                                }
-                                else if (data.leave_status == 'APPROVED'){
-                                    return'<span>'+'<a class="btn-block btn btn-sm bg-green" disabled><i class="fa fa-fw fa-check-circle"></i> Approved</a>'+
-                                        '<a class="btn-block btn btn-sm btn-default view_leave_request_remarks" href="'+(data.leave_id)+'" data-toggle="modal" data-target="#modal_leave_request_remarks" name="'+data.leave_id+'" style="border:1px solid #00a65a;"><i class="fa fa-fw fa-eye text-green"></i> Remarks</a>'
-                                        +'</span>'
-                                }
-                                else if(data.leave_status == 'DISAPPROVED'){
-                                    return'<span>'+'<a class="btn-block btn btn-sm bg-red" name="'+data.leave_id+'" disabled><i class="fa fa-fw fa-times-circle"></i> Disapproved</a>'+
-                                        '<a class="btn-block btn btn-sm btn-default view_leave_request_remarks" href="'+(data.leave_id)+'" data-toggle="modal" data-target="#modal_leave_request_remarks" name="'+data.leave_id+'" style="border:1px solid #f56954;"><i class="fa fa-fw fa-eye text-red"></i> Remarks</a>'
-                                        +'</span>'
-                                }
-                                else if (data.leave_status == 'CANCELLED'){
-                                    return'<span>'+'<a class="btn-block btn btn-sm bg-gray" disabled><i class="fa fa-fw fa-trash"></i> Removed</a>'+'</span>'
-                                }
-                            },
-                            'name': 'leave_type',
-                            searchable: false,
-                            orderable: false
-                        },
-                        // {
-                        //     data: function action(data)
-                        //     {
-                        //         if (data.leave_status == 'Pending')
-                        //         {
-                        //             return'' +
-                        //             '<button class="btn btn-block btn-danger btn-sm leave_cancel_pops btn-sm" name="'+data.leave_id+'" href="'+btoa(data.leave_id)+'">Cancel</button>'
-                        //         }
-                        //         else if (data.leave_status == 'APPROVED')
-                        //         {
-                        //             return'' +
-                        //                 '<button class="btn btn-block btn-success btn-sm" style="pointer-events: none">Already Approved</button>'+
-                        //                 '<button class="btn btn-block btn-primary btn-sm view_leave_request_remarks" name="'+data.leave_id+'" data-toggle="modal" data-target="#modal_leave_request_remarks" href="'+(data.leave_id)+'" style="margin-top: 10px;pointer-events: painted">View Remarks</button>'
-                        //         }
-                        //         else if (data.leave_status == 'DISAPPROVED')
-                        //         {
-                        //             return'' +
-                        //                 '<button class="btn btn-block btn-warning btn-sm" style="pointer-events: none" name="'+data.id+'">Already Disapproved</button>'+
-                        //                 '<button class="btn btn-block btn-primary btn-sm view_leave_request_remarks" name="'+data.leave_id+'" data-toggle="modal" data-target="#modal_leave_request_remarks" href="'+(data.leave_id)+'" style="margin-top: 10px">View Remarks</button>'
-                        //         }
-                        //         else if (data.leave_status == 'CANCELLED')
-                        //         {
-                        //             return'' +
-                        //                 '<button class="btn btn-block btn-danger btn-sm" style="pointer-events: none">Cancelled</button>'
-                        //         }
-                        //     },
-                        //     'name': 'leave_type',
-                        //     searchable: false,
-                        //     orderable: false
-                        // }
-                    ],
-                "order": [[0, 'desc']],
-                "pageLength": 10,
-                "pagingType": "simple",
-                "bSortClasses": false,
-                // "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull)
-                // {
-                //     if(aData.status == 'Acknowledge')
-                //     {
-                //         $('td', nRow).css('background-color', '#ffb84d');
-                //     }
-                //     else
-                //     {
-                //         $('td', nRow).css('background-color', '#b3ffb3');
-                //     }
-                //
-                //     $('td', nRow).css('cursor', 'pointer');
-                //     $('td', nRow).addClass('get_infos');
-                //     $('td', nRow).attr('id', btoa(aData.id));
-                // }i
-            initComplete:function(){
-                $('.overlay').hide();
-                $('#table_emp_leave_status_wrapper').css({"margin-top":"2%"});
-                $('#table_emp_leave_status tbody td').css({"vertical-align":"middle"});
-            }
-            });
-
-        $('#table_emp_leave_status_filter input').unbind();
-        $('#table_emp_leave_status_filter input').bind('keyup change', function (e) {
-
-            if ($(this).is(':focus')) {
-                if (e.keyCode == 13) {
-                    table_leave_request.search($(this).val()).draw();
-                }
-                else if (e.keyCode === 8) {
-                    if ($(this).val() == '') {
-                        table_leave_request.search($(this).val()).draw();
+                            alert('Fill-up required fields.');
+                            validatorIfNull = false;
+                            return false;
+                        }
                     }
-                }
-            }
-        });
-    }
-});
+                });
 
-
-$('#table_emp_leave_status').on('click', '.leave_cancel_pops', function () {
-    var request_id = $(this).attr('name');
-    var $this = $(this);
-
-    if (confirm('Are you sure?'))
-    {
-        $this.attr('disabled', true);
-        $.ajax({
-            url: 'get_leave_statusCancel_monitor',
-            type: 'get',
-            data:
+                if(validatorIfNull)
                 {
-                    'leave_id' : request_id,
-                    'leave_status': "Cancelled"
-                },
-            success: function (data) {
-                console.log(data);
+                    if(confirm('Are you sure to update ' + atob($(this).attr('href')) + ' schedule?'))
+                    {
 
-            },
-            complete: function () {
-                $this.attr('disabled', false);
-                alert('Leave Request Cancelled');
-                table_leave_request.ajax.reload(null, false);
-            }
-        });
-    }
-    else {}
-});
+                        $('.change_sched_input ').each(function()
+                        {
+                            if(!$(this).is(":disabled"))
+                            {
+                                if($(this).hasClass('work_start_attend'))
+                                {
+                                    inputted_start = $(this).val();
+                                    $('.save_schedule_time').prop('disabled', true);
+                                    $('.change_sched_input').prop('disabled', true);
 
-$('#close_master').on('click', function(){
-   $('#leave_form_id').show();
-});
+                                }
+                                else
+                                {
+                                    inputted_end= $(this).val();
+                                }
+                            }
+                        });
+                    }
+                    else
+                    {
+                        console.log('do nothing');
+                    }
+                    $.ajax({
+                        url: 'get_management_saveTime',
+                        type: 'get',
+                        data:{
+                            'id' : $(this).attr('name'),
+                            'work_start' : $('.work_start_attend').val(),
+                            'work_end' : $('.work_end_attend').val()
+                        },
+                        success: function (data) {
+                            alert ('Employee Schedule Successfully Updated');
 
+                        }
+                    });
 
-$('.global_leave_form').on('click', function () {
-    var id = $(this).attr('name');
-    var $this = $(this);
-    var additional_count = [5];
-    var service_count = [5];
-    var maternity_count = [105];
-    var paternity_count  = [7];
-    var solo_parent_count = [7];
-    var other_count = [10];
-
-    console.log('CLICK');
-
-    $.ajax({
-        url: 'get_leave_stats_rem',
-        type: 'get',
-        data:
-            {
-                'id' : id
-            },
-        success: function (data) {
-            // This part is For input type Taken
-            $('#additional_leave_taken').val(data[0]);
-            $('#service_incentive_taken').val(data[1]);
-            $('#maternity_leave_taken').val(data[2]);
-            $('#paternity_leave_taken').val(data[3]);
-            $('#solo_parent_leave_taken').val(data[4]);
-            $('#other_leave_taken').val(data[5]);
-
-            // $('#additional_leave_remaining').val(additional_count - data[0]);
-            // $('#service_incentive_remaining').val(service_count - data[1]);
-            // $('#maternity_leave_remaining').val(maternity_count - data[2]);
-            // $('#paternity_leave_remaining').val(paternity_count - data[3]);
-            // $('#solo_parent_leave_remaining').val(solo_parent_count - data[4]);
-            // $('#other_leave_remaining').val(other_count - data[5]);
-
-            // This Part is for input type Remaining
-
-            // $('#additional_leave_remaining').val('No Leave Remaining');
-            // $('#additional_leave_remaining').val('0');
-
-            if ($('#additional_leave_taken').val() == 0)
-            {
-                $('#additional_leave_remaining').val(additional_count - data[0]);
-            }
-            else if  ($('#additional_leave_taken').val() <= 5)
-            {
-                $('#additional_leave_remaining').val(additional_count - data[0]);
-            }
-            else if  ($('#additional_leave_taken').val() > 5)
-            {
-                $('#additional_leave_remaining').val('No Remaining Additional Leave')
-            }
-
-            if ($('#service_incentive_taken').val() == 0)
-            {
-                $('#service_incentive_remaining').val(service_count - data[1]);
-            }
-            else if ($('#service_incentive_taken').val() <= 5)
-            {
-                $('#service_incentive_remaining').val(service_count - data[1]);
-            }
-            else if($('#service_incentive_taken').val() > 5)
-            {
-                $('#service_incentive_remaining').val('No Remaining Service Leave');
-            }
-            // Loop of Maternity Remaining Leave
-            if($('#maternity_leave_taken').val() == 0)
-            {
-                $('#maternity_leave_remaining').val(maternity_count - data[2])
-            }
-            else if($('#maternity_leave_taken').val() <= 5)
-            {
-                $('#maternity_leave_remaining').val(maternity_count - data[2])
-            }
-            else if($('#maternity_leave_taken').val() > 5)
-            {
-                $('#maternity_leave_remaining').val('No Remaining Maternity Leave')
-            }
-            // End of Loop
-
-            // Loop of Paternity Remaining Leave
-            if($('#paternity_leave_taken').val() == 0)
-            {
-                $('#paternity_leave_remaining').val(paternity_count - data[3])
-            }
-            else if($('#paternity_leave_taken').val() <= 5)
-            {
-                $('#paternity_leave_remaining').val(paternity_count - data[3])
-            }
-            else if($('#paternity_leave_taken').val() > 5)
-            {
-                $('#paternity_leave_remaining').val('No Paternity Leave Remaining')
-            }
-            // End Of Loop
-
-            // Loop of Solo Parent Leave
-            if ($('#solo_parent_leave_taken').val() == 0)
-            {
-                $('#solo_parent_leave_remaining').val(solo_parent_count - data[4])
-            }
-            else if($('#solo_parent_leave_taken').val() <= 5)
-            {
-                $('#solo_parent_leave_remaining').val(solo_parent_count - data[4])
-            }
-            else if($('#solo_parent_leave_taken').val() > 5)
-            {
-                $('#solo_parent_leave_remaining').val('No Remaining Solo Parent Leave')
-            }
-            // End Of Loop
-
-            // Loop of Other Remaining Leave
-            if ($('#other_leave_taken').val() == 0)
-            {
-                $('#other_leave_remaining').val(other_count - data[5])
-            }
-            else if($('#other_leave_taken').val() <= 5)
-            {
-                $('#other_leave_remaining').val(other_count - data[5])
-            }
-            else if($('#other_leave_taken').val() > 5)
-            {
-                $('#other_leave_remaining').val('No Other Leave Remaining')
-            }
-            // End Of Loop
-            console.log(data);
+                }
+            });
         }
     });
+
+    $('#table_user_archipelago_filter input').unbind();
+    $('#table_user_archipelago_filter input').bind('keyup change', function(e)
+    {
+        if($(this).is(':focus'))
+        {
+            if (e.keyCode === 13) {
+                table_user_archipelogo.search($(this).val()).draw();
+
+            }
+            else if (e.keyCode === 8)
+            {
+                if ($(this).val() == '') {
+                    table_user_archipelogo.search($(this).val()).draw();
+                }
+            }
+        }
+    });
+}
+
+$('#filter_archipelagos_id').change(function()
+{
+    table_user_archipelogo.draw();
 });
 
-$('#table_emp_leave_status').on('click', '.view_leave_request_remarks', function () {
-    $('#view_remarks_app').html('');
+
+$('#table_user_archipelago').on('click', '.logs_schedule_time', function()
+{
+    $('#attendance_user_logs').html('');
     var id = $(this).attr('name');
-    ViewLeave_remarks(id);
-    $('#leave_form_id').hide();
+    ViewAttendance_logs(id);
 });
 
-function ViewLeave_remarks(leave_id)
+function ViewAttendance_logs(id)
 {
     $.ajax({
         type: 'get',
-        url: 'get_leave_request_remarks',
+        url: 'users_management_view_logs',
         data: {
-            'id' : leave_id
+            'id' : id
         },
         success: function(data)
         {
@@ -3419,15 +2979,15 @@ function ViewLeave_remarks(leave_id)
 
             if(data == '')
             {
-                $('#view_remarks_app').html('<table class="table-hover" width="100%">\n' +
-                    '<tr style="background-color: #001F3F; color:white; text-align: left">\n' +
-                    '<th>Approver Name</th>\n' +
+                $('#attendance_user_logs').html('<table class="table-hover" width="100%">\n' +
+                    '<tr style="background-color: brown; color:white; text-align: left">\n' +
+                    '<th>Name</th>\n' +
                     '<th>Position</th>\n' +
-                    '<th>Remarks</th>\n' +
                     '<th>Activity</th>\n' +
-                    '<th>Date Time Received</th>\n' +
+                    '<th>Date Time Ocurred</th>\n' +
                     '</tr>\n' +
-                    '<td colspan="6">No Available Records</td>\n' +
+                    '<tr>\n' +
+                    '<td colspan="5">No Available Records</td>\n' +
                     '</tr>\n' +
                     '</table>');
             }
@@ -3435,12 +2995,11 @@ function ViewLeave_remarks(leave_id)
             {
                 var dataTable = '';
                 var tableHead = '<table class="table-hover" width="100%">\n' +
-                    '                                <tr style="background-color: #001F3F; color:white; text-align: left">\n' +
-                    '                                    <th>Approver Name</th>\n' +
+                    '                                <tr style="background-color: brown; color:white; text-align: left">\n' +
+                    '                                    <th>Name</th>\n' +
                     '                                    <th>Position</th>\n' +
-                    '                                    <th>Remarks</th>\n' +
                     '                                    <th>Activity</th>\n' +
-                    '                                    <th>Date Time Received</th>\n' +
+                    '                                    <th>Date Time Occured</th>\n' +
                     '                                </tr>';
 
                 for(var i = 0;i < data[0].length; i++)
@@ -3448,57 +3007,63 @@ function ViewLeave_remarks(leave_id)
                     dataTable += '<tr>\n' +
                         '    <td>' + data[0][i].name + '</td>\n' +
                         '    <td>' + data[0][i].position + '</td>\n' +
-                        '    <td>' + data[0][i].remarks + '</td>\n' +
-                        '    <td>' + data[0][i].leave_request_activity + '</td>\n' +
+                        '    <td>' + data[0][i].activity + '</td>\n' +
                         '    <td>' + data[0][i].created_at + '</td>\n' +
                         '</tr>';
                 }
 
-                $('#view_remarks_app').html(tableHead + dataTable + '</table>');
+                $('#attendance_user_logs').html(tableHead + dataTable + '</table>');
             }
-        },
-        complete:function(){
-            $('span#view_remarks_app td,span#view_remarks_app th').css({"font-size":"15px","padding":"2% 0"});
+
         }
     });
 }
 
-$('#global_NTE').click(function(){
-    table_NTE_users=$('#nte_users_table').DataTable({
-        "responsive": true,
-        "processing": true,
-        "serverSide": true,
-        "ajax": "all_nte_users",
-        "columns":[
-            {data:'user_id',name:'user_id'},
-            {data:'user_emp_id',name:'user_emp_id'},
-            {data:'user_name',name:'user_name'},
-            {data:'user_email',name:'user_email'},
-            {data:'user_position',name:'user_position'},
-            {
-                data:function actions(data){
-                    return'<span>'+
-                        '<a class="btn-block btn-primary btn btn-sm text-uppercase" data-target="#nte_reasaon_modal" data-toggle="modal" name="'+data.user_id+'" style="box-shadow:-6px 7px 5px #ddd;margin:10px 0;"><i class="fa fa-fw fa-paper-plane"></i> add nte</a>'+
-                        '<a class="btn-block btn-default btn btn-sm text-uppercase text-blue" data-target="" data-toggle="modal" style="box-shadow:-6px 7px 5px #ddd;border:1px solid #3c8dbc;margin:10px 0;"><i class="fa fa-fw fa-eye"></i> view logs</a>'+
-                        '</span>'
-                },name:'user_id',"orderable":false,"searchable":false
-            },
-        ],
-        "order": [[0, 'desc']],
-        "pageLength": 10,
-        "lengthMenu": [[2, 10, 25, 50, -1], ['2 rows', '10 rows', '25 rows', '50 rows', 'Show all']],
-        initComplete:function(){
-            $('.overlay').hide();
-            $('#nte_users_table_wrapper').css({"margin-top":"2%"});
-            $('#nte_users_table_wrapper tr th').css({"border-block-color":"#DD4B39"});
-            $('#nte_users_table tbody td').css({"vertical-align":"middle"});
-            $('#nte_users_table_length').css({"margin-bottom":"5%"});
-        }
-    });
+$('.gen_att_tabs1 ').click(function()
+{
+    var gethref = $(this).attr('href');
 
+    if(gethref == '#gen_att_tab3')
+    {
+        if( $(''+gethref+'').hasClass('active'))
+        {
+            console.log('do nothing');
+
+        }
+        else if(attendance_sched)
+        {
+            console.log('already loaded');
+
+        }
+        else if(attendance_sched == false)
+        {
+            attendance_sched = true;
+            get_user_archipelago();
+        }
+    }
 });
 
+$('.gen_att_tabs').click(function()
+{
+    var id = $(this).attr('href');
+    var check = $(this).attr('loaded');
 
-
-
-
+    if(id == '#gen_att_tab2')
+    {
+        $('.hide_me_attendance_btn').hide();
+        $('.attendance_all_click').hide();
+    }
+    else if(id == '#gen_att_tab3'){
+        $('.hide_me_attendance_btn').hide();
+        $('.attendance_all_click').hide();
+    }
+    else if(id == '#gen_att_tab4'){
+        $('.hide_me_attendance_btn').hide();
+        $('.attendance_all_click').hide();
+    }
+    else
+    {
+        $('.hide_me_attendance_btn').show();
+    }
+    console.log(id);
+});

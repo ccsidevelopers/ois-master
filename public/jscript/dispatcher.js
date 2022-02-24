@@ -29,8 +29,7 @@ var table_fund_logs_disp;
 var tableFundFa;
 var coltittle3 = [];
 var col_count3 = 0;
-
-var archie = '' ;
+var archie = '';
 
 
 
@@ -147,6 +146,8 @@ $(document).ready(function()
     $('#btnReqFund').hide();
     $('#btnCantShell').hide();
     // $('#checkifShellCi').hide();
+
+
 
     table = $('#endorsement-table').DataTable
     (
@@ -345,13 +346,12 @@ $(document).ready(function()
             }
         }
     });
-
+    
     $('#select_dispt_arch').change(function()
     {
         archie = $(this).val();
         table.draw();
     });
-
 
     $('.datepicks').datepicker({
         dateFormat: "yy-mm-dd",
@@ -977,7 +977,7 @@ $('#btnDispatch').click(function (event)
 {
     var accountID = acctID;
     var accountName = $('#accountName').val();
-        var ciID = parseInt($('#ciID_dispatch').val());
+    var ciID = parseInt($('#ciID_dispatch').val());
     var ciName = $('#ciID_dispatch').children('option:selected').text();
     var date = $('#DateDue').val();
     var time = $('#TimeDue').val();
@@ -1005,8 +1005,7 @@ $('#btnDispatch').click(function (event)
                 'ciName': ciName,
                 'date_due': date,
                 'time_due': time,
-                'aim': aim,
-                'date_time_endo': $('#DateEndorse').val()
+                'aim': aim
                 // '_token':$('input[name=_token]').val()
             },
             beforeSend: function () {
@@ -1032,7 +1031,6 @@ $('#btnDispatch').click(function (event)
                     $('#accountID').val('');
                     $('#dispatch_modal').modal('hide');
                     alert('Account Successfully Dispatched to C.I');
-                    $('#DateEndorse').val('');
                     table.ajax.reload(null, false);
                 }
                 // table.ajax.reload(null, false);
@@ -1522,7 +1520,7 @@ $('#selFciName').change(function ()
     var id = $(this).val();
     console.log('ID----------:'+id);
     getpending_and_onhand_fund(id);
-
+    $('#table_selected_account_new_list tbody tr').remove();
 });
 
 // EXTRACTING ID FOR DISPATCHING
@@ -2811,300 +2809,6 @@ function faTablesCi()
         }
     });
 }
-
-
-$('#endorsement-table').on('click', '#btnUpdateNowDispatchAuto', function()
-{
-
-    var tr = $(this).closest('tr');
-    acctID = $(this).attr("href");
-    dateEndorsed = $(this).attr('value');
-    timeEndorsed = $(this).attr("name");
-
-    $('#DateDue_auto').val(dateEndorsed);
-    var gettimsplit = timeEndorsed.split(":");
-    var getimeint = parseInt(gettimsplit[0]);
-
-    if(getimeint >= 10)
-    {
-        if(getimeint > 12)
-        {
-            getimeint -= 12;
-            $('#TimeDue_auto').val(getimeint+':'+gettimsplit[1]+' PM');
-        }
-        else
-        {
-            $('#TimeDue_auto').val(getimeint+':'+gettimsplit[1]+' AM');
-        }
-    }
-    else {
-        $('#TimeDue_auto').val(getimeint+':'+gettimsplit[1]+' AM');
-    }
-
-    var accountName = tr.children('td:eq(6)').text();
-
-    $('#accountName').val (accountName);
-
-    $('#accountInformation_auto').html('');
-    $('#subjComaker_auto').html('');
-    $('#evrInfo_auto').html('');
-    $('#bvrInfo_auto').html('');
-
-    $.ajax({
-        url: '/dispatcher-get-other-info',
-        type: 'GET',
-        data:
-            {
-                'acctID': acctID
-            },
-        success: function (data)
-        {
-            console.log(data);
-
-            if(data[3][0].note != null)
-            {
-                $('#dispatch_additional_client_note_auto').val(data[3][0].note);
-                $('#additional_note_from_client_auto').show();
-            }
-            else {
-                $('#dispatch_additional_client_note_auto').val('');
-                $('#additional_note_from_client_auto').hide();
-
-            }
-
-            if(data.length === 0)
-            {
-                console.log('data empty');
-            }
-            else
-            {
-
-                // $('#DateDue').val(data[4][0].date_due);
-                // $('#TimeDue').val(data[4][0].time_due);
-
-                $('#accountInformation_auto').append
-                (
-                    '<dl>\n' +
-                    '            <dt>Account Name:</dt>\n' +
-                    '            <dd>'+data[3][0].account_name+'</dd>\n' +
-                    '\n' +
-                    '            <dt>Address:</dt>\n' +
-                    '            <dd>'+data[3][0].address+' '+data[3][0].muni_name.toUpperCase()+' '+data[3][0].provinces+'</dd>\n' +
-                    '\n' +
-                    '            <dt>Type of Request:</dt>\n' +
-                    '            <dd>'+data[3][0].type_of_request+'</dd>\n' +
-                    '</dl>'
-                );
-
-                if(data[0].length===0)
-                {
-                    // $('#subjComaker').append
-                    // (
-                    //     '            <center><h4>No Co-Maker Declared</h4></center>'
-                    // )
-                }
-                else
-                {
-                    for (ctrr = 0; ctrr <= (data[0].length) - 1; ctrr++)
-                    {
-                        $('#subjComaker_auto').append
-                        (
-                            '            <dl>' +
-                            '            <dt>Co-Maker:</dt>' +
-                            '            <dd>' + data[0][ctrr].coborrower_name + '</dd>'+
-                            '            <dt>Address:</dt>' +
-                            '            <dd>'+data[0][ctrr].coborrower_address+' '+data[0][ctrr].coborrower_municipality+' '+data[0][ctrr].coborrower_province+'</dd>'+
-                            '            </dl>'
-                        )
-                    }
-                }
-
-                if(data[2].length===0)
-                {
-                    for (ctrr = 0; ctrr <= (data[1].length) - 1; ctrr++)
-                    {
-                        $('#evrInfo_auto').append
-                        (
-                            '            <dl>' +
-                            '            <dt>Employer Name:</dt>' +
-                            '            <dd>' + data[1][ctrr].employer_name + '</dd>'+
-                            '            <dt>Address:</dt>' +
-                            '            <dd>'+data[3][0].address+' '+data[3][0].muni_name.toUpperCase()+' '+data[3][0].provinces+'</dd>\n' +
-                            '            </dl>'
-                        )
-                    }
-                }
-                else if(data[1].length===0)
-                {
-                    for (ctrr = 0; ctrr <= (data[2].length) - 1; ctrr++)
-                    {
-                        $('#bvrInfo_auto').append
-                        (
-                            '            <dl>' +
-                            '            <dt>Business Name:</dt>' +
-                            '            <dd>' + data[2][ctrr].business_name + '</dd>'+
-                            '            <dt>Address:</dt>' +
-                            '            <dd>'+data[3][0].address+' '+data[3][0].muni_name.toUpperCase()+' '+data[3][0].provinces+'</dd>\n' +
-                            '            </dl>'
-                        )
-                    }
-                }
-                else
-                {
-                    $('#evrInf_auto').append
-                    (
-                        '            <center><h4>No Employer/Business Info Available</h4></center>'
-                    )
-                }
-
-                $('#ciID_dispatch_auto').val(data[6][0].ci_id + ' ');
-                $('#ciID_dispatch_auto').select2().trigger('change');
-
-                $('#btnUpdateDispatch_auto').attr('name', data[6][0].ci_id).attr('href', acctID);
-
-            }
-        }
-    });
-
-    $('#update_auto_dispatched_modal').modal('show');
-
-});
-
-$('#btnUpdateDispatch_auto').click(function()
-{
-    var btn = $(this);
-    var current = parseInt(btn.attr('name'));
-    var selected = parseInt($('#ciID_dispatch_auto').find(':selected').val());
-    var date = $('#DateDue_auto').val();
-    var time = $('#TimeDue_auto').val();
-    var acctId = $(this).attr('href');
-
-
-    btn.attr('disabled', false);
-
-    if(current == 0)
-    {
-        alert('Please select CI.');
-    }
-    else if(current == selected)
-    {
-        if(confirm('CI selected not changed. Continue?'))
-        {
-            if(date == '')
-            {
-                alert('Please fill up Date Due.');
-            }
-            else
-            {
-
-                $.ajax
-                ({
-                    type: 'get',
-                    url: '/dispatcher-update-get-time-due',
-                    data:
-                        {
-                            'acctID': acctId,
-                            'dateTime': date + ' ' + time
-                        },
-                    beforeSend: function ()
-                    {
-                        $('#toOverlayDispAuto').addClass('overlay').html('<i class="fa fa-refresh fa-spin"></i>');
-                        btn.attr('disabled', true);
-                    },
-                    success: function ()
-                    {
-                        alert('Successfully updated');
-                        $('#toOverlayDispAuto').removeClass('overlay').html('');
-                        $('#update_auto_dispatched_modal').modal('hide');
-                        table.ajax.reload(null, false);
-                    },
-                    complete: function ()
-                    {
-                        btn.attr('disabled', false);
-                    }
-                });
-            }
-        }
-        else
-        {
-
-        }
-    }
-    else if(current != selected)
-    {
-        if(date == '')
-        {
-            alert('Please fill up Date Due.');
-        }
-        else
-        {
-            $.ajax
-            ({
-                method: 'get',
-                url: 'dispatcher-ci-transfer',
-                data:
-                    {
-                        'ciID': current,
-                        'acctID': acctId,
-                        'ciIDToTransfer': selected
-                    },
-                beforeSend : function ()
-                {
-                    $('#toOverlayDispAuto').addClass('overlay').html('<i class="fa fa-refresh fa-spin"></i>');
-                    btn.attr('disabled', true);
-                },
-                success: function (data)
-                {
-                    $('#toOverlayDispAuto').removeClass('overlay').html('');
-                    if(data=='failed')
-                    {
-                        alert('This account is in the process of fund request. Please cancel the process or wait for the process to finish before the transferring of this account become available.\n\nOR\n\nContact the SAO or Finance to Disapproved the Fund Request for this account.');
-                        btn.attr('disabled', false);
-
-                    }
-                    else if(data == 'finish')
-                    {
-                        alert('Account already finished failed to transfer.');
-                        btn.attr('disabled', false);
-                    }
-                    else if(data == 'uploaded')
-                    {
-                        alert('This account is already modified/uploaded by C.I.');
-                        btn.attr('disabled', false);
-                    }
-                    else if(data=='success')
-                    {
-                        $.ajax
-                        ({
-                            type: 'get',
-                            url: '/dispatcher-update-get-time-due',
-                            data:
-                                {
-                                    'acctID': acctId,
-                                    'dateTime': date + ' ' + time
-                                },
-                            beforeSend: function ()
-                            {
-                                btn.attr('disabled', true);
-                            },
-                            success: function ()
-                            {
-                                alert('Successfully updated');
-                                $('#update_auto_dispatched_modal').modal('hide');
-                                table.ajax.reload(null, false);
-                            },
-                            complete: function ()
-                            {
-                                btn.attr('disabled', false);
-                            }
-                        });
-                    }
-                }
-            })
-        }
-    }
-});
-
 
 $('#ci_expense_archi').change(function()
 {
