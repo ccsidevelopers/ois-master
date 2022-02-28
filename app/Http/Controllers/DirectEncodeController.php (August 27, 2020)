@@ -1,0 +1,461 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Generals\AuditFundQueries;
+use App\Generals\AuditQueries;
+use App\Generals\EmailQueries;
+use App\Generals\ScriptTrimmer;
+use App\Generals\Trimmer;
+use App\Municipality;
+use App\User;
+use Carbon\Carbon;
+use Carbon\CarbonInterval;
+use Chumper\Zipper\Zipper;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Contracts\Session\Session;
+use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
+use Yajra\DataTables\DataTables;
+use App\handler;
+use Illuminate\Support\Str;
+
+class DirectEncodeController extends Controller
+{
+    public function direct_encode_inputs(Request $request)
+    {
+        $arrayInputs = json_decode($request->arrayToSend);
+        $arrayPlus = json_decode($request->plusArrays);
+        $arrayOcc = json_decode($request->arrayToSendOcc);
+
+        $CurDate = Carbon::now('Asia/Manila');
+        $date_time = explode(' ', $CurDate);
+        $date = explode('-', $date_time[0]);
+        $time = explode(':', $date_time[1]);
+        $randoString = $date[0].$date[1].$date[2].'-'.strtoupper(Str::random(5)).'-'.$time[0].$time[1].$time[2] . '-' . strtoupper($arrayInputs[0]);
+
+
+        $getBIid = DB::table('users')
+            ->join('bi_account_to_users', 'bi_account_to_users.users_id', '=', 'users.id')
+            ->select([
+                'bi_account_to_users.bi_account_id as bi_id'
+            ])
+            ->where('users.id', Auth::user()->id)
+            ->where('bi_account_to_users.to_display', 'display')
+            ->get();
+
+        $getId = DB::table('bi_direct_applicant_endorsement')
+            ->insertGetId
+            ([
+                'direct_last_name' => $arrayInputs[0],
+                'direct_first_name' => $arrayInputs[1],
+                'direct_middle_name' => $arrayInputs[2],
+                'direct_suffix_name' => $arrayInputs[3],
+                'direct_birthdate' => $arrayInputs[4],
+                'direct_age' => $arrayInputs[5],
+                'direct_gender' => $arrayInputs[6],
+                'direct_marital_status' => $arrayInputs[7],
+                'direct_maiden_last' => $arrayInputs[8],
+                'direct_maiden_first' => $arrayInputs[9],
+                'direct_maiden_middle' => $arrayInputs[10],
+                'direct_birth_place' => $arrayInputs[11],
+                'direct_religion' => $arrayInputs[12],
+                'direct_tel_cp' => $arrayInputs[13],
+                'direct_sss' => $arrayInputs[14],
+                'direct_present_muni' => $arrayInputs[15],
+                'direct_present_prov' => $arrayInputs[16],
+                'direct_present_address' => $arrayInputs[17],
+                'direct_perma_muni' => $arrayInputs[18],
+                'direct_perma_prov' => $arrayInputs[19],
+                'direct_perma_address' => $arrayInputs[20],
+                'direct_spouse_name' => $arrayInputs[21],
+                'direct_spouse_tel_cp' => $arrayInputs[22],
+                'direct_father_name' => $arrayInputs[23],
+                'direct_father_age' => $arrayInputs[24],
+                'direct_father_tel' => $arrayInputs[25],
+                'direct_mother_name' => $arrayInputs[26],
+                'direct_mother_age' => $arrayInputs[27],
+                'direct_mother_tel' => $arrayInputs[28],
+                'direct_secondary_school' => $arrayInputs[29],
+                'direct_secondary_location' => $arrayInputs[30],
+                'direct_secondary_inclusive' => $arrayInputs[31],
+                'direct_secondary_year_graduated' => $arrayInputs[32],
+                'direct_college_school' => $arrayInputs[33],
+                'direct_college_location' => $arrayInputs[34],
+                'direct_college_inclusive' => $arrayInputs[35],
+                'direct_college_year_graduated' => $arrayInputs[36],
+                'direct_other_schools' => $arrayInputs[37],
+                'direct_civil_service' => $arrayInputs[38],
+                'direct_dismissed' => $arrayInputs[39],
+                'direct_dismissed_reason' => $arrayInputs[40],
+                'generated_code' => $randoString,
+                'applicant_status' => 'Pending',
+                'created_at' => Carbon::now('Asia/Manila')
+            ]);
+
+        DB::table('bi_direct_applicant_endorsement')
+            ->where('id', $getId)
+            ->update
+            ([
+                'direct_father_occupation' => $arrayOcc[0],
+                'direct_mother_occupation' => $arrayOcc[1]
+            ]);
+
+
+        if(count($arrayPlus[0]) > 0)
+        {
+            for($a = 0; $a < count($arrayPlus[0]); $a++)
+            {
+               DB::table('bi_direct_applicant_children')
+                   ->insert
+                   ([
+                       'direct_id' => $getId,
+                       'children_name' => $arrayPlus[0][$a][0],
+                       'children_birthdate' => $arrayPlus[0][$a][1],
+                       'children_birthplace' => $arrayPlus[0][$a][2],
+                       'created_at' => Carbon::now('Asia/Manila')
+                   ]);
+            }
+        }
+
+        if(count($arrayPlus[1]) > 0)
+        {
+            for($b = 0; $b < count($arrayPlus[1]); $b++)
+            {
+                DB::table('bi_direct_applicant_siblings')
+                    ->insert
+                    ([
+                        'direct_id' => $getId,
+                        'sibs_name' => $arrayPlus[1][$b][0],
+                        'sibs_age' => $arrayPlus[1][$b][1],
+                        'sibs_address' => $arrayPlus[1][$b][2],
+                        'sibs_occupation' => $arrayPlus[1][$b][3],
+                        'created_at' => Carbon::now('Asia/Manila')
+                    ]);
+            }
+        }
+
+        if(count($arrayPlus[2]) > 0)
+        {
+            for($c = 0; $c < count($arrayPlus[2]); $c++)
+            {
+                DB::table('bi_direct_applicant_addresses')
+                    ->insert
+                    ([
+                        'direct_id' => $getId,
+                        'inclusive_dates' => $arrayPlus[2][$c][0],
+                        'address' => $arrayPlus[2][$c][1],
+                        'created_at' => Carbon::now('Asia/Manila')
+                    ]);
+            }
+        }
+
+        if(count($arrayPlus[3]) > 0)
+        {
+            for($d = 0; $d < count($arrayPlus[3]); $d++)
+            {
+                DB::table('bi_direct_applicant_experience')
+                    ->insert
+                    ([
+                        'direct_id' => $getId,
+                        'date_started' => $arrayPlus[3][$d][0],
+                        'date_ended' => $arrayPlus[3][$d][1],
+                        'date_ended_present' => $arrayPlus[3][$d][2],
+                        'position' => $arrayPlus[3][$d][3],
+                        'emp_no' => $arrayPlus[3][$d][4],
+                        'emp_address' => $arrayPlus[3][$d][5],
+                        'emp_contact_no' => $arrayPlus[3][$d][6],
+                        'supervisor_name' => $arrayPlus[3][$d][7],
+                        'supervisor_number' => $arrayPlus[3][$d][8],
+                        'reason_leaving' => $arrayPlus[3][$d][9],
+                        'created_at' => Carbon::now('Asia/Manila')
+                    ]);
+            }
+        }
+
+        if(count($arrayPlus[4]) > 0)
+        {
+            for($e = 0; $e < count($arrayPlus[4]); $e++)
+            {
+                DB::table('bi_direct_applicant_character')
+                    ->insert
+                    ([
+                        'direct_id' => $getId,
+                        'charac_name' => $arrayPlus[4][$e][0],
+                        'charac_position' => $arrayPlus[4][$e][1],
+                        'charac_address' => $arrayPlus[4][$e][2],
+                        'charac_email' => $arrayPlus[4][$e][3],
+                        'charac_contact' => $arrayPlus[4][$e][4],
+                        'created_at' => Carbon::now('Asia/Manila')
+                    ]);
+            }
+        }
+
+        if(count($arrayPlus[5]) > 0)
+        {
+            for($f = 0; $f < count($arrayPlus[3]); $f++)
+            {
+                DB::table('bi_direct_applicant_organizations')
+                    ->insert
+                    ([
+                        'direct_id' => $getId,
+                        'org_name' => $arrayPlus[5][$f][0],
+                        'org_date' => $arrayPlus[5][$f][1],
+                        'org_pos' => $arrayPlus[5][$f][2],
+                        'created_at' => Carbon::now('Asia/Manila')
+                    ]);
+            }
+        }
+
+        if(count($arrayPlus[6]) > 0)
+        {
+            for($g = 0; $g < count($arrayPlus[6]); $g++)
+            {
+                DB::table('bi_direct_applicant_trainings')
+                    ->insert
+                    ([
+                        'direct_id' => $getId,
+                        'train_title' => $arrayPlus[6][$g][0],
+                        'train_conducted' => $arrayPlus[6][$g][1],
+                        'train_year' => $arrayPlus[6][$g][2],
+                        'created_at' => Carbon::now('Asia/Manila')
+                    ]);
+            }
+        }
+
+        if(count($arrayPlus[7]) > 0)
+        {
+            for($h = 0; $h < count($arrayPlus[7]); $h++)
+            {
+                DB::table('bi_direct_applicant_credit_card')
+                    ->insert
+                    ([
+                        'direct_id' => $getId,
+                        'credit_name' => $arrayPlus[7][$h][0],
+                        'credit_number' => $arrayPlus[7][$h][1],
+                        'credit_limit' => $arrayPlus[7][$h][2],
+                        'credit_expiry' => $arrayPlus[7][$h][3],
+                        'created_at' => Carbon::now('Asia/Manila')
+                    ]);
+            }
+        }
+
+        $file1 = $request->file('file_1');
+        $file2 = $request->file('file_2');
+        $file3 = $request->file('file_3');
+        $file4 = $request->file('file_4');
+        $img = $request->file('image_file');
+
+
+        $getData = DB::table('bi_direct_applicant_endorsement')
+            ->where('id', $getId)
+            ->select('direct_attach_1','direct_attach_2','direct_attach_3','direct_attach_4')
+            ->get();
+
+        $count = 1;
+        if($file1 != null)
+        {
+            $file_name1 = $file1->getClientOriginalName();
+
+            if($file_name1 == $getData[0]->direct_attach_2)
+            {
+                $count++;
+                $file_name1 = explode('.',$file1->getClientOriginalName())[0].'('.$count.').'.$file1->getClientOriginalExtension();
+            }
+
+            if($file_name1 == $getData[0]->direct_attach_3)
+            {
+                $count++;
+                $file_name1 = explode('.',$file1->getClientOriginalName())[0].'('.$count.').'.$file1->getClientOriginalExtension();
+            }
+
+            if($file_name1 == $getData[0]->direct_attach_4)
+            {
+                $count++;
+                $file_name1 = explode('.',$file1->getClientOriginalName())[0].'('.$count.').'.$file1->getClientOriginalExtension();
+            }
+
+            $file1->move(storage_path('direct_bi_attachment/' .$getBIid[0]->bi_id .'/' .$getId.'/'),$file_name1);
+
+            DB::table('bi_direct_applicant_endorsement')
+                ->where('id', $getId)
+                ->update
+                ([
+                    'direct_attach_1' => $file_name1
+                ]);
+
+        }
+
+        if($file2 != null)
+        {
+            $file_name2 = $file2->getClientOriginalName();
+
+            if($file_name2 == $getData[0]->direct_attach_1)
+            {
+                $count++;
+                $file_name2 = explode('.',$file2->getClientOriginalName())[0].'('.$count.').'.$file2->getClientOriginalExtension();
+            }
+
+            if($file_name2 == $getData[0]->direct_attach_3)
+            {
+                $count++;
+                $file_name2 = explode('.',$file2->getClientOriginalName())[0].'('.$count.').'.$file2->getClientOriginalExtension();
+            }
+
+            if($file_name2 == $getData[0]->direct_attach_4)
+            {
+                $count++;
+                $file_name2 = explode('.',$file2->getClientOriginalName())[0].'('.$count.').'.$file2->getClientOriginalExtension();
+            }
+
+            $file2->move(storage_path('direct_bi_attachment/' . $getBIid[0]->bi_id . '/' .$getId.'/'),$file_name2);
+
+            DB::table('bi_direct_applicant_endorsement')
+                ->where('id', $getId)
+                ->update
+                ([
+                    'direct_attach_2' => $file_name2
+                ]);
+        }
+
+        if($file3 != null)
+        {
+            $file_name3 = $file3->getClientOriginalName();
+
+            if($file_name3 == $getData[0]->direct_attach_1)
+            {
+                $count++;
+                $file_name3 = explode('.',$file3->getClientOriginalName())[0].'('.$count.').'.$file3->getClientOriginalExtension();
+            }
+
+            if($file_name3 == $getData[0]->direct_attach_2)
+            {
+                $count++;
+                $file_name3 = explode('.',$file3->getClientOriginalName())[0].'('.$count.').'.$file3->getClientOriginalExtension();
+            }
+
+            if($file_name3 == $getData[0]->direct_attach_4)
+            {
+                $count++;
+                $file_name3 = explode('.',$file3->getClientOriginalName())[0].'('.$count.').'.$file3->getClientOriginalExtension();
+            }
+
+            $file3->move(storage_path('direct_bi_attachment/'  .$getBIid[0]->bi_id . '/' .$getId.'/'),$file_name3);
+
+            DB::table('bi_direct_applicant_endorsement')
+                ->where('id', $getId)
+                ->update
+                ([
+                    'direct_attach_3' => $file_name3
+                ]);
+        }
+
+        if($file4 != null)
+        {
+            $file_name4 = $file4->getClientOriginalName();
+
+            if($file_name4 == $getData[0]->direct_attach_1)
+            {
+                $count++;
+                $file_name4 = explode('.',$file4->getClientOriginalName())[0].'('.$count.').'.$file4->getClientOriginalExtension();
+            }
+
+            if($file_name4 == $getData[0]->direct_attach_2)
+            {
+                $count++;
+                $file_name4 = explode('.',$file4->getClientOriginalName())[0].'('.$count.').'.$file4->getClientOriginalExtension();
+            }
+
+            if($file_name4 == $getData[0]->direct_attach_4)
+            {
+                $count++;
+                $file_name4 = explode('.',$file4->getClientOriginalName())[0].'('.$count.').'.$file4->getClientOriginalExtension();
+            }
+
+            $file4->move(storage_path('direct_bi_attachment/' . $getBIid[0]->bi_id . '/' .$getId.'/'),$file_name4);
+
+            DB::table('bi_direct_applicant_endorsement')
+                ->where('id', $getId)
+                ->update
+                ([
+                    'direct_attach_4' => $file_name4
+                ]);
+        }
+
+        if($img != null)
+        {
+            $prof_data =  $getBIid[0]->bi_id . '/' .$getId.'/' . $img->getClientOriginalName();
+
+
+            $img->move(storage_path('direct_applicant_prof_pic/' . $getBIid[0]->bi_id . '/' .$getId.'/'), $img->getClientOriginalName());
+
+            DB::table('bi_direct_applicant_endorsement')
+                ->where('id', $getId)
+                ->update
+                ([
+                    'direct_profile_pic' => $prof_data
+                ]);
+        }
+
+        $fileCount = $request->count_additional_files;
+
+        if($fileCount > 0)
+        {
+            for ($i = 0; $i < $fileCount; $i++)
+            {
+                $file = $request->file('additionalfile-' . $i . '');
+
+                $name = $file->getClientOriginalName();
+                $file->move(storage_path('/direct_additional_files/' . $getBIid[0]->bi_id . '/' . $getId), $name);
+                $path = '/direct_additional_files/' . $getBIid[0]->bi_id . '/'. $getId . '/' . $name;
+
+                DB::table('bi_direct_applicant_additional_files')
+                    ->insert
+                    ([
+                        'direct_id' => $getId,
+                        'file_path' => $path,
+                        'created_at' => Carbon::now('Asia/Manila')
+                    ]);
+            }
+
+        }
+
+
+        DB::table('bi_direct_pivot')
+            ->insert
+            ([
+                'bi_id' => $getBIid[0]->bi_id,
+                'direct_to_get_id' => $getId,
+                'direct_name' => strtoupper($arrayInputs[0] . ', '. $arrayInputs[1] . ' ' . $arrayInputs[2]),
+                'direct_type' => 'direct_applicant',
+                'direct_status' => '0',
+                'created_at' => Carbon::now('Asia/Manila')
+            ]);
+
+        return $randoString;
+    }
+
+    public function direct_applicant_search_application_tracking(Request $request)
+    {
+        $getData = DB::table('bi_direct_applicant_endorsement')
+            ->leftjoin('municipalities', 'municipalities.id', '=', 'bi_direct_applicant_endorsement.direct_present_muni')
+            ->select
+            ([
+                'bi_direct_applicant_endorsement.applicant_status as status',
+                'bi_direct_applicant_endorsement.direct_last_name as lname',
+                'bi_direct_applicant_endorsement.direct_first_name as fname',
+                'bi_direct_applicant_endorsement.direct_middle_name as mname',
+                'bi_direct_applicant_endorsement.direct_suffix_name as sname',
+                'bi_direct_applicant_endorsement.direct_present_address as address',
+                'municipalities.muni_name as muni'
+            ])
+            ->where('bi_direct_applicant_endorsement.generated_code', strtoupper($request->track_id))
+            ->get();
+
+        return response()->json($getData);
+    }
+}
