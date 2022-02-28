@@ -1004,6 +1004,12 @@ Route::get('users_management_view_logs',
         'role' => 'General'
     ]);
 
+//================================== KIOSK LOAN ROUTES
+
+Route::get('/loan-form', function() {
+    return view('loan-form');
+});
+
 
 //===================================DISPATCHERS ACCESS ROUTE==========================================================
 
