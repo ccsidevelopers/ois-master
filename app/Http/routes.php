@@ -1010,6 +1010,11 @@ Route::get('/loan-form', function() {
     return view('loan-form');
 });
 
+Route::get('kiosk_create', [
+    'uses' => 'LoanFormController@kiosk_create',
+    'as' => 'kiosk_create',
+]);
+
 
 //===================================DISPATCHERS ACCESS ROUTE==========================================================
 

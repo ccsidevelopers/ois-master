@@ -608,7 +608,7 @@
     array (
       'font_dir' => 'C:\\xampp\\htdocs\\ois-master\\storage\\fonts/',
       'font_cache' => 'C:\\xampp\\htdocs\\ois-master\\storage\\fonts/',
-      'temp_dir' => 'C:\\Users\\Rnyll\\AppData\\Local\\Temp',
+      'temp_dir' => 'C:\\Users\\chano\\AppData\\Local\\Temp',
       'chroot' => 'C:\\xampp\\htdocs\\ois-master',
       'enable_font_subsetting' => false,
       'pdf_backend' => 'CPDF',
