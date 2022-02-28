@@ -8,7 +8,7 @@
     'timezone' => 'Asia/Manila',
     'locale' => 'en',
     'fallback_locale' => 'en',
-    'key' => 'base64:qWRSnZD/tcLQ7nk55KzQZup1Z0ZEYFXbv9U+XXZc9Jw=',
+    'key' => 'base64:i/TbzJfFL8kWIcg60QhE85f9cz+QwlDFXioFhEYChik=',
     'cipher' => 'AES-256-CBC',
     'log' => 'single',
     'providers' => 
@@ -462,7 +462,7 @@
   'mail' => 
   array (
     'driver' => 'smtp',
-    'host' => 'dedicated03.ccsi-oims.net',
+    'host' => 'dedicated02.ccsi-oims.net',
     'port' => '465',
     'from' => 
     array (
@@ -623,13 +623,13 @@
       'enable_html5_parser' => false,
     ),
   ),
-  'image' => 
-  array (
-    'driver' => 'gd',
-  ),
   'report-generator' => 
   array (
     'flush' => false,
+  ),
+  'image' => 
+  array (
+    'driver' => 'gd',
   ),
   'excel' => 
   array (
@@ -888,16 +888,6 @@
           ),
         ),
       ),
-    ),
-  ),
-  'tinker' => 
-  array (
-    'commands' => 
-    array (
-    ),
-    'dont_alias' => 
-    array (
-      0 => 'App\\Nova',
     ),
   ),
 );
