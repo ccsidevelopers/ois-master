@@ -872,4 +872,24 @@ esources\\views\\login.blade.php) at C:\\xampp\\htdocs\\ois-master-v1\\storage\\
 #14 C:\\xampp\\htdocs\\ois-master-v1\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(121): Illuminate\\Console\\Application->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
 #15 C:\\xampp\\htdocs\\ois-master-v1\\artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
 #16 {main}
+"} [2022-03-01 10:15:11] production.ERROR: The "C:\xampp\htdocs\ois-master\storage\framework/cache" directory does not exist. {"exception":"[object] (InvalidArgumentException(code: 0): The \"C:\\xampp\\htdocs\\ois-master\\storage\\framework/cache\" directory does not exist. at C:\\xampp\\htdocs\\ois-master\\vendor\\symfony\\finder\\Finder.php:548)
+[stacktrace]
+#0 C:\\xampp\\htdocs\\ois-master\\vendor\\laravel\\framework\\src\\Illuminate\\Filesystem\\Filesystem.php(390): Symfony\\Component\\Finder\\Finder->in('C:\\\\xampp\\\\htdocs...')
+#1 C:\\xampp\\htdocs\\ois-master\\vendor\\laravel\\framework\\src\\Illuminate\\Cache\\Console\\ClearCommand.php(85): Illuminate\\Filesystem\\Filesystem->files('C:\\\\xampp\\\\htdocs...')
+#2 C:\\xampp\\htdocs\\ois-master\\vendor\\laravel\\framework\\src\\Illuminate\\Cache\\Console\\ClearCommand.php(69): Illuminate\\Cache\\Console\\ClearCommand->flushFacades()
+#3 [internal function]: Illuminate\\Cache\\Console\\ClearCommand->handle()
+#4 C:\\xampp\\htdocs\\ois-master\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(29): call_user_func_array(Array, Array)
+#5 C:\\xampp\\htdocs\\ois-master\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(87): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#6 C:\\xampp\\htdocs\\ois-master\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(31): Illuminate\\Container\\BoundMethod::callBoundMethod(Object(Illuminate\\Foundation\\Application), Array, Object(Closure))
+#7 C:\\xampp\\htdocs\\ois-master\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(549): Illuminate\\Container\\BoundMethod::call(Object(Illuminate\\Foundation\\Application), Array, Array, NULL)
+#8 C:\\xampp\\htdocs\\ois-master\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Command.php(183): Illuminate\\Container\\Container->call(Array)
+#9 C:\\xampp\\htdocs\\ois-master\\vendor\\symfony\\console\\Command\\Command.php(255): Illuminate\\Console\\Command->execute(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Illuminate\\Console\\OutputStyle))
+#10 C:\\xampp\\htdocs\\ois-master\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Command.php(170): Symfony\\Component\\Console\\Command\\Command->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Illuminate\\Console\\OutputStyle))
+#11 C:\\xampp\\htdocs\\ois-master\\vendor\\symfony\\console\\Application.php(992): Illuminate\\Console\\Command->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#12 C:\\xampp\\htdocs\\ois-master\\vendor\\symfony\\console\\Application.php(255): Symfony\\Component\\Console\\Application->doRunCommand(Object(Illuminate\\Cache\\Console\\ClearCommand), Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#13 C:\\xampp\\htdocs\\ois-master\\vendor\\symfony\\console\\Application.php(148): Symfony\\Component\\Console\\Application->doRun(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#14 C:\\xampp\\htdocs\\ois-master\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Application.php(88): Symfony\\Component\\Console\\Application->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#15 C:\\xampp\\htdocs\\ois-master\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(121): Illuminate\\Console\\Application->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#16 C:\\xampp\\htdocs\\ois-master\\artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#17 {main}
 "} 

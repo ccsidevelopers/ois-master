@@ -2,13 +2,13 @@
   'app' => 
   array (
     'name' => 'ois',
-    'env' => 'local',
-    'debug' => true,
+    'env' => 'production',
+    'debug' => false,
     'url' => 'http://localhost',
     'timezone' => 'Asia/Manila',
     'locale' => 'en',
     'fallback_locale' => 'en',
-    'key' => 'base64:i/TbzJfFL8kWIcg60QhE85f9cz+QwlDFXioFhEYChik=',
+    'key' => NULL,
     'cipher' => 'AES-256-CBC',
     'log' => 'single',
     'providers' => 
@@ -130,7 +130,7 @@
   ),
   'broadcasting' => 
   array (
-    'default' => 'pusher',
+    'default' => 'null',
     'options' => 
     array (
       'cluster' => 'ap1',
@@ -141,9 +141,9 @@
       'pusher' => 
       array (
         'driver' => 'pusher',
-        'key' => 'a6dbe65ac4fdaf766126',
-        'secret' => 'cbcb26db3a921c81c480',
-        'app_id' => '816085',
+        'key' => NULL,
+        'secret' => NULL,
+        'app_id' => NULL,
         'options' => 
         array (
           'cluster' => 'ap1',
@@ -163,7 +163,7 @@
   ),
   'cache' => 
   array (
-    'default' => 'array',
+    'default' => 'file',
     'stores' => 
     array (
       'apc' => 
@@ -225,16 +225,16 @@
       'sqlite' => 
       array (
         'driver' => 'sqlite',
-        'database' => 'ois',
+        'database' => 'C:\\xampp\\htdocs\\ois-master\\database\\database.sqlite',
         'prefix' => '',
       ),
       'mysql' => 
       array (
         'driver' => 'mysql',
-        'host' => '127.0.0.1',
+        'host' => 'localhost',
         'port' => '3306',
-        'database' => 'ois',
-        'username' => 'root',
+        'database' => 'forge',
+        'username' => 'forge',
         'password' => '',
         'charset' => 'utf8',
         'collation' => 'utf8_unicode_ci',
@@ -245,10 +245,10 @@
       'pgsql' => 
       array (
         'driver' => 'pgsql',
-        'host' => '127.0.0.1',
-        'port' => '3306',
-        'database' => 'ois',
-        'username' => 'root',
+        'host' => 'localhost',
+        'port' => '5432',
+        'database' => 'forge',
+        'username' => 'forge',
         'password' => '',
         'charset' => 'utf8',
         'prefix' => '',
@@ -261,9 +261,9 @@
       'cluster' => false,
       'default' => 
       array (
-        'host' => '127.0.0.1',
+        'host' => 'localhost',
         'password' => NULL,
-        'port' => '6379',
+        'port' => 6379,
         'database' => 0,
       ),
     ),
@@ -462,16 +462,16 @@
   'mail' => 
   array (
     'driver' => 'smtp',
-    'host' => 'dedicated02.ccsi-oims.net',
-    'port' => '465',
+    'host' => 'smtp.mailgun.org',
+    'port' => 587,
     'from' => 
     array (
       'address' => NULL,
       'name' => NULL,
     ),
-    'encryption' => 'ssl',
-    'username' => 'notification@ccsi-oims.net',
-    'password' => 'w=Rqc=dv#yF,',
+    'encryption' => 'tls',
+    'username' => NULL,
+    'password' => NULL,
     'sendmail' => '/usr/sbin/sendmail -bs',
   ),
   'queue' => 
