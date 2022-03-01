@@ -1,5 +1,3 @@
-
-
 // Code for citizenship checkboxes to behave like a radio button
 $('.chbCitizenship').click(function(){
     $('.chbCitizenship').each(function(){
@@ -152,4 +150,3 @@ $('#inputLoanAgreeChb').click(function() {
         $('#submitKioskLoanBtn').prop('disabled', true);
     }
 });
-
