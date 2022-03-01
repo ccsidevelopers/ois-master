@@ -35,6 +35,9 @@
                 <div class="row border-bottom border-3 border-primary py-3">
                     <h1 class="text-uppercase">Loan application form</h1>
                 </div>
+
+                <select name="city" id="my-city-dropdown"></select>
+
                 <div class="main-form">
                     <div class="typeOfLoan row border-bottom border-3 border-primary py-3">
                         <div class="form-group col-md-4 py-2">
@@ -438,6 +441,7 @@
         </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://f001.backblazeb2.com/file/buonzz-assets/jquery.ph-locations-v1.0.0.js"></script>
     <script src="jscript/loan-form.js"></script>
 </body>
 </html>
