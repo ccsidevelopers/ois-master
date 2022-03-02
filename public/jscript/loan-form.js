@@ -5,7 +5,7 @@ $('.chbCitizenship').click(function(){
     }); 
     $(this).prop('checked', true);
 
-    //Checks if 'Other' option are checked and enable input field
+    // Checks if 'Other' option are checked and enable input field
     if ($('#inputLoanCitizenshipOthers').is(':checked')) {
         $('#inputLoanCitizenshipOthersEnter').prop('disabled', false);
     } else {
@@ -21,7 +21,7 @@ $('.chbEmploymentStatus').click(function(){
     }); 
     $(this).prop('checked', true);
 
-    //Checks if 'Other' option are checked and enable input field
+    // Checks if 'Other' option are checked and enable input field
     if ($('#inputLoanStatusOthers').is(':checked')) {
         $('#inputLoanStatusOthersEnter').prop('disabled', false);
     } else {
@@ -47,7 +47,7 @@ $('.chbForSelfEmployed').click(function(){
 });
 
 
-//Reusable function for toggling other input field
+// Reusable function for toggling other input field
 function myFunction(chbOthers, ChbOthersEnter) {
     ChbOthersEnter.prop('disabled', false);
     chbOthers.click(function() {
@@ -66,35 +66,59 @@ function applied(func, args) {
   }
 }
 
-//Use this syntax below to reuse the function other input above
+// Use this syntax below to reuse the function other input above
 $('#inputLoanIncomeOthers').click(applied(myFunction, [$('#inputLoanIncomeOthers'), $('#inputLoanIncomeOthersEnter')]));
 
 
 $('#inputLoanAgreeChb').click(function() {
+
+    const TOLselector = [];
+    const SOIselector = [];
+
+    $('.TOLselect').each(function() {
+        if($(this).is(':checked')) {
+            TOLselector.push($(this).val());
+        }
+    });
+    // Type Of Loan Temporary storage
+    $('#TOLTempStorage').val(TOLselector);
+
+    var getIncomeOthersVal = $('#inputLoanIncomeOthersEnter').val();
+    $('#inputLoanIncomeOthers').val(getIncomeOthersVal);
+
+    $('.SOIselect').each(function() {
+        if($(this).is(':checked')) {
+            SOIselector.push($(this).val());
+        }
+    });
+    // Source Of Income Temporary storage
+    $('#SOITempStorage').val(SOIselector);
+
+
     if ($(this).is(':checked')) {
         $('#submitKioskLoanBtn').prop('disabled', false);
 
         $('#submitKioskLoanBtn').click(function() {
 
-            //get the value of 'others' input in citizenship
+            // Get the value of 'others' input in citizenship
             var getCitizenshipOtherVal = $('#inputLoanCitizenshipOthersEnter').val();
             $('#inputLoanCitizenshipOthers').val(getCitizenshipOtherVal);
 
             var getEmploymentStatusVal = $('#inputLoanStatusOthersEnter').val();
             $('#inputLoanStatusOthers').val(getEmploymentStatusVal);
 
-            //get the value of selected option of civil status
+            // Get the value of selected option of civil status
             $('select.civilStatus').change(function() {
                 var selectedCivilStatus = $(this).children('option:selected').val();
                 $('#inputLoanCivilStatus').val(selectedCivilStatus);
-            });
+            });   
     
             if(confirm('Submit this info now?')) {
                 $.ajax({
                     url: 'kiosk_create',
                     type: 'get',
                     data: {
-                        // 'type_of_loan': $('input[name="typeOfLoan"]:checked'),
+                        'type_of_loan': $('#TOLTempStorage').val(),
                         'applicant_lname': $('#inputLoanLName').val(),
                         'applicant_fname': $('#inputLoanFName').val(),
                         'applicant_mname': $('#inputLoanMName').val(),
@@ -128,7 +152,7 @@ $('#inputLoanAgreeChb').click(function() {
                         'mothers_maiden_lname': $('#inputLoanMothersMaidenLName').val(),
                         'mothers_maiden_fname': $('#inputLoanMothersMaidenFName').val(),
                         'mothers_maiden_mname': $('#inputLoanMothersMaidenMName').val(),
-                        // 'source_of_income': $('input[name=""]').val(),
+                        'source_of_income': $('#SOITempStorage').val(),
                         'employment_status': $('input[name="employmentStatus"]:checked').val(),
                         'for_employed': $('input[name="forEmployed"]:checked').val(),
                         'for_self_employed': $('input[name="forSelfEmployed"]:checked').val(),
@@ -149,4 +173,22 @@ $('#inputLoanAgreeChb').click(function() {
     } else {
         $('#submitKioskLoanBtn').prop('disabled', true);
     }
+});
+
+
+// If Present and Permanent address are the same
+$('#inputLoanSameAddressCheck').click(function() {
+    var presentAddress1 = $('#inputLoanPresentAddress1').val();
+    var presentAddress2 = $('#inputLoanPresentAddress2').val();
+    var presentAddress3 = $('#inputLoanPresentAddress3').val();
+
+    if($(this).is(':checked')) {
+        $('#inputLoanPermanentAddress1').val(presentAddress1);
+        $('#inputLoanPermanentAddress2').val(presentAddress2);
+        $('#inputLoanPermanentAddress3').val(presentAddress3);
+    } else {
+        $('#inputLoanPermanentAddress1').val('');
+        $('#inputLoanPermanentAddress2').val('');
+        $('#inputLoanPermanentAddress3').val('');
+    } 
 });
