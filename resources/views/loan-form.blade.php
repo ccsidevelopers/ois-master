@@ -14,6 +14,9 @@
         .logo img {
             width: 20%;
         }
+        #TOLTempStorage {
+            display: none;
+        }
         @media screen and (max-width: 1366px) {
             .main-form {
                 padding: 0 !important;
@@ -25,8 +28,6 @@
         }
     </style>
 </head>
-
-{{-- uwian na naman kare-kare ulam ko mamaya --}}
 
 <body>
     <div class="main mh-100 main bg-light ">
@@ -42,23 +43,24 @@
                         </div>
                         <div class="form-group col-md-2 py-2">
                             <div class="my-2">
-                                <input type="checkbox" class="text-uppercase" id="inputLoanMotorcycleLoan" name="selector[]" value="Motorcycle loan">
+                                <input type="checkbox" class="text-uppercase TOLselect" id="inputLoanMotorcycleLoan" name="TOLselector[]" value="Motorcycle loan">
                                 <label for="inputLoanMotorcycleLoan">Motorcycle Loan</label>
                             </div>
                             <div class="my-2">
-                                <input type="checkbox" class=" text-uppercase" id="inputLoanAutoLoan" name="selector[]" value="Auto loan">
+                                <input type="checkbox" class=" text-uppercase TOLselect" id="inputLoanAutoLoan" name="TOLselector[]" value="Auto loan">
                                 <label for="inputLoanAutoLoan">Auto loan</label>
                             </div>
                         </div>
                         <div class="form-group col-md-4 py-2">
                             <div class="my-2">
-                                <input type="checkbox" class=" text-uppercase" id="inputLoanPersonalLoan" name="selector[]" value="Personal loan">
+                                <input type="checkbox" class=" text-uppercase TOLselect" id="inputLoanPersonalLoan" name="TOLselector[]" value="Personal loan">
                                 <label for="inputLoanPersonalLoan">Personal / Salary Loan</label>
                             </div>
                             <div class="my-2">
-                                <input type="checkbox" class=" text-uppercase" id="inputLoanHomeLoan" name="selector[]" value="Home loan">
+                                <input type="checkbox" class=" text-uppercase TOLselect" id="inputLoanHomeLoan" name="TOLselector[]" value="Home loan">
                                 <label for="inputLoanHomeLoan">Home / Housing Loan</label>
                             </div>
+                            <input type="text" id="TOLTempStorage">
                         </div>
                     </div>
                     <div class="text-uppercase pt-3">
@@ -264,24 +266,25 @@
                             <div class="row">
                                 <div class="col-md-3 d-flex flex-column">
                                     <div class="my-1">
-                                        <input type="checkbox" class="text-uppercase" id="inputLoanIncomeEmployment" name="" value="Employment">
+                                        <input type="checkbox" class="text-uppercase SOIselect" id="inputLoanIncomeEmployment" name="SOIselector[]" value="Employment">
                                         <label for="inputLoanIncomeEmployment">Employment</label>
                                     </div>
                                     <div class="my-1">
-                                        <input type="checkbox" class="text-uppercase" id="inputLoanIncomeBusiness" name="" value="Business">
+                                        <input type="checkbox" class="text-uppercase SOIselect" id="inputLoanIncomeBusiness" name="SOIselector[]" value="Business">
                                         <label for="inputLoanIncomeBusiness">Business</label>
                                     </div>
                                 </div>
                                 <div class="col-md-9 d-flex flex-column">
                                     <div class="my-1">
-                                        <input type="checkbox" class="text-uppercase" id="inputLoanIncomePension" name="" value="Pension">
+                                        <input type="checkbox" class="text-uppercase SOIselect" id="inputLoanIncomePension" name="SOIselector[]" value="Pension">
                                         <label for="inputLoanIncomePension">Pension</label>
                                     </div>
                                     <div class="my-1">
-                                        <input type="checkbox" class="text-uppercase" id="inputLoanIncomeOthers" name="" value="Others">
+                                        <input type="checkbox" class="text-uppercase SOIselect" id="inputLoanIncomeOthers" name="SOIselector[]" value="Others">
                                         <label for="inputLoanIncomeOthers">Others</label>
                                         <input type="text" class="text-uppercase w-50" id="inputLoanIncomeOthersEnter" placeholder="Optional" disabled>
                                     </div>
+                                    <input type="text" id="SOITempStorage">
                                 </div>
                             </div>
                         </div>
