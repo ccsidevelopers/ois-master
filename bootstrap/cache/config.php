@@ -225,7 +225,7 @@
       'sqlite' => 
       array (
         'driver' => 'sqlite',
-        'database' => 'ois',
+        'database' => 'ois_new_db',
         'prefix' => '',
       ),
       'mysql' => 
@@ -233,7 +233,7 @@
         'driver' => 'mysql',
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'ois',
+        'database' => 'ois_new_db',
         'username' => 'root',
         'password' => '',
         'charset' => 'utf8',
@@ -247,7 +247,7 @@
         'driver' => 'pgsql',
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'ois',
+        'database' => 'ois_new_db',
         'username' => 'root',
         'password' => '',
         'charset' => 'utf8',
@@ -608,7 +608,7 @@
     array (
       'font_dir' => 'C:\\xampp\\htdocs\\ois-master\\storage\\fonts/',
       'font_cache' => 'C:\\xampp\\htdocs\\ois-master\\storage\\fonts/',
-      'temp_dir' => 'C:\\Users\\Rnyll\\AppData\\Local\\Temp',
+      'temp_dir' => 'C:\\Users\\chano\\AppData\\Local\\Temp',
       'chroot' => 'C:\\xampp\\htdocs\\ois-master',
       'enable_font_subsetting' => false,
       'pdf_backend' => 'CPDF',
@@ -623,13 +623,13 @@
       'enable_html5_parser' => false,
     ),
   ),
-  'report-generator' => 
-  array (
-    'flush' => false,
-  ),
   'image' => 
   array (
     'driver' => 'gd',
+  ),
+  'report-generator' => 
+  array (
+    'flush' => false,
   ),
   'excel' => 
   array (
@@ -888,6 +888,16 @@
           ),
         ),
       ),
+    ),
+  ),
+  'tinker' => 
+  array (
+    'commands' => 
+    array (
+    ),
+    'dont_alias' => 
+    array (
+      0 => 'App\\Nova',
     ),
   ),
 );

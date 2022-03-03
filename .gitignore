@@ -7,3 +7,4 @@ Homestead.json
 .idea/
 storage/*
 bootstrap/*
+clear-cache.bat
