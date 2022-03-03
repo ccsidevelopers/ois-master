@@ -1549,3 +1549,16 @@ outes.php(8960): Illuminate\\Support\\Facades\\Facade::__callStatic('call', Arra
 #42 C:\\xampp\\htdocs\\ois-master\\server.php(21): require_once('C:\\\\xampp\\\\htdocs...')
 #43 {main}
 "} 
+[2022-03-03 15:06:39] local.ERROR: file_put_contents(C:\xampp\htdocs\ois-master\storage\framework/sessions/s4LohUh2vAoAxTbBM7C7vICqsHGtvjsMn2h4gguF): failed to open stream: No such file or directory {"exception":"[object] (ErrorException(code: 0): file_put_contents(C:\\xampp\\htdocs\\ois-master\\storage\\framework/sessions/s4LohUh2vAoAxTbBM7C7vICqsHGtvjsMn2h4gguF): failed to open stream: No such file or directory at C:\\xampp\\htdocs\\ois-master\\vendor\\laravel\\framework\\src\\Illuminate\\Filesystem\\Filesystem.php:122)
+[stacktrace]
+#0 [internal function]: Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError(2, 'file_put_conten...', 'C:\\\\xampp\\\\htdocs...', 122, Array)
+#1 C:\\xampp\\htdocs\\ois-master\\vendor\\laravel\\framework\\src\\Illuminate\\Filesystem\\Filesystem.php(122): file_put_contents('C:\\\\xampp\\\\htdocs...', 'a:3:{s:6:\"_toke...', 2)
+#2 C:\\xampp\\htdocs\\ois-master\\vendor\\laravel\\framework\\src\\Illuminate\\Session\\FileSessionHandler.php(83): Illuminate\\Filesystem\\Filesystem->put('C:\\\\xampp\\\\htdocs...', 'a:3:{s:6:\"_toke...', true)
+#3 C:\\xampp\\htdocs\\ois-master\\vendor\\laravel\\framework\\src\\Illuminate\\Session\\Store.php(128): Illuminate\\Session\\FileSessionHandler->write('s4LohUh2vAoAxTb...', 'a:3:{s:6:\"_toke...')
+#4 C:\\xampp\\htdocs\\ois-master\\vendor\\laravel\\framework\\src\\Illuminate\\Session\\Middleware\\StartSession.php(87): Illuminate\\Session\\Store->save()
+#5 C:\\xampp\\htdocs\\ois-master\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(218): Illuminate\\Session\\Middleware\\StartSession->terminate(Object(Illuminate\\Http\\Request), Object(Illuminate\\Http\\Response))
+#6 C:\\xampp\\htdocs\\ois-master\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(189): Illuminate\\Foundation\\Http\\Kernel->terminateMiddleware(Object(Illuminate\\Http\\Request), Object(Illuminate\\Http\\Response))
+#7 C:\\xampp\\htdocs\\ois-master\\public\\index.php(59): Illuminate\\Foundation\\Http\\Kernel->terminate(Object(Illuminate\\Http\\Request), Object(Illuminate\\Http\\Response))
+#8 C:\\xampp\\htdocs\\ois-master\\server.php(21): require_once('C:\\\\xampp\\\\htdocs...')
+#9 {main}
+"} 

@@ -14,8 +14,7 @@
         .logo img {
             width: 20%;
         }
-        #TOLTempStorage,
-        #SOITempStorage {
+        #TOLTempStorage {
             display: none;
         }
         @media screen and (max-width: 1366px) {
@@ -409,13 +408,9 @@
                             <h3>Attachment of ID's</h3>
                         </div>
                         <div class="d-flex align-items-center justify-content-center">
-                            <div class="col-md-4 py-3">
+                            <div class="scol-md-4 py-3">
                                 <label for="inputLoanAttachmentOfId" class="pb-2">ID with Signature</label>
-                                <div class="d-flex align-items-center">
-                                    <input type="file" class="form-control form-control-sm text-uppercase" id="inputLoanAttachmentOfId" name="myfile">
-                                    <button type="submit" id="loanUploadBtn" class="btn btn-success w-25 h-25">Upload</button>
-                                </div>
-                               
+                                <input type="file" class="form-control form-control-sm text-uppercase" id="inputLoanAttachmentOfId" name="myfile">
                             </div>
                         </div>
                     </div>
