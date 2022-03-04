@@ -34,7 +34,7 @@
 <body class="hold-transition login-page">
 <div class="login-box">
 
-    <!-- /.login-logo -->
+    <!-- /.login-logo here -->
     <div class="login-box-body">
         <div class="login-logo">
             <img src="{{ asset('dist\img\title.gif') }}" width="100%">

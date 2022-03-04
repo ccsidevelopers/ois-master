@@ -150,7 +150,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    @if(preg_match('/TFS/', Auth::user()->name) || preg_match('/JACCS/', Auth::user()->name) || preg_match('/ACOM/', Auth::user()->name)) {{--added acom march-01-2022--}}
+                                    @if(preg_match('/TFS/', Auth::user()->name) || preg_match('/JACCS/', Auth::user()->name))
                                     <div class="col-md-3">
                                         <div class="box box-danger">
                                             <div class="box-header with-border">
