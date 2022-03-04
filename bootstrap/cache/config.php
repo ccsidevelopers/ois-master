@@ -4,7 +4,7 @@
     'name' => 'ois',
     'env' => 'local',
     'debug' => true,
-    'url' => 'http://localhost',
+    'url' => 'http://127.0.0.1',
     'timezone' => 'Asia/Manila',
     'locale' => 'en',
     'fallback_locale' => 'en',
@@ -225,7 +225,7 @@
       'sqlite' => 
       array (
         'driver' => 'sqlite',
-        'database' => 'ois_new_db',
+        'database' => 'ois',
         'prefix' => '',
       ),
       'mysql' => 
@@ -233,7 +233,7 @@
         'driver' => 'mysql',
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'ois_new_db',
+        'database' => 'ois',
         'username' => 'root',
         'password' => '',
         'charset' => 'utf8',
@@ -247,7 +247,7 @@
         'driver' => 'pgsql',
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'ois_new_db',
+        'database' => 'ois',
         'username' => 'root',
         'password' => '',
         'charset' => 'utf8',
@@ -462,7 +462,7 @@
   'mail' => 
   array (
     'driver' => 'smtp',
-    'host' => 'dedicated02.ccsi-oims.net',
+    'host' => 'dedicated03.ccsi-oims.net',
     'port' => '465',
     'from' => 
     array (
