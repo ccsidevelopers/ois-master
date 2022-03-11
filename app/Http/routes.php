@@ -1004,17 +1004,6 @@ Route::get('users_management_view_logs',
         'role' => 'General'
     ]);
 
-//================================== KIOSK LOAN ROUTES
-
-Route::get('/loan-form', function() {
-    return view('loan-form');
-});
-
-Route::get('kiosk_create', [
-    'uses' => 'LoanFormController@kiosk_create',
-    'as' => 'kiosk_create',
-]);
-
 
 //===================================DISPATCHERS ACCESS ROUTE==========================================================
 
@@ -8678,6 +8667,20 @@ Route::get('qa_get_auth_view',
         'as' => 'qa_get_auth_view',
         'role' => 'Quality Analyst'
     ]);
+
+//==========================================KIOSK LOAN ROUTES===================
+
+Route::get('/loan-form', function() {
+    return view('loan-form');
+});
+
+Route::get('kiosk_create', [
+    'uses' => 'LoanFormController@kiosk_create',
+    'as' => 'kiosk_create',
+]);
+
+
+
     
 //===========================================TEST ROUTE========================================================
 

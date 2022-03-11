@@ -11,9 +11,9 @@ use Carbon\Carbon;
 class LoanFormController extends Controller
 {
     public function kiosk_create(Request $request) {
-        $kiosk_create = DB::table('kiosk_loan_applicants')
+        $kiosk_create = DB::table('loan_users_kiosk')
             ->insert([
-                // 'type_of_loan' => $request->type_of_loan,
+                'type_of_loan' => $request->type_of_loan,
                 'applicant_lname' => $request->applicant_lname,
                 'applicant_fname' => $request->applicant_fname,
                 'applicant_mname' => $request->applicant_mname,
@@ -47,7 +47,7 @@ class LoanFormController extends Controller
                 'mothers_maiden_lname' => $request->mothers_maiden_lname,
                 'mothers_maiden_fname' => $request->mothers_maiden_fname,
                 'mothers_maiden_mname' => $request->mothers_maiden_mname,
-                // 'source_of_income' => $request->source_of_income,
+                'source_of_income' => $request->source_of_income,
                 'employment_status' => $request->employment_status,
                 'mothers_maiden_lname' => $request->mothers_maiden_lname,
                 'for_employed' => $request->for_employed,
