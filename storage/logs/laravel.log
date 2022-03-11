@@ -368,7 +368,8 @@
 #5 C:\\xampp\\htdocs\\ois-master-v1\\artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
 #6 {main}
 "} 
-[2022-02-23 13:16:58] local.ERROR: Call to undefined function asset() (View: C:\xampp\htdocs\ois-master-v1\resources\views\login.blade.php) {"exception":"[object] (ErrorException(code: 0): Call to undefined function asset() (View: C:\\xampp\\htdocs\\ois-master-v1\esources\\views\\login.blade.php) at C:\\xampp\\htdocs\\ois-master-v1\\storage\\framework\\views\\875960ceb29c7ac6f248f7a5da2b2124ede57a7d.php:10, Symfony\\Component\\Debug\\Exception\\FatalThrowableError(code: 0): Call to undefined function asset() at C:\\xampp\\htdocs\\ois-master-v1\\storage\\framework\\views\\875960ceb29c7ac6f248f7a5da2b2124ede57a7d.php:10)
+[2022-02-23 13:16:58] local.ERROR: Call to undefined function asset() (View: C:\xampp\htdocs\ois-master-v1\resources\views\login.blade.php) {"exception":"[object] (ErrorException(code: 0): Call to undefined function asset() (View: C:\\xampp\\htdocs\\ois-master-v1\
+esources\\views\\login.blade.php) at C:\\xampp\\htdocs\\ois-master-v1\\storage\\framework\\views\\875960ceb29c7ac6f248f7a5da2b2124ede57a7d.php:10, Symfony\\Component\\Debug\\Exception\\FatalThrowableError(code: 0): Call to undefined function asset() at C:\\xampp\\htdocs\\ois-master-v1\\storage\\framework\\views\\875960ceb29c7ac6f248f7a5da2b2124ede57a7d.php:10)
 [stacktrace]
 #0 C:\\xampp\\htdocs\\ois-master-v1\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\PhpEngine.php(47): Illuminate\\View\\Engines\\CompilerEngine->handleViewException(Object(Symfony\\Component\\Debug\\Exception\\FatalThrowableError), 1)
 #1 C:\\xampp\\htdocs\\ois-master-v1\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\CompilerEngine.php(59): Illuminate\\View\\Engines\\PhpEngine->evaluatePath('C:\\\\xampp\\\\htdocs...', Array)
@@ -416,7 +417,8 @@
 #43 C:\\xampp\\htdocs\\ois-master-v1\\server.php(21): require_once('C:\\\\xampp\\\\htdocs...')
 #44 {main}
 "} 
-[2022-02-23 13:17:11] local.ERROR: Call to undefined function asset() (View: C:\xampp\htdocs\ois-master-v1\resources\views\login.blade.php) {"exception":"[object] (ErrorException(code: 0): Call to undefined function asset() (View: C:\\xampp\\htdocs\\ois-master-v1\esources\\views\\login.blade.php) at C:\\xampp\\htdocs\\ois-master-v1\\storage\\framework\\views\\875960ceb29c7ac6f248f7a5da2b2124ede57a7d.php:10, Symfony\\Component\\Debug\\Exception\\FatalThrowableError(code: 0): Call to undefined function asset() at C:\\xampp\\htdocs\\ois-master-v1\\storage\\framework\\views\\875960ceb29c7ac6f248f7a5da2b2124ede57a7d.php:10)
+[2022-02-23 13:17:11] local.ERROR: Call to undefined function asset() (View: C:\xampp\htdocs\ois-master-v1\resources\views\login.blade.php) {"exception":"[object] (ErrorException(code: 0): Call to undefined function asset() (View: C:\\xampp\\htdocs\\ois-master-v1\
+esources\\views\\login.blade.php) at C:\\xampp\\htdocs\\ois-master-v1\\storage\\framework\\views\\875960ceb29c7ac6f248f7a5da2b2124ede57a7d.php:10, Symfony\\Component\\Debug\\Exception\\FatalThrowableError(code: 0): Call to undefined function asset() at C:\\xampp\\htdocs\\ois-master-v1\\storage\\framework\\views\\875960ceb29c7ac6f248f7a5da2b2124ede57a7d.php:10)
 [stacktrace]
 #0 C:\\xampp\\htdocs\\ois-master-v1\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\PhpEngine.php(47): Illuminate\\View\\Engines\\CompilerEngine->handleViewException(Object(Symfony\\Component\\Debug\\Exception\\FatalThrowableError), 1)
 #1 C:\\xampp\\htdocs\\ois-master-v1\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\CompilerEngine.php(59): Illuminate\\View\\Engines\\PhpEngine->evaluatePath('C:\\\\xampp\\\\htdocs...', Array)
@@ -464,7 +466,8 @@
 #43 C:\\xampp\\htdocs\\ois-master-v1\\server.php(21): require_once('C:\\\\xampp\\\\htdocs...')
 #44 {main}
 "} 
-[2022-02-23 13:17:12] local.ERROR: Call to undefined function asset() (View: C:\xampp\htdocs\ois-master-v1\resources\views\login.blade.php) {"exception":"[object] (ErrorException(code: 0): Call to undefined function asset() (View: C:\\xampp\\htdocs\\ois-master-v1\esources\\views\\login.blade.php) at C:\\xampp\\htdocs\\ois-master-v1\\storage\\framework\\views\\875960ceb29c7ac6f248f7a5da2b2124ede57a7d.php:10, Symfony\\Component\\Debug\\Exception\\FatalThrowableError(code: 0): Call to undefined function asset() at C:\\xampp\\htdocs\\ois-master-v1\\storage\\framework\\views\\875960ceb29c7ac6f248f7a5da2b2124ede57a7d.php:10)
+[2022-02-23 13:17:12] local.ERROR: Call to undefined function asset() (View: C:\xampp\htdocs\ois-master-v1\resources\views\login.blade.php) {"exception":"[object] (ErrorException(code: 0): Call to undefined function asset() (View: C:\\xampp\\htdocs\\ois-master-v1\
+esources\\views\\login.blade.php) at C:\\xampp\\htdocs\\ois-master-v1\\storage\\framework\\views\\875960ceb29c7ac6f248f7a5da2b2124ede57a7d.php:10, Symfony\\Component\\Debug\\Exception\\FatalThrowableError(code: 0): Call to undefined function asset() at C:\\xampp\\htdocs\\ois-master-v1\\storage\\framework\\views\\875960ceb29c7ac6f248f7a5da2b2124ede57a7d.php:10)
 [stacktrace]
 #0 C:\\xampp\\htdocs\\ois-master-v1\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\PhpEngine.php(47): Illuminate\\View\\Engines\\CompilerEngine->handleViewException(Object(Symfony\\Component\\Debug\\Exception\\FatalThrowableError), 1)
 #1 C:\\xampp\\htdocs\\ois-master-v1\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\CompilerEngine.php(59): Illuminate\\View\\Engines\\PhpEngine->evaluatePath('C:\\\\xampp\\\\htdocs...', Array)
@@ -512,7 +515,8 @@
 #43 C:\\xampp\\htdocs\\ois-master-v1\\server.php(21): require_once('C:\\\\xampp\\\\htdocs...')
 #44 {main}
 "} 
-[2022-02-23 13:17:26] local.ERROR: Call to undefined function asset() (View: C:\xampp\htdocs\ois-master-v1\resources\views\login.blade.php) {"exception":"[object] (ErrorException(code: 0): Call to undefined function asset() (View: C:\\xampp\\htdocs\\ois-master-v1\esources\\views\\login.blade.php) at C:\\xampp\\htdocs\\ois-master-v1\\storage\\framework\\views\\875960ceb29c7ac6f248f7a5da2b2124ede57a7d.php:10, Symfony\\Component\\Debug\\Exception\\FatalThrowableError(code: 0): Call to undefined function asset() at C:\\xampp\\htdocs\\ois-master-v1\\storage\\framework\\views\\875960ceb29c7ac6f248f7a5da2b2124ede57a7d.php:10)
+[2022-02-23 13:17:26] local.ERROR: Call to undefined function asset() (View: C:\xampp\htdocs\ois-master-v1\resources\views\login.blade.php) {"exception":"[object] (ErrorException(code: 0): Call to undefined function asset() (View: C:\\xampp\\htdocs\\ois-master-v1\
+esources\\views\\login.blade.php) at C:\\xampp\\htdocs\\ois-master-v1\\storage\\framework\\views\\875960ceb29c7ac6f248f7a5da2b2124ede57a7d.php:10, Symfony\\Component\\Debug\\Exception\\FatalThrowableError(code: 0): Call to undefined function asset() at C:\\xampp\\htdocs\\ois-master-v1\\storage\\framework\\views\\875960ceb29c7ac6f248f7a5da2b2124ede57a7d.php:10)
 [stacktrace]
 #0 C:\\xampp\\htdocs\\ois-master-v1\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\PhpEngine.php(47): Illuminate\\View\\Engines\\CompilerEngine->handleViewException(Object(Symfony\\Component\\Debug\\Exception\\FatalThrowableError), 1)
 #1 C:\\xampp\\htdocs\\ois-master-v1\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\CompilerEngine.php(59): Illuminate\\View\\Engines\\PhpEngine->evaluatePath('C:\\\\xampp\\\\htdocs...', Array)
@@ -560,7 +564,8 @@
 #43 C:\\xampp\\htdocs\\ois-master-v1\\server.php(21): require_once('C:\\\\xampp\\\\htdocs...')
 #44 {main}
 "} 
-[2022-02-23 13:17:28] local.ERROR: Call to undefined function asset() (View: C:\xampp\htdocs\ois-master-v1\resources\views\login.blade.php) {"exception":"[object] (ErrorException(code: 0): Call to undefined function asset() (View: C:\\xampp\\htdocs\\ois-master-v1\esources\\views\\login.blade.php) at C:\\xampp\\htdocs\\ois-master-v1\\storage\\framework\\views\\875960ceb29c7ac6f248f7a5da2b2124ede57a7d.php:10, Symfony\\Component\\Debug\\Exception\\FatalThrowableError(code: 0): Call to undefined function asset() at C:\\xampp\\htdocs\\ois-master-v1\\storage\\framework\\views\\875960ceb29c7ac6f248f7a5da2b2124ede57a7d.php:10)
+[2022-02-23 13:17:28] local.ERROR: Call to undefined function asset() (View: C:\xampp\htdocs\ois-master-v1\resources\views\login.blade.php) {"exception":"[object] (ErrorException(code: 0): Call to undefined function asset() (View: C:\\xampp\\htdocs\\ois-master-v1\
+esources\\views\\login.blade.php) at C:\\xampp\\htdocs\\ois-master-v1\\storage\\framework\\views\\875960ceb29c7ac6f248f7a5da2b2124ede57a7d.php:10, Symfony\\Component\\Debug\\Exception\\FatalThrowableError(code: 0): Call to undefined function asset() at C:\\xampp\\htdocs\\ois-master-v1\\storage\\framework\\views\\875960ceb29c7ac6f248f7a5da2b2124ede57a7d.php:10)
 [stacktrace]
 #0 C:\\xampp\\htdocs\\ois-master-v1\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\PhpEngine.php(47): Illuminate\\View\\Engines\\CompilerEngine->handleViewException(Object(Symfony\\Component\\Debug\\Exception\\FatalThrowableError), 1)
 #1 C:\\xampp\\htdocs\\ois-master-v1\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\CompilerEngine.php(59): Illuminate\\View\\Engines\\PhpEngine->evaluatePath('C:\\\\xampp\\\\htdocs...', Array)
@@ -1145,6 +1150,7 @@
 "} 
 [2022-03-11 12:08:58] local.ERROR: SQLSTATE[HY000] [1049] Unknown database 'ois_old' (SQL: select * from information_schema.tables where table_schema = ois_old and table_name = migrations) {"exception":"[object] (Illuminate\\Database\\QueryException(code: 1049): SQLSTATE[HY000] [1049] Unknown database 'ois_old' (SQL: select * from information_schema.tables where table_schema = ois_old and table_name = migrations) at C:\\xampp\\htdocs\\ois-staging\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php:664, PDOException(code: 1049): SQLSTATE[HY000] [1049] Unknown database 'ois_old' at C:\\xampp\\htdocs\\ois-staging\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connectors\\Connector.php:67)
 [stacktrace]
+<<<<<<< HEAD
 #0 C:\\xampp\\htdocs\\ois-staging\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php(624): Illuminate\\Database\\Connection->runQueryCallback('select * from i...', Array, Object(Closure))
 #1 C:\\xampp\\htdocs\\ois-staging\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php(333): Illuminate\\Database\\Connection->run('select * from i...', Array, Object(Closure))
 #2 C:\\xampp\\htdocs\\ois-staging\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Schema\\MySqlBuilder.php(18): Illuminate\\Database\\Connection->select('select * from i...', Array)
@@ -1392,3 +1398,32 @@ Did you mean this?
 #4 C:\\xampp\\htdocs\\ois-master\\artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
 #5 {main}
 "} 
+=======
+#0 [internal function]: Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError(2, 'file_put_conten...', 'C:\\\\xampp\\\\htdocs...', 122, Array)
+#1 C:\\xampp\\htdocs\\ois-master\\vendor\\laravel\\framework\\src\\Illuminate\\Filesystem\\Filesystem.php(122): file_put_contents('C:\\\\xampp\\\\htdocs...', '<?php $__env->s...', 0)
+#2 C:\\xampp\\htdocs\\ois-master\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Compilers\\BladeCompiler.php(121): Illuminate\\Filesystem\\Filesystem->put('C:\\\\xampp\\\\htdocs...', '<?php $__env->s...')
+#3 C:\\xampp\\htdocs\\ois-master\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\CompilerEngine.php(51): Illuminate\\View\\Compilers\\BladeCompiler->compile('C:\\\\xampp\\\\htdocs...')
+#4 C:\\xampp\\htdocs\\ois-master\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(137): Illuminate\\View\\Engines\\CompilerEngine->get('C:\\\\xampp\\\\htdocs...', Array)
+#5 C:\\xampp\\htdocs\\ois-master\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(120): Illuminate\\View\\View->getContents()
+#6 C:\\xampp\\htdocs\\ois-master\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(85): Illuminate\\View\\View->renderContents()
+#7 C:\\xampp\\htdocs\\ois-master\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Response.php(42): Illuminate\\View\\View->render()
+#8 C:\\xampp\\htdocs\\ois-master\\vendor\\symfony\\http-foundation\\Response.php(206): Illuminate\\Http\\Response->setContent(Object(Illuminate\\View\\View))
+#9 C:\\xampp\\htdocs\\ois-master\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\ResponseFactory.php(55): Symfony\\Component\\HttpFoundation\\Response->__construct(Object(Illuminate\\View\\View), 404, Array)
+#10 C:\\xampp\\htdocs\\ois-master\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\ResponseFactory.php(69): Illuminate\\Routing\\ResponseFactory->make(Object(Illuminate\\View\\View), 404, Array)
+#11 C:\\xampp\\htdocs\\ois-master\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Exceptions\\Handler.php(403): Illuminate\\Routing\\ResponseFactory->view('errors::404', Array, 404, Array)
+#12 C:\\xampp\\htdocs\\ois-master\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Exceptions\\Handler.php(295): Illuminate\\Foundation\\Exceptions\\Handler->renderHttpException(Object(Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException))
+#13 C:\\xampp\\htdocs\\ois-master\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Exceptions\\Handler.php(187): Illuminate\\Foundation\\Exceptions\\Handler->prepareResponse(Object(Illuminate\\Http\\Request), Object(Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException))
+#14 C:\\xampp\\htdocs\\ois-master\\app\\Exceptions\\Handler.php(57): Illuminate\\Foundation\\Exceptions\\Handler->render(Object(Illuminate\\Http\\Request), Object(Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException))
+#15 C:\\xampp\\htdocs\\ois-master\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Pipeline.php(83): App\\Exceptions\\Handler->render(Object(Illuminate\\Http\\Request), Object(Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException))
+#16 C:\\xampp\\htdocs\\ois-master\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Pipeline.php(32): Illuminate\\Routing\\Pipeline->handleException(Object(Illuminate\\Http\\Request), Object(Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException))
+#17 C:\\xampp\\htdocs\\ois-master\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\CheckForMaintenanceMode.php(46): Illuminate\\Routing\\Pipeline->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))
+#18 C:\\xampp\\htdocs\\ois-master\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(149): Illuminate\\Foundation\\Http\\Middleware\\CheckForMaintenanceMode->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#19 C:\\xampp\\htdocs\\ois-master\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Pipeline.php(53): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#20 C:\\xampp\\htdocs\\ois-master\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(102): Illuminate\\Routing\\Pipeline->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))
+#21 C:\\xampp\\htdocs\\ois-master\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(151): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#22 C:\\xampp\\htdocs\\ois-master\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(116): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter(Object(Illuminate\\Http\\Request))
+#23 C:\\xampp\\htdocs\\ois-master\\public\\index.php(54): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
+#24 C:\\xampp\\htdocs\\ois-master\\server.php(21): require_once('C:\\\\xampp\\\\htdocs...')
+#25 {main}
+"}
+>>>>>>> 62ce07f94dad79bd6e51cf01cf79af6516b4e813
