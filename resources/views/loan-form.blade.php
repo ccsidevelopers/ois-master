@@ -434,6 +434,9 @@
                             <button id="submitKioskLoanBtn" type="submit" class="btn btn-primary btn-not" disabled>Submit</button>
                         </div>
                     </div>
+                    {{-- working on... --}}
+                  
+                    {{-- working on.. --}}
                 </div>
             </form>
         </div>
