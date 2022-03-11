@@ -4,7 +4,7 @@
     'name' => 'ois',
     'env' => 'local',
     'debug' => true,
-    'url' => 'http://127.0.0.1',
+    'url' => 'http://localhost',
     'timezone' => 'Asia/Manila',
     'locale' => 'en',
     'fallback_locale' => 'en',
@@ -462,7 +462,7 @@
   'mail' => 
   array (
     'driver' => 'smtp',
-    'host' => 'dedicated03.ccsi-oims.net',
+    'host' => 'dedicated02.ccsi-oims.net',
     'port' => '465',
     'from' => 
     array (
@@ -608,7 +608,7 @@
     array (
       'font_dir' => 'C:\\xampp\\htdocs\\ois-master\\storage\\fonts/',
       'font_cache' => 'C:\\xampp\\htdocs\\ois-master\\storage\\fonts/',
-      'temp_dir' => 'C:\\Users\\chano\\AppData\\Local\\Temp',
+      'temp_dir' => 'C:\\Users\\Rnyll\\AppData\\Local\\Temp',
       'chroot' => 'C:\\xampp\\htdocs\\ois-master',
       'enable_font_subsetting' => false,
       'pdf_backend' => 'CPDF',
@@ -623,13 +623,13 @@
       'enable_html5_parser' => false,
     ),
   ),
-  'image' => 
-  array (
-    'driver' => 'gd',
-  ),
   'report-generator' => 
   array (
     'flush' => false,
+  ),
+  'image' => 
+  array (
+    'driver' => 'gd',
   ),
   'excel' => 
   array (
@@ -888,16 +888,6 @@
           ),
         ),
       ),
-    ),
-  ),
-  'tinker' => 
-  array (
-    'commands' => 
-    array (
-    ),
-    'dont_alias' => 
-    array (
-      0 => 'App\\Nova',
     ),
   ),
 );
