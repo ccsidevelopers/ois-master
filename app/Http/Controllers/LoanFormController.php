@@ -8,10 +8,13 @@ use Illuminate\Http\Request;
 use DB;
 use Carbon\Carbon;
 
-class LoanFormController extends Controller
-{
+class LoanFormController extends Controller {
+
     public function kiosk_create(Request $request) {
-        $kiosk_create = DB::table('loan_users_kiosk')
+
+        $get_kiosk_applicant = '';
+
+        $get_kiosk_applicant = DB::table('loan_users_kiosk')
             ->insert([
                 'type_of_loan' => $request->type_of_loan,
                 'applicant_lname' => $request->applicant_lname,
@@ -34,7 +37,7 @@ class LoanFormController extends Controller
                 'work_province' => $request->work_province,
                 'birth_date' => $request->birth_date,
                 'birth_place' => $request->birth_place,
-                'citizenship' => $request->citizenship,
+                // 'citizenship' => $request->citizenship,
                 'gender' => $request->gender,
                 'civil_status' => $request->civil_status,
                 'home_ownership' => $request->home_ownership,
@@ -60,5 +63,15 @@ class LoanFormController extends Controller
                 'months_with_employer_in_business' => $request->months_with_employer_in_business,
                 'created_at' => Carbon::now('Asia/Manila'),
             ]);
+
+        // if ($request->number_of_files_count > 0) {
+        //     for ($i = 0; $i < $request->number_of_files_count; $i++) {
+        //         $file1 = $request->file('file_' . $i);
+        //         if ($file1 != null) {
+        //             $file1->move(storage_path('/fund_utilities_attachments/' . $get_kiosk_applicant . '/'), preg_replace("/[^A-Za-z0-9-]/", '', $file1->getClientOriginalName()) . '.' . $file1->getClientOriginalExtension());
+        //         }
+        //     }
+        // }
+
     }
 }

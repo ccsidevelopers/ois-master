@@ -8674,14 +8674,15 @@ Route::get('/loan-form', function() {
     return view('loan-form');
 });
 
-Route::get('kiosk_create', [
-    'uses' => 'LoanFormController@kiosk_create',
-    'as' => 'kiosk_create',
-]);
+// Route::post('kiosk_create', [
+//     'uses' => 'LoanFormController@kiosk_create',
+//     'as' => 'kiosk_create',
+// ]);
+
+Route::post('kiosk_create','LoanFormController@kiosk_create');
 
 
 
-    
 //===========================================TEST ROUTE========================================================
 
 

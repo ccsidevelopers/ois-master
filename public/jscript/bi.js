@@ -1355,6 +1355,18 @@ function func_gender_marital() {
 }
 var cob_array = [];
 
+// Working on start...
+            // Working on start...
+// txtClientRemarks_pdrn textfield id
+var max_length = 25;
+$('textarea').keyup(function () {
+    var len = max_length - $(this).val().length;
+    $('.GFG').text(len);
+});
+// Working on end...
+
+
+//Chano ref
 $('#btn_bi_submit_endorsement').click(function ()
 {
 
@@ -1368,6 +1380,7 @@ $('#btn_bi_submit_endorsement').click(function ()
     var accnt_philhealth = '';
     var accnt_pag_ibig = '';
     var accnt_tin = '';
+
 
     if(if_direct == 'direct')
     {
@@ -4755,11 +4768,16 @@ function holdTable()
     });
 }
 
+
+
 $('#btnSelectForm').change(function ()
 {
 
+
+    
     if($(this).val()=='PDRN')
     {
+
         $('#type_of_request_selection_bi').html('' +
             '                                            <div class="row">\n' +
             '                                            <input type="hidden" id="idPresentMuni">'+
@@ -5045,7 +5063,8 @@ $('#btnSelectForm').change(function ()
             '                                                        <div class="row">\n' +
             '                                                            <div class="form-group col-xs-12">\n' +
             '                                                                <label>Remarks:</label><small style="color: orange;"> (Optional)</small>\n' +
-            '                                                                <textarea id="txtClientRemarks_pdrn" class="form-control" rows="3"></textarea>\n' +
+            '                                                                <textarea id="txtClientRemarks_pdrn" maxlength="255" class="form-control" rows="3"></textarea>\n' +
+                                                                            '<span class="PDRNremainingChars">255</span><span>/255</span>' +
             '                                                            </div>\n' +
             '                                                        </div>\n' +
             '                                                    </div>\n' +
@@ -5066,8 +5085,19 @@ $('#btnSelectForm').change(function ()
             '                                                </div>\n' +
             '                                            </div>\n'
         );
+
+        // Client remarks counter PDRN -chano
+        var max_length = 255;
+        $('#txtClientRemarks_pdrn').keyup(function () {
+            var len = max_length - $(this).val().length;
+            $('.PDRNremainingChars').text(len, 'Chars remaining');
+        });
+
+
+
         $('#btn_bi_submit_endorsement').attr('name', 'PDRN');
 
+    
         var opt_year = '<option value="-">-</option>';
         for(var year = 2019; year>1900; year--)
         {
@@ -5276,6 +5306,8 @@ $('#btnSelectForm').change(function ()
                     '                                                                                        <input type="hidden" class = "cobEachPDRN-'+ i +'" id="idPermaProv-'+i+'">'+
                     '                                                                        </div></div>\n'
             };
+
+
 
             $('#bi_addCob_pdrn').html(coobs);
             $('#btn_bi_submit_endorsement').attr('href', count_cobo);
@@ -5512,7 +5544,8 @@ $('#btnSelectForm').change(function ()
             '                                                            <div class="row">                     \n' +
             '                                                                <div class="form-group col-xs-12">        \n' +
             '                                                                    <label>Remarks:</label><small style="color: orange;"> (Optional)</small>      \n' +
-            '                                                                    <textarea id="txtClientRemarksBVR" class="form-control" rows="3"></textarea>    \n' +
+            '                                                                    <textarea id="txtClientRemarksBVR" maxlength="255" class="form-control" rows="3"></textarea>    \n' +
+                                                                                '<span class="BVRremainingChars">255</span><span>/255</span>' +
             '                                                                </div>                                                \n' +
             '                                                            </div>                                            \n' +
             '                                                        </div>                                           \n' +
@@ -5533,6 +5566,16 @@ $('#btnSelectForm').change(function ()
             '                                                </div>\n' +
             '                                            </div>\n'
         );
+
+        // Client remarks counter BVR -chano
+        var max_length = 255;
+        $('#txtClientRemarksBVR').keyup(function () {
+            var len = max_length - $(this).val().length;
+            $('.BVRremainingChars').text(len);
+        });
+
+
+
         $('#btn_bi_submit_endorsement').attr('name', 'BVR');
         fetchMuni2(0);
         fetchMuniBVRPresent();
@@ -5804,7 +5847,8 @@ $('#btnSelectForm').change(function ()
             '                                                    <div class="row">\n' +
             '                                                        <div class="form-group col-xs-12">\n' +
             '                                                            <label>Remarks:</label><small style="color: orange;"> (Optional)</small>\n' +
-            '                                                            <textarea id="txtClientRemarksEVR" class="form-control" rows="3"></textarea>\n' +
+            '                                                            <textarea id="txtClientRemarksEVR" maxlength="255" class="form-control" rows="3"></textarea>\n' +
+                                                                        '<span class="EVRremainingChars">255</span><span>/255</span>' +
             '                                                        </div>\n' +
             '                                                    </div>\n' +
             '                                                </div>\n' +
@@ -5824,6 +5868,15 @@ $('#btnSelectForm').change(function ()
             '                                            </div>\n' +
             '                                        </div>\n'
         );
+
+        // Client remarks counter EVR -chano
+        var max_length = 255;
+        $('#txtClientRemarksEVR').keyup(function () {
+            var len = max_length - $(this).val().length;
+            $('.EVRremainingChars').text(len);
+        });
+
+
         $('#btn_bi_submit_endorsement').attr('name', 'EVR');
         fetchMuni3(0);
         fetchMuniEVRPresent();
