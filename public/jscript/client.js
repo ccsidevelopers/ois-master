@@ -3859,7 +3859,18 @@ function final_endorse(it_is_direct) {
             alert('Please fill up all information in \"Employer\" or the input information is doubled.\'');
         }
         else
+        //rommel march 01-2022
         {
+            if($('#dealer_name').length > 0 && $('#contract_number').length > 0)
+            {
+                contract_num_end = $('#contract_number').val();
+                dealer_num_end = $('#dealer_name').val();
+            }
+            else
+            {
+                contract_num_end = '';
+                dealer_num_end = '';
+            }
             //proceed to endorse
             $.ajax
             ({
@@ -3924,6 +3935,18 @@ function final_endorse(it_is_direct) {
         }
         else
         {
+            //rommel march 01-2022
+            if($('#dealer_name').length > 0 && $('#contract_number').length > 0)
+            {
+                contract_num_end = $('#contract_number').val();
+                dealer_num_end = $('#dealer_name').val();
+            }
+            else
+            {
+                contract_num_end = '';
+                dealer_num_end = '';
+            }
+            
             if ($("#personalRequest").is(":checked"))
             {
                 //proceed to endorse
