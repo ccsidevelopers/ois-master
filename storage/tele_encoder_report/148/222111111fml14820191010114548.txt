@@ -1,0 +1,41 @@
+email
+secret_id
+api_key
+f_name
+m_name
+l_name
+address
+municipality
+province
+loan_type
+priority_type
+verify_type
+entry_as
+requestor_name
+remarks
+
+
+
+
+
+"""email"" = 
+""api_key"" = P4aQkjErgS60BhtkvAvjjJl0YjKUlALs123450GyjLCcJqPPzihAPHj3Udgw1d
+""secret_id"" = 12cft312345ac596455a91b03a11da1c88d12fabcsb78f63171253eaa2351a0c6f
+""f_name"" = Juan
+""m_name"" = Caballero
+""l_name"" = Dela Cruz
+""address"" = Blk 12 Lot 34 Ph 5, Brgy Pagibig
+""municipality"" = Dasmarinas
+""province"" = Cavite
+""loan_type"" = Auto Loan
+""priority_type"" = Regular
+""verify_type"" = Discreet
+""entry_as"" = New Endorsement
+""requestor_name"" = Juan Dela Cruz
+""remarks"" = Please verify "
+
+
+
+
+
+
