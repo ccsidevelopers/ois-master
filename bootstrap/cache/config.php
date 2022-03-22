@@ -3,12 +3,12 @@
   array (
     'name' => 'ois',
     'env' => 'local',
-    'debug' => true,
+    'debug' => false,
     'url' => 'http://localhost',
     'timezone' => 'Asia/Manila',
     'locale' => 'en',
     'fallback_locale' => 'en',
-    'key' => 'base64:i/TbzJfFL8kWIcg60QhE85f9cz+QwlDFXioFhEYChik=',
+    'key' => 'base64:U9Z1/3s78RwbaBk/2aNIWKe8MDhd9wQ52yEpbEcq208=',
     'cipher' => 'AES-256-CBC',
     'log' => 'single',
     'providers' => 
@@ -360,7 +360,7 @@
       'local' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\xampp\\htdocs\\ois-master\\public',
+        'root' => 'C:\\xampp\\htdocs\\ois-master/../public_html',
       ),
       'public' => 
       array (
@@ -462,7 +462,7 @@
   'mail' => 
   array (
     'driver' => 'smtp',
-    'host' => 'dedicated02.ccsi-oims.net',
+    'host' => 'dedicated03.ccsi-oims.net',
     'port' => '465',
     'from' => 
     array (
@@ -623,13 +623,13 @@
       'enable_html5_parser' => false,
     ),
   ),
-  'report-generator' => 
-  array (
-    'flush' => false,
-  ),
   'image' => 
   array (
     'driver' => 'gd',
+  ),
+  'report-generator' => 
+  array (
+    'flush' => false,
   ),
   'excel' => 
   array (
@@ -888,6 +888,16 @@
           ),
         ),
       ),
+    ),
+  ),
+  'tinker' => 
+  array (
+    'commands' => 
+    array (
+    ),
+    'dont_alias' => 
+    array (
+      0 => 'App\\Nova',
     ),
   ),
 );
