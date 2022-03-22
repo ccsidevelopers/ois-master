@@ -1,10 +1,10 @@
 /vendor
 /node_modules
 /public/storage
+bootstrap/*
 Homestead.yaml
 Homestead.json
 .env
 .idea/
 storage/*
-bootstrap/*
 clear-cache.bat
