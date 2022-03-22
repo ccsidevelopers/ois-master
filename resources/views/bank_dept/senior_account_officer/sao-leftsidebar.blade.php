@@ -64,12 +64,6 @@
                 </a>
             </li>
 
-            <li class="class_sao">
-                <a id="kiosk_loan_menu" href="#kiosk_loan_tab" data-toggle="tab" class="a_sao">
-                    <i class="fa fa-laptop"></i> <span>Kiosk Loan Account</span>
-                </a>
-            </li>
-
             <li class="header">OTHERS</li>
             <li>
                 <a href="#" id="btnTriggerCIdirectory" data-toggle="modal" data-target="#modal-ci-direct">
@@ -107,11 +101,6 @@
         <div class="tab-pane" id="sao_search_tab">
             @include('bank_dept.senior_account_officer.sao-endorsement')
         </div>
-
-        <div class="tab-pane" id="kiosk_loan_tab">
-            @include('bank_dept.senior_account_officer.kiosk_loan_application')
-        </div>
-
         <div class="tab-pane" id="sao_dashboard_tab">
             @include('bank_dept.senior_account_officer.sao-dashboard')
         </div>
