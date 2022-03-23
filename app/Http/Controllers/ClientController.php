@@ -3973,7 +3973,7 @@ class ClientController extends Controller
                 )
                 ->where('endorsement_user.client_id',$authing)
                 ->where('endorsements.acct_status',3)
-                ->where('endorsements.client_status', '=', 'Downloaded')
+                // ->where('endorsements.client_status', '=', 'Downloaded')
 //            ->where('endorsements.revised','')
                 ->where('date_endorsed','>=',Carbon::now('Asia/Manila')->subDays(30))
                 ->where('date_endorsed','<=',Carbon::now('Asia/Manila'));
@@ -4016,7 +4016,7 @@ class ClientController extends Controller
                 )
                 ->where('endorsement_user.client_id',$authing)
                 ->where('endorsements.acct_status',3)
-                ->where('endorsements.client_status', '=', 'Downloaded')
+                // ->where('endorsements.client_status', '=', 'Downloaded')
 //            ->where('endorsements.revised','')
                 ->where('endorsements.date_endorsed','>=',$request->min_date_endorsed)
                 ->where('endorsements.date_endorsed','<=',$request->max_date_endorsed);
