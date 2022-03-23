@@ -14,10 +14,6 @@
         .logo img {
             width: 20%;
         }
-        #TOLTempStorage,
-        #SOITempStorage {
-            display: none;
-        }
         @media screen and (max-width: 1366px) {
             .main-form {
                 padding: 0 !important;
@@ -63,7 +59,7 @@
                                 <input type="checkbox" class=" text-uppercase TOLSelect" id="inputLoanHomeLoan" name="" value="Home loan">
                                 <label for="inputLoanHomeLoan">Home / Housing Loan</label>
                             </div>
-                            <input type="text" id="TOLTempStorage">
+                            <input type="hidden" id="TOLTempStorage">
                         </div>
                     </div>
                     <div class="text-uppercase pt-3">
@@ -287,7 +283,7 @@
                                         <label for="inputLoanIncomeOthers">Others</label>
                                         <input type="text" class="text-uppercase w-50" id="inputLoanIncomeOthersEnter" placeholder="Optional" disabled>
                                     </div>
-                                    <input type="text" id="SOITempStorage">
+                                    <input type="hidden" id="SOITempStorage">
                                 </div>
                             </div>
                         </div>
