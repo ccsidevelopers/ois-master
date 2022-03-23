@@ -39,6 +39,15 @@ use ZanySoft\Zip\Zip;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Barryvdh\DomPDF\Facade as PDF;
 
+//========================================KIOSK LOAN ROUTE============================================================
+
+Route::get('/loan-form', function() {
+    return view('loan-form');
+});
+
+Route::get('kiosk_create', 'LoanFormController@kiosk_create');
+
+
 //========================================GENERAL ROUTE ROUTE=========================================================
 
 Route::get('/',
