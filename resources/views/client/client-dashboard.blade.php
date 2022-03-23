@@ -199,12 +199,12 @@
                                             <div class="tab-pane" id="tab_2">
                                                 <div class="nav-tabs-custom">
                                                     <ul class="nav nav-tabs">
-                                                        <li class="active"><a href="#new_accounts_tab" class="success_tabs" data-toggle="tab">New Accounts</a></li>
-                                                        <li><a href="#read_accounts_tab" class="success_tabs" data-toggle="tab">Read Accounts</a></li>
-                                                        <li><a href="#finish_accounts_tab" class="success_tabs" data-toggle="tab">Finish Accounts</a></li>
+                                                        {{-- <li class="active"><a href="#new_accounts_tab" class="success_tabs" data-toggle="tab">New Accounts</a></li>
+                                                        <li><a href="#read_accounts_tab" class="success_tabs" data-toggle="tab">Read Accounts</a></li> --}}
+                                                        <li><a href="#finish_accounts_tab" class="success_tabs" data-toggle="tab"><button class="btn btn-primary">CLICK HERE TO REFRESH ALL ACCOUNTS</button></a></li>
                                                     </ul>
                                                     <div class="tab-content">
-                                                        <div class="tab-pane active" id="new_accounts_tab">
+                                                        {{-- <div class="tab-pane active" id="new_accounts_tab">
 
                                                             <div class="col-md-5">
                                                                 <div class="box box-danger">
@@ -251,6 +251,8 @@
                                                                     <th>Type of Loan</th>
                                                                    
                                                                     <th>Requestor</th>
+                                                                    <th>Dealer name</th>
+                                                                    <th>Contract number</th>
                                                                     <th>Remarks</th>
                                                                     <th>Entry As</th>
                                                                     <th>Status</th>
@@ -271,6 +273,8 @@
                                                                     <th>Type of Loan</th>
                                                                   
                                                                     <th>Requestor</th>
+                                                                    <th>Dealer name</th>
+                                                                    <th>Contract number</th>
                                                                     <th>Remarks</th>
                                                                     <th>Entry As</th>
                                                                     <th>Status</th>
@@ -279,8 +283,8 @@
                                                                 </tr>
                                                                 </tfoot>
                                                             </table>
-                                                        </div>
-                                                        <div class="tab-pane" id="read_accounts_tab">
+                                                        </div> --}}
+                                                        {{-- <div class="tab-pane" id="read_accounts_tab">
 
                                                             <div class="col-md-5">
                                                                 <div class="box box-danger">
@@ -326,6 +330,8 @@
                                                                     <th>Type of Request</th>
                                                                     <th>Type of Loan</th>
                                                                     <th>Requestor</th>
+                                                                    <th>Dealer name</th>
+                                                                    <th>Contract number</th>
                                                                     <th>Remarks</th>
                                                                     <th>Entry As</th>
                                                                     <th>Status</th>
@@ -345,6 +351,8 @@
                                                                     <th>Type of Request</th>
                                                                     <th>Type of Loan</th>
                                                                     <th>Requestor</th>
+                                                                    <th>Dealer name</th>
+                                                                    <th>Contract number</th>
                                                                     <th>Remarks</th>
                                                                     <th>Entry As</th>
                                                                     <th>Status</th>
@@ -354,10 +362,8 @@
                                                                 </tfoot>
                                                             </table>
 
-                                                        </div>
+                                                        </div> --}}
                                                         <div class="tab-pane" id="finish_accounts_tab">
-
-
                                                             <div class="col-md-5">
                                                                 <div class="box box-danger">
                                                                     <div class="box-header with-border">
@@ -402,6 +408,8 @@
                                                                     <th>Type of Request</th>
                                                                     <th>Type of Loan</th>
                                                                     <th>Requestor</th>
+                                                                    <th>Dealer name</th>
+                                                                    <th>Contract number</th>
                                                                     <th>Remarks</th>
                                                                     <th>Entry As</th>
                                                                     <th>Status</th>
@@ -423,6 +431,8 @@
                                                                     <th>Type of Request</th>
                                                                     <th>Type of Loan</th>
                                                                     <th>Requestor</th>
+                                                                    <th>Dealer name</th>
+                                                                    <th>Contract number</th>
                                                                     <th>Remarks</th>
                                                                     <th>Entry As</th>
                                                                     <th>Status</th>
