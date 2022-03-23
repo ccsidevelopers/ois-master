@@ -456,6 +456,8 @@ function finish_accounts_table_read() {
                 //     'name' : 'endorsements.type_of_request'
                 // },
                 {data: 'requestor_name', name: 'endorsements.requestor_name', "className": "text-center"},
+                {data: 'dealer_name', name: 'endorsements.dealer_name'},
+                {data: 'contract_number', name: 'endorsements.contract_number'},
                 {data: 'client_remarks', name: 'endorsements.client_remarks', "className": "text-center"},
                 {data: 're_ci', name: 'endorsements.re_ci', "className": "text-center"},
                 {
@@ -725,6 +727,8 @@ function finish_accounts_table_downloaded() {
                 //     'name' : 'endorsements.type_of_request'
                 // },
                 {data: 'requestor_name', name: 'endorsements.requestor_name', "className": "text-center"},
+                {data: 'dealer_name', name: 'endorsements.dealer_name'},
+                {data: 'contract_number', name: 'endorsements.contract_number'},
                 {data: 'client_remarks', name: 'endorsements.client_remarks', "className": "text-center"},
                 {data: 're_ci', name: 'endorsements.re_ci', "className": "text-center"},
                 {
@@ -1008,6 +1012,8 @@ function finish_accounts_table()
                 //     'name' : 'endorsements.type_of_request'
                 // },
                 {data: 'requestor_name', name: 'endorsements.requestor_name', "className": "text-center"},
+                {data: 'dealer_name', name: 'endorsements.dealer_name'},
+                {data: 'contract_number', name: 'endorsements.contract_number'},
                 {data: 'client_remarks', name: 'endorsements.client_remarks', "className": "text-center"},
                 {data: 're_ci', name: 'endorsements.re_ci', "className": "text-center"},
                 {

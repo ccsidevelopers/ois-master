@@ -251,6 +251,8 @@
                                                                     <th>Type of Loan</th>
                                                                    
                                                                     <th>Requestor</th>
+                                                                    <th>Dealer name</th>
+                                                                    <th>Contract number</th>
                                                                     <th>Remarks</th>
                                                                     <th>Entry As</th>
                                                                     <th>Status</th>
@@ -271,6 +273,8 @@
                                                                     <th>Type of Loan</th>
                                                                   
                                                                     <th>Requestor</th>
+                                                                    <th>Dealer name</th>
+                                                                    <th>Contract number</th>
                                                                     <th>Remarks</th>
                                                                     <th>Entry As</th>
                                                                     <th>Status</th>
@@ -326,6 +330,8 @@
                                                                     <th>Type of Request</th>
                                                                     <th>Type of Loan</th>
                                                                     <th>Requestor</th>
+                                                                    <th>Dealer name</th>
+                                                                    <th>Contract number</th>
                                                                     <th>Remarks</th>
                                                                     <th>Entry As</th>
                                                                     <th>Status</th>
@@ -345,6 +351,8 @@
                                                                     <th>Type of Request</th>
                                                                     <th>Type of Loan</th>
                                                                     <th>Requestor</th>
+                                                                    <th>Dealer name</th>
+                                                                    <th>Contract number</th>
                                                                     <th>Remarks</th>
                                                                     <th>Entry As</th>
                                                                     <th>Status</th>
@@ -402,6 +410,8 @@
                                                                     <th>Type of Request</th>
                                                                     <th>Type of Loan</th>
                                                                     <th>Requestor</th>
+                                                                    <th>Dealer name</th>
+                                                                    <th>Contract number</th>
                                                                     <th>Remarks</th>
                                                                     <th>Entry As</th>
                                                                     <th>Status</th>
@@ -423,6 +433,8 @@
                                                                     <th>Type of Request</th>
                                                                     <th>Type of Loan</th>
                                                                     <th>Requestor</th>
+                                                                    <th>Dealer name</th>
+                                                                    <th>Contract number</th>
                                                                     <th>Remarks</th>
                                                                     <th>Entry As</th>
                                                                     <th>Status</th>

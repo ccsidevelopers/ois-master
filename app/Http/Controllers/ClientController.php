@@ -343,6 +343,8 @@ class ClientController extends Controller
                         'municipalities.muni_name as muni_name',
                         'provinces.name',
                         'endorsements.address',
+                        'endorsements.dealer_name',
+                        'endorsements.contract_number',
                         'endorsements.client_remarks',
                         'endorsements.provinces',
                         'endorsements.acct_status',
@@ -388,6 +390,8 @@ class ClientController extends Controller
                         'provinces.name',
 
                         'endorsements.address',
+                        'endorsements.dealer_name',
+                        'endorsements.contract_number',
                         'endorsements.client_remarks',
                         'endorsements.provinces',
                         'endorsements.acct_status',
@@ -3810,6 +3814,8 @@ class ClientController extends Controller
                         'endorsements.account_name',
                         'endorsements.type_of_request',
                         'endorsements.requestor_name',
+                        'endorsements.dealer_name',
+                        'endorsements.contract_number',
 
                         'municipalities.muni_name as muni_name',
                         'provinces.name',
@@ -3849,6 +3855,8 @@ class ClientController extends Controller
                         'endorsements.account_name',
                         'endorsements.type_of_request',
                         'endorsements.requestor_name',
+                        'endorsements.dealer_name',
+                        'endorsements.contract_number',
 
                         'municipalities.muni_name as muni_name',
                         'provinces.name',
@@ -3946,6 +3954,8 @@ class ClientController extends Controller
                         'endorsements.account_name',
                         'endorsements.type_of_request',
                         'endorsements.requestor_name',
+                        'endorsements.dealer_name',
+                        'endorsements.contract_number',
                         'endorsements.date_forwarded_to_client as date_forward',
                         'endorsements.time_forwarded_to_client as time_forward',
 
@@ -3987,6 +3997,8 @@ class ClientController extends Controller
                         'endorsements.account_name',
                         'endorsements.type_of_request',
                         'endorsements.requestor_name',
+                        'endorsements.dealer_name',
+                        'endorsements.contract_number',
                         'endorsements.date_forwarded_to_client as date_forward',
                         'endorsements.time_forwarded_to_client as time_forward',
 
