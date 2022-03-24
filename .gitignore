@@ -5,6 +5,6 @@ Homestead.yaml
 Homestead.json
 .env
 .idea/
-/storage/*
-/bootstrap/*
+storage/*
+bootstrap/*
 clear-cache.bat

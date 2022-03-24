@@ -2837,12 +2837,18 @@ $(document).ready(function()
 
 function fetchTemp()
 {
+
+    
+
     $.ajax
     ({
         type: 'get',
         url: '/get-list-province',
         success: function (data)
         {
+            
+            
+
             console.log(data)
 
             for (i = 0; i <= data[0].length - 1; i++)
@@ -2979,7 +2985,7 @@ function fetchTemp()
                 '                                                        <div class="form-group col-xs-4">' +
                 '                                                            <label>Type of Loan:</label>' +
                 '                                                            <select class="form-control select1" style="width: 100%" id="loanType" name="loanType">' +
-                tol+
+                                                                                                                                                                    tol+
                 '                                                            </select>' +
                 '                                                        </div>' +
                 '                                                        <div class="form-group col-xs-4">' +
@@ -3001,6 +3007,7 @@ function fetchTemp()
                 '                                                        <div class="form-group col-xs-12">' +
                 '                                                            <label>Remarks:</label><small style="color: red;"> (Optional)</small>' +
                 '                                                            <textarea id="txtClientRemarks" class="form-control" rows="3"></textarea>'+
+                                                                            
                 '                                                        </div>' +
                 '                                                    </div>' +
                 '                                                </div>' +
@@ -3123,8 +3130,12 @@ function fetchTemp()
                 '                                                </div>\n' +
                 '                                            </div>';
         }
+        
     });
 }
+
+
+
 
 
 function clearInputsSuccess(data)
