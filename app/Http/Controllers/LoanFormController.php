@@ -11,6 +11,9 @@ use Carbon\Carbon;
 class LoanFormController extends Controller
 {
     public function kiosk_create(Request $request) {
+
+    return request()->all();
+
         $kiosk_create = DB::table('kiosk_loan_applicants')
             ->insertGetId([
                 // 'type_of_loan' => $request->type_of_loan,
