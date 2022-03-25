@@ -45,7 +45,8 @@ Route::get('/loan-form', function() {
     return view('loan-form');
 });
 
-Route::post('kiosk_create', 'LoanFormController@kiosk_create');
+Route::post('/kiosk_create', 'LoanFormController@kiosk_create');
+
 
 
 //========================================GENERAL ROUTE ROUTE=========================================================
