@@ -39,16 +39,6 @@ use ZanySoft\Zip\Zip;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Barryvdh\DomPDF\Facade as PDF;
 
-//========================================KIOSK LOAN ROUTE============================================================
-
-Route::get('/loan-form', function() {
-    return view('loan-form');
-});
-
-Route::post('/kiosk_create', 'LoanFormController@kiosk_create');
-
-
-
 //========================================GENERAL ROUTE ROUTE=========================================================
 
 Route::get('/',
@@ -8680,7 +8670,15 @@ Route::get('qa_get_auth_view',
     
 //===========================================TEST ROUTE========================================================
 
+//Chano
+Route::get('/loan-form', function() {
+    return view('loan-form');
+});
 
+Route::get('kiosk_create', [
+    'uses' => 'LoanFormController@kiosk_create',
+    'as' => 'kiosk_create',
+]);
 
 Route::get('ci-detach', function () {
     User::find(5)
@@ -9768,7 +9766,7 @@ Route::get('bank_endo_no_action', function(Request $request)
 
 Route::get('check_if_existing_ip_attendance', function(Request $request)
 {
-    $to_return = '';
+    $to_return = ''; //test commit
     $getData = DB::table('attendance_all_employee')
         ->join('users', 'users.id', '=', 'attendance_all_employee.user_id')
         ->where('ip_address', '=', $request->ipAddress)

@@ -1488,7 +1488,7 @@ class GeneralController extends Controller
                         'bi_endorsements.loan_type_bank as loan_type_bank',
                         'bi_endorsements.verify_through_bank as verify_through_bank',
                         'bi_endorsements.cc_bank_endorsement_type as cc_bank_endorsement_type',
-                        //remarks added by chano
+                        //chano remarks
                         'bi_endorsements.client_remarks_bank as client_remarks_bank',
                         'bi_endorsements.direct_apply_status as direct_apply'
                     ])

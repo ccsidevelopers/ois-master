@@ -113,9 +113,12 @@ class ClientController extends Controller
                 $timeStamp = $dataDashboard[3];
                 $tatAccounts = $dataDashboard[4];
                 //            END
+                
+                //Added $provinces variable
+                $provinces = Province::all();
                 $tors = TypeOfRequest::all();
                 $tols = TypeOfLoan::all();
-                $provinces = Province::all();
+                // $provinces = Province::all(); ADDED ON LIVE FEB 14,2022
 
                 $javs = DB::table('javascript_magic')
                     ->select('unique')
@@ -130,7 +133,6 @@ class ClientController extends Controller
                     'overdueAccount',
                     'tatAccounts',
                     'javs',
-                    //marked
                     'provinces',
                     'tors',
                     'tols'
@@ -343,8 +345,6 @@ class ClientController extends Controller
                         'municipalities.muni_name as muni_name',
                         'provinces.name',
                         'endorsements.address',
-                        'endorsements.dealer_name',
-                        'endorsements.contract_number',
                         'endorsements.client_remarks',
                         'endorsements.provinces',
                         'endorsements.acct_status',
@@ -390,8 +390,6 @@ class ClientController extends Controller
                         'provinces.name',
 
                         'endorsements.address',
-                        'endorsements.dealer_name',
-                        'endorsements.contract_number',
                         'endorsements.client_remarks',
                         'endorsements.provinces',
                         'endorsements.acct_status',
@@ -3814,8 +3812,6 @@ class ClientController extends Controller
                         'endorsements.account_name',
                         'endorsements.type_of_request',
                         'endorsements.requestor_name',
-                        'endorsements.dealer_name',
-                        'endorsements.contract_number',
 
                         'municipalities.muni_name as muni_name',
                         'provinces.name',
@@ -3855,8 +3851,6 @@ class ClientController extends Controller
                         'endorsements.account_name',
                         'endorsements.type_of_request',
                         'endorsements.requestor_name',
-                        'endorsements.dealer_name',
-                        'endorsements.contract_number',
 
                         'municipalities.muni_name as muni_name',
                         'provinces.name',
@@ -3954,8 +3948,6 @@ class ClientController extends Controller
                         'endorsements.account_name',
                         'endorsements.type_of_request',
                         'endorsements.requestor_name',
-                        'endorsements.dealer_name',
-                        'endorsements.contract_number',
                         'endorsements.date_forwarded_to_client as date_forward',
                         'endorsements.time_forwarded_to_client as time_forward',
 
@@ -3973,7 +3965,7 @@ class ClientController extends Controller
                 )
                 ->where('endorsement_user.client_id',$authing)
                 ->where('endorsements.acct_status',3)
-                // ->where('endorsements.client_status', '=', 'Downloaded')
+                ->where('endorsements.client_status', '=', 'Downloaded')
 //            ->where('endorsements.revised','')
                 ->where('date_endorsed','>=',Carbon::now('Asia/Manila')->subDays(30))
                 ->where('date_endorsed','<=',Carbon::now('Asia/Manila'));
@@ -3997,8 +3989,6 @@ class ClientController extends Controller
                         'endorsements.account_name',
                         'endorsements.type_of_request',
                         'endorsements.requestor_name',
-                        'endorsements.dealer_name',
-                        'endorsements.contract_number',
                         'endorsements.date_forwarded_to_client as date_forward',
                         'endorsements.time_forwarded_to_client as time_forward',
 
@@ -4016,7 +4006,7 @@ class ClientController extends Controller
                 )
                 ->where('endorsement_user.client_id',$authing)
                 ->where('endorsements.acct_status',3)
-                // ->where('endorsements.client_status', '=', 'Downloaded')
+                ->where('endorsements.client_status', '=', 'Downloaded')
 //            ->where('endorsements.revised','')
                 ->where('endorsements.date_endorsed','>=',$request->min_date_endorsed)
                 ->where('endorsements.date_endorsed','<=',$request->max_date_endorsed);
