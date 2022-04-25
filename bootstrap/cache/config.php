@@ -8,7 +8,7 @@
     'timezone' => 'Asia/Manila',
     'locale' => 'en',
     'fallback_locale' => 'en',
-    'key' => NULL,
+    'key' => 'base64:i/TbzJfFL8kWIcg60QhE85f9cz+QwlDFXioFhEYChik=',
     'cipher' => 'AES-256-CBC',
     'log' => 'single',
     'providers' => 
@@ -130,7 +130,7 @@
   ),
   'broadcasting' => 
   array (
-    'default' => 'null',
+    'default' => 'pusher',
     'options' => 
     array (
       'cluster' => 'ap1',
@@ -141,9 +141,9 @@
       'pusher' => 
       array (
         'driver' => 'pusher',
-        'key' => NULL,
-        'secret' => NULL,
-        'app_id' => NULL,
+        'key' => 'a6dbe65ac4fdaf766126',
+        'secret' => 'cbcb26db3a921c81c480',
+        'app_id' => '816085',
         'options' => 
         array (
           'cluster' => 'ap1',
@@ -163,7 +163,7 @@
   ),
   'cache' => 
   array (
-    'default' => 'file',
+    'default' => 'array',
     'stores' => 
     array (
       'apc' => 
@@ -225,16 +225,16 @@
       'sqlite' => 
       array (
         'driver' => 'sqlite',
-        'database' => 'C:\\xampp\\htdocs\\ois-master\\database\\database.sqlite',
+        'database' => 'ois_master_db',
         'prefix' => '',
       ),
       'mysql' => 
       array (
         'driver' => 'mysql',
-        'host' => 'localhost',
+        'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'forge',
-        'username' => 'forge',
+        'database' => 'ois_master_db',
+        'username' => 'root',
         'password' => '',
         'charset' => 'utf8',
         'collation' => 'utf8_unicode_ci',
@@ -245,10 +245,10 @@
       'pgsql' => 
       array (
         'driver' => 'pgsql',
-        'host' => 'localhost',
-        'port' => '5432',
-        'database' => 'forge',
-        'username' => 'forge',
+        'host' => '127.0.0.1',
+        'port' => '3306',
+        'database' => 'ois_master_db',
+        'username' => 'root',
         'password' => '',
         'charset' => 'utf8',
         'prefix' => '',
@@ -261,9 +261,9 @@
       'cluster' => false,
       'default' => 
       array (
-        'host' => 'localhost',
+        'host' => '127.0.0.1',
         'password' => NULL,
-        'port' => 6379,
+        'port' => '6379',
         'database' => 0,
       ),
     ),
@@ -360,7 +360,7 @@
       'local' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\xampp\\htdocs\\ois-master/../public_html',
+        'root' => 'C:\\xampp\\htdocs\\ois-master\\public',
       ),
       'public' => 
       array (
@@ -462,16 +462,16 @@
   'mail' => 
   array (
     'driver' => 'smtp',
-    'host' => 'smtp.mailgun.org',
-    'port' => 587,
+    'host' => 'dedicated03.ccsi-oims.net',
+    'port' => '465',
     'from' => 
     array (
       'address' => NULL,
       'name' => NULL,
     ),
-    'encryption' => 'tls',
-    'username' => NULL,
-    'password' => NULL,
+    'encryption' => 'ssl',
+    'username' => 'notification@ccsi-oims.net',
+    'password' => 'w=Rqc=dv#yF,',
     'sendmail' => '/usr/sbin/sendmail -bs',
   ),
   'queue' => 
@@ -623,13 +623,13 @@
       'enable_html5_parser' => false,
     ),
   ),
-  'image' => 
-  array (
-    'driver' => 'gd',
-  ),
   'report-generator' => 
   array (
     'flush' => false,
+  ),
+  'image' => 
+  array (
+    'driver' => 'gd',
   ),
   'excel' => 
   array (
@@ -888,16 +888,6 @@
           ),
         ),
       ),
-    ),
-  ),
-  'tinker' => 
-  array (
-    'commands' => 
-    array (
-    ),
-    'dont_alias' => 
-    array (
-      0 => 'App\\Nova',
     ),
   ),
 );
