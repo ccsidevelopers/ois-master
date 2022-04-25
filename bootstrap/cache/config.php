@@ -3,12 +3,12 @@
   array (
     'name' => 'ois',
     'env' => 'local',
-    'debug' => true,
+    'debug' => false,
     'url' => 'http://localhost',
     'timezone' => 'Asia/Manila',
     'locale' => 'en',
     'fallback_locale' => 'en',
-    'key' => 'base64:xvTrVRGIF735sCbRH25N9mlq79p30poYgyeYiQoONeo=',
+    'key' => NULL,
     'cipher' => 'AES-256-CBC',
     'log' => 'single',
     'providers' => 
@@ -130,7 +130,7 @@
   ),
   'broadcasting' => 
   array (
-    'default' => 'pusher',
+    'default' => 'null',
     'options' => 
     array (
       'cluster' => 'ap1',
@@ -141,9 +141,9 @@
       'pusher' => 
       array (
         'driver' => 'pusher',
-        'key' => 'a6dbe65ac4fdaf766126',
-        'secret' => 'cbcb26db3a921c81c480',
-        'app_id' => '816085',
+        'key' => NULL,
+        'secret' => NULL,
+        'app_id' => NULL,
         'options' => 
         array (
           'cluster' => 'ap1',
@@ -163,7 +163,7 @@
   ),
   'cache' => 
   array (
-    'default' => 'array',
+    'default' => 'file',
     'stores' => 
     array (
       'apc' => 
@@ -183,7 +183,7 @@
       'file' => 
       array (
         'driver' => 'file',
-        'path' => 'C:\\xampp\\htdocs\\ois-dev-github\\storage\\framework/cache',
+        'path' => 'C:\\xampp\\htdocs\\ois-master\\storage\\framework/cache',
       ),
       'memcached' => 
       array (
@@ -225,16 +225,16 @@
       'sqlite' => 
       array (
         'driver' => 'sqlite',
-        'database' => 'ois_github_db',
+        'database' => 'C:\\xampp\\htdocs\\ois-master\\database\\database.sqlite',
         'prefix' => '',
       ),
       'mysql' => 
       array (
         'driver' => 'mysql',
-        'host' => '127.0.0.1',
+        'host' => 'localhost',
         'port' => '3306',
-        'database' => 'ois_github_db',
-        'username' => 'root',
+        'database' => 'forge',
+        'username' => 'forge',
         'password' => '',
         'charset' => 'utf8',
         'collation' => 'utf8_unicode_ci',
@@ -245,10 +245,10 @@
       'pgsql' => 
       array (
         'driver' => 'pgsql',
-        'host' => '127.0.0.1',
-        'port' => '3306',
-        'database' => 'ois_github_db',
-        'username' => 'root',
+        'host' => 'localhost',
+        'port' => '5432',
+        'database' => 'forge',
+        'username' => 'forge',
         'password' => '',
         'charset' => 'utf8',
         'prefix' => '',
@@ -261,9 +261,9 @@
       'cluster' => false,
       'default' => 
       array (
-        'host' => '127.0.0.1',
+        'host' => 'localhost',
         'password' => NULL,
-        'port' => '6379',
+        'port' => 6379,
         'database' => 0,
       ),
     ),
@@ -360,12 +360,12 @@
       'local' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\xampp\\htdocs\\ois-dev-github/../public_html',
+        'root' => 'C:\\xampp\\htdocs\\ois-master/../public_html',
       ),
       'public' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\xampp\\htdocs\\ois-dev-github\\storage\\app/public',
+        'root' => 'C:\\xampp\\htdocs\\ois-master\\storage\\app/public',
         'visibility' => 'public',
       ),
       's3' => 
@@ -420,13 +420,13 @@
       'single' => 
       array (
         'driver' => 'single',
-        'path' => 'C:\\xampp\\htdocs\\ois-dev-github\\storage\\logs/laravel.log',
+        'path' => 'C:\\xampp\\htdocs\\ois-master\\storage\\logs/laravel.log',
         'level' => 'debug',
       ),
       'daily' => 
       array (
         'driver' => 'daily',
-        'path' => 'C:\\xampp\\htdocs\\ois-dev-github\\storage\\logs/laravel.log',
+        'path' => 'C:\\xampp\\htdocs\\ois-master\\storage\\logs/laravel.log',
         'level' => 'debug',
         'days' => 7,
       ),
@@ -462,16 +462,16 @@
   'mail' => 
   array (
     'driver' => 'smtp',
-    'host' => 'dedicated03.ccsi-oims.net',
-    'port' => '465',
+    'host' => 'smtp.mailgun.org',
+    'port' => 587,
     'from' => 
     array (
       'address' => NULL,
       'name' => NULL,
     ),
-    'encryption' => 'ssl',
-    'username' => 'notification@ccsi-oims.net',
-    'password' => 'w=Rqc=dv#yF,',
+    'encryption' => 'tls',
+    'username' => NULL,
+    'password' => NULL,
     'sendmail' => '/usr/sbin/sendmail -bs',
   ),
   'queue' => 
@@ -550,7 +550,7 @@
     'lifetime' => 600,
     'expire_on_close' => false,
     'encrypt' => false,
-    'files' => 'C:\\xampp\\htdocs\\ois-dev-github\\storage\\framework/sessions',
+    'files' => 'C:\\xampp\\htdocs\\ois-master\\storage\\framework/sessions',
     'connection' => NULL,
     'table' => 'sessions',
     'lottery' => 
@@ -595,9 +595,9 @@
   array (
     'paths' => 
     array (
-      0 => 'C:\\xampp\\htdocs\\ois-dev-github\\resources\\views',
+      0 => 'C:\\xampp\\htdocs\\ois-master\\resources\\views',
     ),
-    'compiled' => 'C:\\xampp\\htdocs\\ois-dev-github\\storage\\framework\\views',
+    'compiled' => 'C:\\xampp\\htdocs\\ois-master\\storage\\framework\\views',
     'cache' => false,
   ),
   'dompdf' => 
@@ -606,10 +606,10 @@
     'orientation' => 'portrait',
     'defines' => 
     array (
-      'font_dir' => 'C:\\xampp\\htdocs\\ois-dev-github\\storage\\fonts/',
-      'font_cache' => 'C:\\xampp\\htdocs\\ois-dev-github\\storage\\fonts/',
-      'temp_dir' => 'C:\\Users\\chano\\AppData\\Local\\Temp',
-      'chroot' => 'C:\\xampp\\htdocs\\ois-dev-github',
+      'font_dir' => 'C:\\xampp\\htdocs\\ois-master\\storage\\fonts/',
+      'font_cache' => 'C:\\xampp\\htdocs\\ois-master\\storage\\fonts/',
+      'temp_dir' => 'C:\\Users\\CHRIST~1\\AppData\\Local\\Temp',
+      'chroot' => 'C:\\xampp\\htdocs\\ois-master',
       'enable_font_subsetting' => false,
       'pdf_backend' => 'CPDF',
       'default_media_type' => 'screen',
@@ -647,7 +647,7 @@
         'host' => 'localhost',
         'port' => 11211,
       ),
-      'dir' => 'C:\\xampp\\htdocs\\ois-dev-github\\storage\\cache',
+      'dir' => 'C:\\xampp\\htdocs\\ois-master\\storage\\cache',
     ),
     'properties' => 
     array (
@@ -713,7 +713,7 @@
       ),
       'store' => 
       array (
-        'path' => 'C:\\xampp\\htdocs\\ois-dev-github\\storage\\exports',
+        'path' => 'C:\\xampp\\htdocs\\ois-master\\storage\\exports',
         'returnInfo' => false,
       ),
       'pdf' => 
@@ -723,15 +723,15 @@
         array (
           'DomPDF' => 
           array (
-            'path' => 'C:\\xampp\\htdocs\\ois-dev-github\\vendor/dompdf/dompdf/',
+            'path' => 'C:\\xampp\\htdocs\\ois-master\\vendor/dompdf/dompdf/',
           ),
           'tcPDF' => 
           array (
-            'path' => 'C:\\xampp\\htdocs\\ois-dev-github\\vendor/tecnick.com/tcpdf/',
+            'path' => 'C:\\xampp\\htdocs\\ois-master\\vendor/tecnick.com/tcpdf/',
           ),
           'mPDF' => 
           array (
-            'path' => 'C:\\xampp\\htdocs\\ois-dev-github\\vendor/mpdf/mpdf/',
+            'path' => 'C:\\xampp\\htdocs\\ois-master\\vendor/mpdf/mpdf/',
           ),
         ),
       ),
