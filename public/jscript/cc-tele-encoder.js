@@ -264,6 +264,8 @@ $.ajax
             $('#tele-acc-stat').change();
             $('#contactedSelect').hide();
             $('#uncontactedSelect').hide();
+            $('#verified_acomSelect').hide();
+            $('#unverified_acomSelect').hide();
             console.log(accID);
 
             $('#modal-upload-attach-file').modal('show');
@@ -811,6 +813,8 @@ $('#btnSendtoSao').click(function()
     var contacted_details = $('#contacted-details').val();
     var un_contacted_details = $('#un-contacted-details').val();
     var check_tick = '';
+    var verified_acom =$('#verified-acom-details').val();
+    var unverified_acom =$('#unverified-acom-details').val();
 
     var formData = new FormData();
 
@@ -829,6 +833,16 @@ $('#btnSendtoSao').click(function()
     {
         formData.append('contacted_details', un_contacted_details);
         check_tick = un_contacted_details;
+    }
+    else if(veriStat == 'Verified')
+    {
+        formData.append('contacted_details', verified_acom);
+        check_tick = verified_acom;
+    }
+    else if(veriStat == 'Unverified')
+    {
+        formData.append('contacted_details', unverified_acom);
+        check_tick = unverified_acom;
     }
     else
     {
@@ -1112,6 +1126,14 @@ function getGeneralsearch()
                                 if(data.status_report == 'Contacted')
                                 {
                                     return '<a class="btn btn-xs btn-info btn-block" disabled><i class="fa fa-fw fa-check-square"></i> '+data.status_report+'</a>';
+                                }
+                                else if(data.status_report == 'Verified')
+                                {
+                                    return '<a class="btn btn-xs btn-success btn-block" disabled><i class="fa fa-fw fa-check-square"></i> '+data.status_report+'</a>';
+                                }
+                                else if(data.status_report == 'Unverified')
+                                {
+                                    return '<a class="btn btn-xs btn-warning btn-block" disabled><i class="fa fa-fw fa-check-square"></i> '+data.status_report+'</a>';
                                 }
                                 else
                                 {
@@ -6302,18 +6324,38 @@ $('#tele-acc-stat').change(function()
     {
         $('#contactedSelect').show();
         $('#uncontactedSelect').hide();
+        $('#verified_acomSelect').hide();
+        $('#unverified_acomSelect').hide();
 
     }
     else if ($(this).find(':selected').val() == 'Uncontacted')
     {
         $('#contactedSelect').hide();
         $('#uncontactedSelect').show();
+        $('#verified_acomSelect').hide();
+        $('#unverified_acomSelect').hide();
 
+    }
+    else if ($(this).find(':selected').val() == 'Verified')
+    {
+        $('#contactedSelect').hide();
+        $('#uncontactedSelect').hide();
+        $('#verified_acomSelect').show();
+        $('#unverified_acomSelect').hide();
+    }
+    else if ($(this).find(':selected').val() == 'Unverified')
+    {
+        $('#contactedSelect').hide();
+        $('#uncontactedSelect').hide();
+        $('#verified_acomSelect').hide();
+        $('#unverified_acomSelect').show();
     }
     else
     {
         $('#contactedSelect').hide();
         $('#uncontactedSelect').hide();
+        $('#verified_acomSelect').hide();
+        $('#unverified_acomSelect').hide();
     }
 });
 

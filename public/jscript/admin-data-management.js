@@ -8231,9 +8231,13 @@ $('#admin-staff-assets-table, #admin-staff-availability-table').on('click', '.vi
     var eqid = atob($(this).attr('id'));
     var eqbarcode = atob($(this).attr('name'));
     $('#item_update_status').attr('name', $(this).attr('id'));
+    $('#update_item_desc').attr('name',$(this).attr('id'));
     $('#update_item_div').show();
+    $('#update_desc_item').show();
     $('#latest_pic').html('');
     $('#item-overlay').show();
+    $('#item_update_desc').parent().removeClass('has-error');
+    $('#item_update_desc_alert').hide();
 
     $.ajax({
         type : 'get',
@@ -8305,6 +8309,49 @@ $('#admin-staff-assets-table, #admin-staff-availability-table').on('click', '.vi
             $('#item-overlay').hide();
         }
     });
+});
+
+$('#update_item_desc').click(function(){
+var btn =$(this);
+var item_id = atob($(this).attr('name'));
+var validation = false;
+var new_item_desc = $('#item_update_desc').val();
+
+    $('.update_desc_text').each(function(){
+        if($(this).val() == ''){
+            $(this).parent().addClass('has-error');
+            validation = false;
+            $('#item_update_desc_alert').hide();
+            return false;
+        }
+        else
+        {
+            validation = true;
+            $(this).parent().removeClass('has-error').addClass('has-success');
+        }
+    });
+
+        if(validation){
+            btn.attr('disabled', true);
+            $.ajax({
+                type:'get',
+                url:'admin_staff_update_item_description',
+                data:{
+                    'id':item_id,
+                    'item_desc':new_item_desc
+                },
+                success: function (data) {
+                    console.log(data);
+                },
+                complete: function () {
+                    btn.attr('disabled', false);
+                    $('.update_desc_text').parent().removeClass('has-error has-success')
+                    $('#item_update_desc').val('');
+                    $('#item_update_desc_alert').show();
+                }
+            })
+
+        }
 });
 
 $('#item_update_status').click(function()

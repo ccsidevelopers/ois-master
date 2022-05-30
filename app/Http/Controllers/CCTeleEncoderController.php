@@ -359,6 +359,24 @@ class CCTeleEncoderController extends Controller
                     'verify_tele_status_details' => $request->contacted_details
                 ]);
         }
+        else if($request->stat == 'Verified')
+        {
+            DB::table('bi_endorsements')
+                ->where('id', $id)
+                ->update
+                ([
+                    'verify_tele_status_details' => $request->contacted_details
+                ]);
+        }
+        else if($request->stat == 'Unverified')
+        {
+            DB::table('bi_endorsements')
+                ->where('id', $id)
+                ->update
+                ([
+                    'verify_tele_status_details' => $request->contacted_details
+                ]);
+        }
 
         if($file != null || $file != '')
         {
@@ -376,7 +394,7 @@ class CCTeleEncoderController extends Controller
         {
             return 'already';
         }
-        else if(($data[0]->status == 2 && $request->stat == 'Complete') || ($data[0]->status == 2 && $request->stat == 'Contacted'))
+        else if(($data[0]->status == 2 && $request->stat == 'Complete') || ($data[0]->status == 2 && $request->stat == 'Contacted') || ($data[0]->status == 2 && $request->stat == 'Verified') || ($data[0]->status == 2 && $request->stat == 'Unverified'))
         {
             if($file != null)
             {
@@ -1010,6 +1028,16 @@ class CCTeleEncoderController extends Controller
                         {
                             return '<a class="btn btn-xs btn-success btn-block" data-toggle="modal" data-target="" disabled><i class="glyphicon glyphicon-ok"></i> '.$get_finished->rep_stat.'</a>' .  $additive_haha;
                         }
+
+                        else if($get_finished->rep_stat == 'Verified')
+                        {
+                            return '<a class="btn btn-xs btn-success btn-block" data-toggle="modal" data-target="" disabled><i class="glyphicon glyphicon-ok"></i> '.$get_finished->rep_stat.'</a>' .  $additive_haha;
+                        }
+                        else if($get_finished->rep_stat == 'Unverified')
+                        {
+                            return '<a class="btn btn-xs btn-danger btn-block" data-toggle="modal" data-target="" disabled><i class="glyphicon glyphicon-ok"></i> '.$get_finished->rep_stat.'</a>' .  $additive_haha;
+                        }
+
                         else
                         {
                             return '<a class="btn btn-xs btn-warning btn-block" data-toggle="modal" data-target="" disabled><i class="fa fa-fw fa-spinner"></i> '.$get_finished->rep_stat.'</a>' .  $additive_haha;

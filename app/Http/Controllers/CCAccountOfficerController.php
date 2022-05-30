@@ -627,6 +627,17 @@ class CCAccountOfficerController extends Controller
                             return
                                 '<a class="btn btn-xs btn-info btn-block" disabled><i class="fa fa-fw fa-check-square"></i> '.$query->status_report.'</a>' . $statusTat;
                         }
+                        else if($query->status_report == 'Verified')
+                        {
+                            return
+                                '<a class="btn btn-xs btn-success btn-block" disabled><i class="fa fa-fw fa-check-square"></i> '.$query->status_report.'</a>' . $statusTat;
+                        }
+                        else if($query->status_report == 'Unverified')
+                        {
+                            return
+                                '<a class="btn btn-xs btn-warning btn-block" disabled><i class="fa fa-fw fa-check-square"></i> '.$query->status_report.'</a>' . $statusTat;
+                        }
+                        
                         else
                         {
                             return '<a class="btn btn-xs btn-warning btn-block" disabled><i class="fa fa-fw fa-spinner"></i> '.$query->status_report.' </a>' . $statusTat;

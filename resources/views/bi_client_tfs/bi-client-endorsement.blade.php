@@ -582,7 +582,7 @@ class="form-control" id="acct_nationality">--}}
                                                          title="Input Party # and Contract #. Optional">
                                                         <div class="row">
                                                             <div class="col-md-4" hidden>
-                                                                <label for="">Party #:<small style="color: orange">(Optional field)</small></label>
+                                                                <label for="">Dealer name/Party#:<small style="color: orange">(Optional field)</small></label>
                                                                 <input type="text" class=""
                                                                        id="party_num">
                                                             </div>
@@ -914,7 +914,7 @@ class="form-control" id="acct_nationality">--}}
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-success pull-right" id="ack_encoded">Submit</button>
-                        <button type="button" class="btn btn-default pull-left" data- dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-default pull-left" Requestor Information
                     </div>
                 </div>
             </div>

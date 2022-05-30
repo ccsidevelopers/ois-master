@@ -5057,6 +5057,11 @@ class GeneralController extends Controller
              ]);
         $email->adminReceive_ar_notify($request->id);
     }
+
+    // public function test_mailer(){
+    //     $email = new EmailQueries();
+    //     $email->test_mailer_route();
+    // }
     
     public function get_user_archipelago(Request $request)
     {

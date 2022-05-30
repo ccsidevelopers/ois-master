@@ -1117,6 +1117,30 @@ function cc_table_finished()
                                 return '<p style="font-style: italic">'+data.contact_details+'</p>';
                             }
                         }
+                        else if(data.tele_stat == 'Verified')
+                        {
+
+                            if(data.contact_details == null || data.contact_details == '')
+                            {
+                                return 'N/A';
+                            }
+                            else
+                            {
+                                return '<p style="font-style: italic">'+data.contact_details+'</p>';
+                            }
+                        }
+                        else if(data.tele_stat == 'Unverified')
+                        {
+
+                            if(data.contact_details == null || data.contact_details == '')
+                            {
+                                return 'N/A';
+                            }
+                            else
+                            {
+                                return '<p style="font-style: italic">'+data.contact_details+'</p>';
+                            }
+                        }
                         else
                         {
                             return 'N/A';
@@ -2311,6 +2335,30 @@ function teleSuccess()
                             }
                         }
                         else if(data.tele_stat == 'Uncontacted')
+                        {
+
+                            if(data.contact_details == null || data.contact_details == '')
+                            {
+                                return 'N/A';
+                            }
+                            else
+                            {
+                                return '<p style="font-style: italic">'+data.contact_details+'</p>';
+                            }
+                        }
+                        else if(data.tele_stat == 'Verified')
+                        {
+
+                            if(data.contact_details == null || data.contact_details == '')
+                            {
+                                return 'N/A';
+                            }
+                            else
+                            {
+                                return '<p style="font-style: italic">'+data.contact_details+'</p>';
+                            }
+                        }
+                        else if(data.tele_stat == 'Unverified')
                         {
 
                             if(data.contact_details == null || data.contact_details == '')

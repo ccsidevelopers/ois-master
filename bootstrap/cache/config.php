@@ -3,7 +3,7 @@
   array (
     'name' => 'ois',
     'env' => 'local',
-    'debug' => false,
+    'debug' => true,
     'url' => 'http://localhost',
     'timezone' => 'Asia/Manila',
     'locale' => 'en',

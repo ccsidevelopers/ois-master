@@ -991,6 +991,13 @@ Route::get('/acknowledge-form-status',
         'as' => 'acknowledge-form-status',
         'role' => 'General'
     ]);
+
+    // Route::get('/test_mailer',
+    // [
+    //     'uses' => 'GeneralController@test_mailer',
+    //     'as' => 'test_mailer',
+    //     'role' => 'General'
+    // ]);
     
 Route::get('get_management_saveTime',
     [
@@ -5798,6 +5805,13 @@ Route::get('admin_get_all_latest_item_pic',
         'role' => 'Admin Staff'
     ]);
 
+Route::get('admin_staff_update_item_description',
+    [
+        'uses' => 'AdminStaffController@admin_staff_update_item_description',
+        'as' => 'admin_staff_update_item_description',
+        'role' => 'Admin Staff'
+    ]);
+
 Route::post('admin_staff_update_item_status',
     [
         'uses' => 'AdminStaffController@admin_staff_update_item_status',
@@ -10115,6 +10129,23 @@ Route::get('get_user_attendance',function(Request $request) {
     }
 
 });
+
+Route::get('check_sms_status', function()
+{
+    $smsCheck = new \App\Generals\SmsNotification();
+    $iTexmoResult = json_decode($smsCheck->CheckSMSStatus());
+
+    return response()->json($iTexmoResult->result);
+});
+
+
+Route::get('check_sms_credits', function()
+{
+    $smsCheck = new \App\Generals\SmsNotification();
+    $iTexmoResult = json_decode($smsCheck->CheckSMSCredits());
+
+    return response()->json($iTexmoResult);
+ });
 
 Route::get('bi_add_checking_route', function()
 {

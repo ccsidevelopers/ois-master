@@ -594,7 +594,7 @@ class="form-control" id="acct_nationality">--}}
                                                          title="Input Party # and Contract #. Optional">
                                                         <div class="row">
                                                             <div class="col-md-4">
-                                                                <label for="">Party #:<small style="color: orange">(Optional field)</small></label>
+                                                                <label for="">Dealer name/Party #:<small style="color: orange">(Optional field)</small></label>
                                                                 <input type="text" class=""
                                                                        id="party_num">
                                                             </div>
@@ -866,8 +866,7 @@ class="form-control" id="acct_nationality">--}}
                         <p style="text-align: center">Successfully endorsed. Thank you!</p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-outline pull-right" data-
-                                dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-outline pull-right" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>

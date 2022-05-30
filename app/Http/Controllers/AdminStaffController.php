@@ -2205,6 +2205,24 @@ AdminStaffController extends Controller
         return response()->json([$request->id, $file_name_array, $item]);
     }
 
+    public function admin_staff_update_item_description (Request $request){
+        
+        DB::table('equipments')
+        ->where('id', $request->id)
+        ->update([
+            'item_description' => $request->item_desc,
+            'created_at' => Carbon::now('Asia/Manila')
+        ]);
+
+        DB::table('assign_logs')
+        ->insert([
+            'equipment_id' => $request->id,
+            'user_id' => Auth::user()->id,
+            'activities' => Auth::user()->name . ' updated the item description',
+            'created_at' => Carbon::now('Asia/Manila')
+        ]);
+    }
+
     public function admin_staff_update_item_status(Request $request)
     {
         $trims = new ScriptTrimmer();

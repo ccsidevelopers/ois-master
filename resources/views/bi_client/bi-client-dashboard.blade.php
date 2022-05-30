@@ -122,9 +122,9 @@
                                                 <thead>
                                                 <tr>
                                                     <th>ID</th>
-                                                    <th>Party #</th>
-                                                    <th>Contract #</th>
                                                     <th>SITE</th>
+                                                    <th>Dealer name/Party #</th>
+                                                    <th>Contract #</th>
                                                     <th>TYPE OF REQUEST</th>
                                                     <th>DATE/TIME ENDORSED</th>
                                                     <th>PROJECT/ACCOUNT</th>
@@ -141,9 +141,9 @@
                                                 <tfoot>
                                                 <tr>
                                                     <th>ID</th>
-                                                    <th>Party #</th>
-                                                    <th>Contract #</th>
                                                     <th>SITE</th>
+                                                    <th>Dealer name/Party #</th>
+                                                    <th>Contract #</th>
                                                     <th>TYPE OF REQUEST</th>
                                                     <th>DATE/TIME ENDORSED</th>
                                                     <th>PROJECT/ACCOUNT</th>
@@ -171,6 +171,8 @@
                                                 <tr>
                                                     <th>ID</th>
                                                     <th>SITE</th>
+                                                    <th>Dealer name/party#</th>
+                                                    <th>Contract #</th>
                                                     <th>TYPE OF REQUEST</th>
                                                     <th>DATE/TIME ENDORSED</th>
                                                     <th>PROJECT/ACCOUNT</th>
@@ -187,6 +189,8 @@
                                                 <tr>
                                                     <th>ID</th>
                                                     <th>SITE</th>
+                                                    <th>Dealer name/party#</th>
+                                                    <th>Contract #</th>
                                                     <th>TYPE OF REQUEST</th>
                                                     <th>DATE/TIME ENDORSED</th>
                                                     <th>PROJECT/ACCOUNT</th>
@@ -243,6 +247,8 @@
                                                 <tr>
                                                     <th>ID</th>
                                                     <th>SITE</th>
+                                                    <th>Dealer name/party #</th>
+                                                    <th>Contract #</th>
                                                     <th>TYPE OF REQUEST</th>
                                                     <th>DATE/TIME ENDORSED</th>
                                                     <th>PROJECT/ACCOUNT</th>
@@ -261,6 +267,8 @@
                                                 <tr>
                                                     <th>ID</th>
                                                     <th>SITE</th>
+                                                    <th>Dealer name/party #</th>
+                                                    <th>Contract #</th>
                                                     <th>TYPE OF REQUEST</th>
                                                     <th>DATE/TIME ENDORSED</th>
                                                     <th>PROJECT/ACCOUNT</th>
@@ -294,6 +302,8 @@
                                                 <tr>
                                                     <th>ID</th>
                                                     <th>SITE</th>
+                                                    <th>Dealer name/party #</th>
+                                                    <th>Contract #</th>
                                                     <th>TYPE OF REQUEST</th>
                                                     <th>DATE/TIME ENDORSED</th>
                                                     <th>PROJECT/ACCOUNT</th>
@@ -310,6 +320,8 @@
                                                 <tr>
                                                     <th>ID</th>
                                                     <th>SITE</th>
+                                                    <th>Dealer name/party #</th>
+                                                    <th>Contract #</th>
                                                     <th>TYPE OF REQUEST</th>
                                                     <th>DATE/TIME ENDORSED</th>
                                                     <th>PROJECT/ACCOUNT</th>
@@ -335,6 +347,8 @@
                                             <tr>
                                                 <th>ID</th>
                                                 <th>SITE</th>
+                                                <th>Dealer name/party #</th>
+                                                <th>Contract #</th>
                                                 <th>TYPE OF REQUEST</th>
                                                 <th>DATE/TIME ENDORSED</th>
                                                 <th>PROJECT/ACCOUNT</th>
@@ -349,6 +363,8 @@
                                             <tr>
                                                 <th>ID</th>
                                                 <th>SITE</th>
+                                                <th>Dealer name/party #</th>
+                                                <th>Contract #</th>
                                                 <th>TYPE OF REQUEST</th>
                                                 <th>DATE/TIME ENDORSED</th>
                                                 <th>PROJECT/ACCOUNT</th>

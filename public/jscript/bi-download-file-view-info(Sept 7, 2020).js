@@ -1005,7 +1005,7 @@ $('.tableendorse').each(function () {
                             '                </tr>\n' +
 
                             '                <tr>\n' +
-                            '                  <td style="padding: 3px;"><span class="badge bg-red">PARTY #:</span></td>\n' +
+                            '                  <td style="padding: 3px;"><span class="badge bg-red">Dealer name/PARTY #:</span></td>\n' +
                             '                  <td style="padding: 3px;">'+data[0][0].party_num+'</td>\n' +
                             '                  <td style="padding: 3px;"><span class="badge bg-red">CONTRACT #:</span></td>\n' +
                             '                  <td style="padding: 3px;">'+data[0][0].contract_num+'</td>\n' +
@@ -1078,7 +1078,7 @@ $('.tableendorse').each(function () {
                             '                </tr>\n' +
 
                             '                <tr>\n' +
-                            '                  <td style="padding: 3px;"><span class="badge bg-red">PARTY #:</span></td>\n' +
+                            '                  <td style="padding: 3px;"><span class="badge bg-red">Dealer name/PARTY #:</span></td>\n' +
                             '                  <td style="padding: 3px;">'+data[0][0].party_num+'</td>\n' +
                             '                  <td style="padding: 3px;"><span class="badge bg-red">CONTRACT #:</span></td>\n' +
                             '                  <td style="padding: 3px;">'+data[0][0].contract_num+'</td>\n' +
