@@ -386,10 +386,10 @@ function get_general_table()
             ],
         "columns":
             [
-                {data: 'endorse_id', name: 'bi_endorsements.id'},
-                {data: 'party_num', name: 'bi_endorsements.party_num', visible:false},
-                {data: 'contract_num', name: 'bi_endorsements.contract_num', visible:false},
+                {data: 'endorse_id', name: 'bi_endorsements.id'},  
                 {data: 'site', name: 'bi_endorsements.bi_account_name'},
+                {data: 'party_num', name: 'bi_endorsements.party_num'},
+                {data: 'contract_num', name: 'bi_endorsements.contract_num'},
                 {data: 'tor', name: 'bi_endorsements.type_of_endorsement_bank'},
                 {data: 'date_time_endorsed', name: 'bi_endorsements.created_at'},
                 {data: 'project', name: 'bi_endorsements.project'},
@@ -416,6 +416,36 @@ function get_general_table()
                             {
                                 return '<p style="font-style: italic">'+data.contact_details+'</p>';
                             }
+                            else
+                            {
+                                return '<p style="font-style: italic">'+data.contact_details+'</p>';
+                            }
+                        }
+                        else if(data.tele_stat == 'Verified')
+                        {
+                            if(data.contact_details == null)
+                            {
+                                return 'N/A';
+                            }
+                            else if(data.contact_details == 'Verified')
+                            {
+                                return '<p style="font-style: italic">'+data.contact_details+'</p>';
+                            } 
+                            else
+                            {
+                                return '<p style="font-style: italic">'+data.contact_details+'</p>';
+                            }
+                        }
+                        else if(data.tele_stat == 'Unverified')
+                        {
+                            if(data.contact_details == null)
+                            {
+                                return 'N/A';
+                            }
+                            else if(data.contact_details == 'Unverified')
+                            {
+                                return '<p style="font-style: italic">'+data.contact_details+'</p>';
+                            } 
                             else
                             {
                                 return '<p style="font-style: italic">'+data.contact_details+'</p>';
@@ -596,6 +626,8 @@ function get_pending_table() {
             [
                 {data: 'endorse_id', name: 'bi_endorsements.id'},
                 {data: 'site', name: 'bi_endorsements.bi_account_name'},
+                {data: 'party_num', name: 'bi_endorsements.party_num'},
+                {data: 'dealer_num', name: 'bi_endorsements.dealer_num'},
                 {data: 'tor', name: 'bi_endorsements.type_of_endorsement_bank'},
                 {data: 'date_time_endorsed', name: 'bi_endorsements.created_at'},
                 {data: 'project', name: 'bi_endorsements.project'},
@@ -665,6 +697,7 @@ function get_pending_table() {
             if(what_to_submit =='cc_bank')
             {
                 table_pending.column(1).visible(false);
+                table_pending.column(2).visible(true);
                 table_pending.column(6).visible(false);
                 table_pending.column(7).visible(false);
             }
@@ -755,6 +788,8 @@ function get_return_table() {
             [
                 {data: 'endorse_id', name: 'bi_endorsements.id'},
                 {data: 'site', name: 'bi_endorsements.bi_account_name'},
+                {data: 'party_num', name: 'bi_endorsements.party_num'},
+                {data: 'dealer_num', name: 'bi_endorsements.dealer_num'},
                 {data: 'tor', name: 'bi_endorsements.type_of_endorsement_bank'},
                 {data: 'date_time_endorsed', name: 'bi_endorsements.created_at'},
                 {data: 'project', name: 'bi_endorsements.project'},
@@ -1875,7 +1910,8 @@ $('#btn_bi_submit_endorsement').click(function ()
                         type : 'post',
                         url : 'bi-client-bvr-endorse-submit',
                         data :
-                            {
+                            {   'party_num' : $('#party_num').val(),
+                                'contract_num' : $('#contract_num').val(),
                                 'acct_fname' : $('#acctFNameBVR').val(),
                                 'acct_mname' : $('#acctMNameBVR').val(),
                                 'acct_lname' : $('#acctLNameBVR').val(),
@@ -1964,7 +2000,8 @@ $('#btn_bi_submit_endorsement').click(function ()
                         type : 'post',
                         url : 'bi-client-evr-submit-endorse',
                         data :
-                            {
+                            {   'party_num' : $('#party_num').val(),
+                                'contract_num' : $('#contract_num').val(),
                                 'acct_fname' : $('#acctFNameEVR').val(),
                                 'acct_mname' : $('#acctMNameEVR').val(),
                                 'acct_lname' : $('#acctLNameEVR').val(),
@@ -2211,6 +2248,8 @@ function uploadAttachEndo(form)
 
 function clear(type) {
 
+    $('#party_num').val('');
+    $('#contract_num').val('');
     $('#type_package').val('-');
     $('#type_package').trigger('change');
     // $('#bi_account').val('');
@@ -2624,6 +2663,8 @@ function bi_finish()
             [
                 {data: 'endorse_id', name: 'bi_endorsements.id'},
                 {data: 'site', name: 'bi_endorsements.bi_account_name'},
+                {data: 'party_num', name: 'bi_endorsements.party_num'},
+                {data: 'contract_num', name: 'bi_endorsements.contract_num'},
                 {data: 'tor', name: 'bi_endorsements.type_of_endorsement_bank'},
                 {data: 'date_time_endorsed', name: 'bi_endorsements.created_at'},
                 {data: 'project', name: 'bi_endorsements.project'},
@@ -2643,6 +2684,14 @@ function bi_finish()
                         {
                             return '<a  id="'+data.endorse_id+'" class="btn btn-xs btn-warning btn-block" disabled><i class="fa fa-fw fa-spinner"></i>'+data.status_report+'</a>';
                         }
+                        else if(data.status_report == 'Verified')
+                        {
+                            return '<a  id="'+data.endorse_id+'" class="btn btn-xs btn-success btn-block" disabled><i class="fa fa-fw fa-check-square"></i>'+data.status_report+'</a>';
+                        }
+                        else if(data.status_report == 'Unverified')
+                        {
+                            return '<a  id="'+data.endorse_id+'" class="btn btn-xs btn-danger btn-block" disabled><i class="fa fa-fw fa-check-square"></i>'+data.status_report+'</a>';
+                        }
                     },
                     'name' : 'tat',
                     'searchable' : false,
@@ -2654,6 +2703,28 @@ function bi_finish()
                     data: function contact_details(data)
                     {
                         if(data.tele_stat == 'Contacted')
+                        {
+                            if(data.contact_details == null)
+                            {
+                                return 'N/A';
+                            }
+                            else
+                            {
+                                return data.contact_details;
+                            }
+                        }
+                        else if(data.tele_stat == 'Verified')
+                        {
+                            if(data.contact_details == null)
+                            {
+                                return 'N/A';
+                            }
+                            else
+                            {
+                                return data.contact_details;
+                            }
+                        }
+                        else if(data.tele_stat == 'Unverified')
                         {
                             if(data.contact_details == null)
                             {
@@ -2691,6 +2762,22 @@ function bi_finish()
                                 var act = '<a class="btn_down_report btn btn-xs btn-success btn-block" id="'+data.endorse_id+'"><i class="fa fa-fw fa-download"></i> Download Report File</a>' +
                                     '<a  id="'+data.endorse_id+'" class="btn_view_report_remarks btn btn-xs btn-warning btn-block"><i class="fa fa-fw fa-eye"></i>View Remarks</a>' +
                                     '<a  id="'+data.endorse_id+'" class="btn_return_after btn btn-xs btn-danger btn-block" name="'+data.status1+'"><i class="fa fa-fw fa-repeat"></i> Return for Update</a>' +
+                                    '<a  id="'+data.endorse_id+'" class="btn_view_information_bi btn btn-xs btn-info btn-block" data-toggle="modal" data-target="" ><i class="glyphicon glyphicon-film"></i> View Information</a>' +
+                                    '<span id = "downReport"></span>';
+                            }
+                            else if(data.status_report == 'Verified')
+                            {
+                                var act = '<a class="btn_down_report btn btn-xs btn-success btn-block" id="'+data.endorse_id+'"><i class="fa fa-fw fa-download"></i> Download Report File</a>' +
+                                    '<a  id="'+data.endorse_id+'" class="btn_view_report_remarks btn btn-xs btn-warning btn-block"><i class="fa fa-fw fa-eye"></i>View Remarks</a>' +
+                                    '<a  id="'+data.endorse_id+'" class="btn_return_after btn btn-xs btn-danger btn-block" name="'+data.status1+'"><i class="fa fa-fw fa-repeat"></i> Return</a>' +
+                                    '<a  id="'+data.endorse_id+'" class="btn_view_information_bi btn btn-xs btn-info btn-block" data-toggle="modal" data-target="" ><i class="glyphicon glyphicon-film"></i> View Information</a>' +
+                                    '<span id = "downReport"></span>';
+                            }
+                            else if(data.status_report == 'Unverified')
+                            {
+                                var act = '<a class="btn_down_report btn btn-xs btn-success btn-block" id="'+data.endorse_id+'"><i class="fa fa-fw fa-download"></i> Download Report File</a>' +
+                                    '<a  id="'+data.endorse_id+'" class="btn_view_report_remarks btn btn-xs btn-warning btn-block"><i class="fa fa-fw fa-eye"></i>View Remarks</a>' +
+                                    '<a  id="'+data.endorse_id+'" class="btn_return_after btn btn-xs btn-danger btn-block" name="'+data.status1+'"><i class="fa fa-fw fa-repeat"></i> Return</a>' +
                                     '<a  id="'+data.endorse_id+'" class="btn_view_information_bi btn btn-xs btn-info btn-block" data-toggle="modal" data-target="" ><i class="glyphicon glyphicon-film"></i> View Information</a>' +
                                     '<span id = "downReport"></span>';
                             }
@@ -4528,6 +4615,8 @@ function cancelTable()
             [
                 {data: 'endorse_id', name: 'bi_endorsements.id'},
                 {data: 'site',name: 'bi_endorsements.bi_account_name'},
+                {data: 'party_num', name: 'bi_endorsements.party_num'},
+                {data: 'contract_num', name: 'bi_endorsements.contract_num'},
                 {data: 'tor', name: 'bi_endorsements.type_of_endorsement_bank'},
                 {data: 'date_time_endorsed', name: 'bi_endorsements.created_at'},
                 {data: 'project', name: 'bi_endorsements.project'},

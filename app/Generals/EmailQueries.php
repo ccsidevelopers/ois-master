@@ -3229,4 +3229,18 @@ class EmailQueries
                 ->from('notification@ccsi-oims.net','OIMS NOTIFICATION');
         });
     }
+
+    // public function test_mailer_query($request){
+       
+    //     $data=['test'=>'test lng'];
+
+    //     Mail::send('receive_mailer', $data, function($message1)
+    //     {
+    //         $message1
+    //             ->to('ccsirommel.rinos@gmail.com')
+    //             ->subject('OIMS: TEST Notification');
+    //         $message1
+    //             ->from('notification@ccsi-oims.net','OIMS NOTIFICATION');
+    //     });
+    // }
 }

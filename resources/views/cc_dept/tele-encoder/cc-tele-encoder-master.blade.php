@@ -60,6 +60,8 @@
                                                 <option class = "ccOps"  value="Incomplete">Incomplete</option>
                                                 <option class = "bankOps" value="Contacted">Contacted</option>
                                                 <option class = "bankOps" value="Uncontacted">Uncontacted</option>
+                                                <option class = "bankOps" value="Verified">Verified</option>
+                                                <option class = "bankOps" value="Unverified">Unverified</option>
                                             </select>
                                         </div>
                                     </div>
@@ -87,6 +89,26 @@
                                                 <option value="Contact number was on fast busy tone">Contact  number was on fast busy tone</option>
                                                 <option value="Contact number cannot be completed when dialed">Contact number cannot be completed when dialed</option>
                                                 <option value="Contact number is not in service">Contact number is not in service</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class = "row" style = "padding-top: 20px; padding-bottom : 20px;" hidden id = "verified_acomSelect">
+                                        <div class = "col-md-6">
+                                            <label for="">Verified Details: </label>
+                                            <select class = "form-control" id = "verified-acom-details">
+                                                <option value="-">-</option>
+                                                <option value="Verified">Verified</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class = "row" style = "padding-top: 20px; padding-bottom : 20px;" hidden id = "unverified_acomSelect">
+                                        <div class = "col-md-6">
+                                            <label for="">Verified Details: </label>
+                                            <select class = "form-control" id = "unverified-acom-details">
+                                                <option value="-">-</option>
+                                                <option value="Unverified">Unverified</option>
                                             </select>
                                         </div>
                                     </div>

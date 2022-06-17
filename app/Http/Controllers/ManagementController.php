@@ -1164,6 +1164,14 @@ class ManagementController extends Controller
 //                        return '<a class="btn btn-xs btn-success btn-block" data-toggle="modal" data-target="" disabled><i class="fa fa-fw fa-check-square"></i> Finished</a>'.
                                 return  '<a class="btn btn-xs btn-info btn-block" disabled><i class="fa fa-fw fa-check-square"></i> '.$get_general_table->status_report.' </a>';
                             }
+                            else if($get_general_table->status_report == 'Verified')
+                            {
+                                return  '<a class="btn btn-xs btn-success btn-block" disabled><i class="fa fa-fw fa-check-square"></i> '.$get_general_table->status_report.' </a>';
+                            }
+                            else if($get_general_table->status_report == 'Unverified')
+                            {
+                                return  '<a class="btn btn-xs btn-success btn-block" disabled><i class="fa fa-fw fa-check-square"></i> '.$get_general_table->status_report.' </a>';
+                            }
                             else
                             {
 //                        return '<a class="btn btn-xs btn-success btn-block" data-toggle="modal" data-target="" disabled><i class="fa fa-fw fa-check-square"></i> Finished</a>'.

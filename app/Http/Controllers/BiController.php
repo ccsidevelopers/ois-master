@@ -86,9 +86,9 @@ class BiController extends Controller
                 ->select([
 //            \DB::raw('count(count.bi_endorsement_id) as count'),
                     'bi_endorsements.id as endorse_id',
+                    'bi_endorsements.bi_account_name as site',
                     'bi_endorsements.party_num as party_num',
                     'bi_endorsements.contract_num as contract_num',
-                    'bi_endorsements.bi_account_name as site',
                     'bi_endorsements.created_at as date_time_endorsed',
                     'bi_endorsements.project as project',
                     'bi_endorsements.account_name as account_name',
@@ -132,6 +132,8 @@ class BiController extends Controller
 //            \DB::raw('count(count.bi_endorsement_id) as count'),
                     'bi_endorsements.id as endorse_id',
                     'bi_endorsements.bi_account_name as site',
+                    'bi_endorsements.party_num as party_num',
+                    'bi_endorsements.contract_num as contract_num',
                     'bi_endorsements.created_at as date_time_endorsed',
                     'bi_endorsements.project as project',
                     'bi_endorsements.account_name as account_name',
@@ -343,6 +345,14 @@ class BiController extends Controller
                             {
 //                        return '<a class="btn btn-xs btn-success btn-block" data-toggle="modal" data-target="" disabled><i class="fa fa-fw fa-check-square"></i> Finished</a>'.
                                 return  '<a class="btn btn-xs btn-info btn-block" disabled><i class="fa fa-fw fa-check-square"></i> '.$get_general_table->status_report.' </a>';
+                            }
+                            else if($get_general_table->status_report == 'Verified')
+                            {
+                                return  '<a class="btn btn-xs btn-success btn-block" disabled><i class="fa fa-fw fa-check-square"></i> '.$get_general_table->status_report.' </a>';
+                            }
+                            else if($get_general_table->status_report == 'Unverified')
+                            {
+                                return  '<a class="btn btn-xs btn-warning btn-block" disabled><i class="fa fa-fw fa-check-square"></i> '.$get_general_table->status_report.' </a>';
                             }
                             else
                             {
@@ -569,6 +579,8 @@ class BiController extends Controller
 //            \DB::raw('count(count.bi_endorsement_id) as count'),
                     'bi_endorsements.id as endorse_id',
                     'bi_endorsements.bi_account_name as site',
+                    'bi_endorsements.party_num as party_num',
+                    'bi_endorsements.contract_num as contract_num',
                     'bi_endorsements.created_at as date_time_endorsed',
                     'bi_endorsements.project as project',
                     'bi_endorsements.account_name as account_name',
@@ -606,6 +618,8 @@ class BiController extends Controller
 //            \DB::raw('count(count.bi_endorsement_id) as count'),
                     'bi_endorsements.id as endorse_id',
                     'bi_endorsements.bi_account_name as site',
+                    'bi_endorsements.party_num as party_num',
+                    'bi_endorsements.contract_num as contract_num',
                     'bi_endorsements.created_at as date_time_endorsed',
                     'bi_endorsements.project as project',
                     'bi_endorsements.account_name as account_name',
@@ -858,6 +872,8 @@ class BiController extends Controller
 //            \DB::raw('count(count.bi_endorsement_id) as count'),
                     'bi_endorsements.id as endorse_id',
                     'bi_endorsements.bi_account_name as site',
+                    'bi_endorsements.party_num as party_num',
+                    'bi_endorsements.contract_num as contract_num',
                     'bi_endorsements.created_at as date_time_endorsed',
                     'bi_endorsements.project as project',
                     'bi_endorsements.account_name as account_name',
@@ -895,6 +911,8 @@ class BiController extends Controller
     //            \DB::raw('count(count.bi_endorsement_id) as count'),
                         'bi_endorsements.id as endorse_id',
                         'bi_endorsements.bi_account_name as site',
+                        'bi_endorsements.party_num as party_num',
+                        'bi_endorsements.contract_num as contract_num',
                         'bi_endorsements.created_at as date_time_endorsed',
                         'bi_endorsements.project as project',
                         'bi_endorsements.account_name as account_name',
@@ -1101,6 +1119,8 @@ class BiController extends Controller
                 ([
                     'bi_endorsements.id as endorse_id',
                     'bi_endorsements.bi_account_name as site',
+                    'bi_endorsements.party_num as party_num',
+                    'bi_endorsements.contract_num as contract_num',
                     'bi_endorsements.created_at as date_time_endorsed',
                     'bi_endorsements.project as project',
                     'bi_endorsements.account_name as account_name',
@@ -1142,6 +1162,8 @@ class BiController extends Controller
                 ([
                     'bi_endorsements.id as endorse_id',
                     'bi_endorsements.bi_account_name as site',
+                    'bi_endorsements.party_num as party_num',
+                    'bi_endorsements.contract_num as contract_num',
                     'bi_endorsements.created_at as date_time_endorsed',
                     'bi_endorsements.project as project',
                     'bi_endorsements.account_name as account_name',
@@ -2908,6 +2930,8 @@ class BiController extends Controller
 
                     'bi_endorsements.id as endorse_id',
                     'bi_endorsements.bi_account_name as site',
+                    'bi_endorsements.party_num as party_num',
+                    'bi_endorsements.contract_num as contract_num',
                     'bi_endorsements.created_at as date_time_endorsed',
                     'bi_endorsements.project as project',
                     'bi_endorsements.account_name as account_name',
@@ -2943,6 +2967,8 @@ class BiController extends Controller
 
                     'bi_endorsements.id as endorse_id',
                     'bi_endorsements.bi_account_name as site',
+                    'bi_endorsements.party_num as party_num',
+                    'bi_endorsements.contract_num as contract_num',
                     'bi_endorsements.created_at as date_time_endorsed',
                     'bi_endorsements.project as project',
                     'bi_endorsements.account_name as account_name',

@@ -1488,7 +1488,7 @@ class GeneralController extends Controller
                         'bi_endorsements.loan_type_bank as loan_type_bank',
                         'bi_endorsements.verify_through_bank as verify_through_bank',
                         'bi_endorsements.cc_bank_endorsement_type as cc_bank_endorsement_type',
-                        //chano remarks
+                        //remarks added by chano
                         'bi_endorsements.client_remarks_bank as client_remarks_bank',
                         'bi_endorsements.direct_apply_status as direct_apply'
                     ])
@@ -5057,6 +5057,11 @@ class GeneralController extends Controller
              ]);
         $email->adminReceive_ar_notify($request->id);
     }
+
+    // public function test_mailer(){
+    //     $email = new EmailQueries();
+    //     $email->test_mailer_route();
+    // }
     
     public function get_user_archipelago(Request $request)
     {
