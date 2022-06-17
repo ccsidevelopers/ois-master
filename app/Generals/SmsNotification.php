@@ -174,4 +174,22 @@ class SmsNotification
         }
     }
 
+    public function CheckSMSStatus()
+    {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL,"https://itexmo.com/php_api/serverstatus.php?apicode=PR-COMPR617657_F7ELA");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        return curl_exec ($ch);
+        curl_close ($ch);
+    }
+
+    public function CheckSMSCredits()
+    {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL,"https://www.itexmo.com/php_api/apicode_info.php?apicode=PR-COMPR617657_F7ELA");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        return curl_exec ($ch);
+        curl_close ($ch);
+    }
+
 }
