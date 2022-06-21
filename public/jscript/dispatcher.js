@@ -2377,8 +2377,8 @@ $('#send_message_to_ci').click(function()
                 },
                 success : function(data) {
                     console.log(data);
-                    if(data[1][0] == '0')
-                    {
+                    if(data[0] == 'ok')
+                    {   
                         alert('Message Successfully Sent');
                         $('#dispatcher_mess_to_ci').val('');
                         if(dispatcher_sms_logs_table_bool)

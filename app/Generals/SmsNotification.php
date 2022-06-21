@@ -29,11 +29,20 @@ class SmsNotification
 //        return file_get_contents($url, false, $context);
 
         $ch = curl_init();
-        $itexmo = array('1' => $number, '2' => $message, '3' => $apicode);
-        curl_setopt($ch, CURLOPT_URL,"https://www.itexmo.com/php_api/api.php");
+        $payload = [
+            'Email' => 'oims.notifications@gmail.com',
+            'Password' => 'JXGt6v5rpsQ3R5@',
+            'Recipients' => [$number],
+            'Message' => $message,
+            'ApiCode' => 'PR-COMPR617657_F7ELA',
+            'SenderId' =>'CCSI OIMS'
+        ];
+
+        // $itexmo = array('1' => $number, '2' => $message, '3' => $apicode);
+        curl_setopt($ch, CURLOPT_URL,"https://api.itexmo.com/api/broadcast");
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS,
-            http_build_query($itexmo));
+            http_build_query($payload));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         return curl_exec ($ch);
         curl_close ($ch);
@@ -114,11 +123,20 @@ class SmsNotification
             }
 
             $ch = curl_init();
-            $itexmo = array('1' => $num, '2' => $message, '3' => 'PR-COMPR617657_F7ELA');
-            curl_setopt($ch, CURLOPT_URL,"https://www.itexmo.com/php_api/api.php");
+            $payload = [
+                'Email' => 'oims.notifications@gmail.com',
+                'Password' => 'JXGt6v5rpsQ3R5@',
+                'Recipients' => [$num],
+                'Message' => $message,
+                'ApiCode' => 'PR-COMPR617657_F7ELA',
+                'SenderId' =>'CCSI OIMS'
+            ];
+
+            // $itexmo = array('1' => $num, '2' => $message, '3' => 'PR-COMPR617657_F7ELA');
+            curl_setopt($ch, CURLOPT_URL,"https://api.itexmo.com/api/broadcast");
             curl_setopt($ch, CURLOPT_POST, 1);
             curl_setopt($ch, CURLOPT_POSTFIELDS,
-                http_build_query($itexmo));
+                http_build_query($payload));
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             return curl_exec ($ch);
             curl_close ($ch);
@@ -128,14 +146,23 @@ class SmsNotification
     public function DispatcherSendMessageToCI($request, $messageToCi)
     {
         $ch = curl_init();
-        $itexmo = array('1' => $request->contact_number, '2' => $messageToCi, '3' => 'PR-COMPR617657_F7ELA');
-        curl_setopt($ch, CURLOPT_URL,"https://www.itexmo.com/php_api/api.php");
+        $payload = [
+            'Email' => 'oims.notifications@gmail.com',
+            'Password' => 'JXGt6v5rpsQ3R5@',
+            'Recipients' => [$request->contact_number],
+            'Message' => $messageToCi,
+            'ApiCode' => 'PR-COMPR617657_F7ELA',
+            'SenderId' =>'CCSI OIMS'
+        ];
+        // $itexmo = array('1' => $request->contact_number, '2' => $messageToCi, '3' => 'PR-COMPR617657_F7ELA');
+        curl_setopt($ch, CURLOPT_URL,"https://api.itexmo.com/api/broadcast");
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS,
-            http_build_query($itexmo));
+        http_build_query($payload));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        return curl_exec ($ch);
+        $result =  curl_exec ($ch);
         curl_close ($ch);
+        return json_decode($result);
     }
 
     public function AuditFinanceNotifToCI($request, $remarks, $fund_requested)
@@ -163,15 +190,42 @@ class SmsNotification
             "SENDER: " . Auth::user()->roles->first()->name;
 
             $ch = curl_init();
-            $itexmo = array('1' => $getciNum[0]->contact_number, '2' => $message, '3' => 'PR-COMPR617657_F7ELA');
-            curl_setopt($ch, CURLOPT_URL,"https://www.itexmo.com/php_api/api.php");
+            $payload = [
+                'Email' => 'oims.notifications@gmail.com',
+                'Password' => 'JXGt6v5rpsQ3R5@',
+                'Recipients' => [$getciNum[0]->contact_number],
+                'Message' => $message,
+                'ApiCode' => 'PR-COMPR617657_F7ELA',
+                'SenderId' =>'CCSI OIMS'
+            ];
+            // $itexmo = array('1' => $getciNum[0]->contact_number, '2' => $message, '3' => 'PR-COMPR617657_F7ELA');
+            // curl_setopt($ch, CURLOPT_URL,"https://www.itexmo.com/php_api/api.php");
+            curl_setopt($ch, CURLOPT_URL,"https://api.itexmo.com/api/broadcast");
             curl_setopt($ch, CURLOPT_POST, 1);
             curl_setopt($ch, CURLOPT_POSTFIELDS,
-                http_build_query($itexmo));
+                http_build_query($payload));
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             return curl_exec ($ch);
             curl_close ($ch);
         }
+    }
+
+    public function CheckSMSStatus()
+    {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL,"https://itexmo.com/php_api/serverstatus.php?apicode=PR-COMPR617657_F7ELA");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        return curl_exec ($ch);
+        curl_close ($ch);
+    }
+
+    public function CheckSMSCredits()
+    {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL,"https://www.itexmo.com/php_api/apicode_info.php?apicode=PR-COMPR617657_F7ELA");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        return curl_exec ($ch);
+        curl_close ($ch);
     }
 
 }
