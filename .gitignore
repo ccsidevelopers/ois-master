@@ -6,5 +6,6 @@ Homestead.json
 .env
 .idea/
 storage/*
+/storage
 bootstrap/*
 clear-cache.bat
