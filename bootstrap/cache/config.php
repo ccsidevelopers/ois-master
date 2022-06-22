@@ -8,7 +8,7 @@
     'timezone' => 'Asia/Manila',
     'locale' => 'en',
     'fallback_locale' => 'en',
-    'key' => 'base64:U9Z1/3s78RwbaBk/2aNIWKe8MDhd9wQ52yEpbEcq208=',
+    'key' => 'base64:EURs6pHHLrcE9ldBV8grL04/jGdvVpyEYNN5axy5Qx0=',
     'cipher' => 'AES-256-CBC',
     'log' => 'single',
     'providers' => 
@@ -183,7 +183,7 @@
       'file' => 
       array (
         'driver' => 'file',
-        'path' => 'C:\\xampp\\htdocs\\ois-local\\storage\\framework/cache',
+        'path' => 'C:\\xampp\\htdocs\\ois-master\\storage\\framework/cache',
       ),
       'memcached' => 
       array (
@@ -225,7 +225,7 @@
       'sqlite' => 
       array (
         'driver' => 'sqlite',
-        'database' => 'ois',
+        'database' => 'ois_master_db',
         'prefix' => '',
       ),
       'mysql' => 
@@ -233,7 +233,7 @@
         'driver' => 'mysql',
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'ois',
+        'database' => 'ois_master_db',
         'username' => 'root',
         'password' => '',
         'charset' => 'utf8',
@@ -247,7 +247,7 @@
         'driver' => 'pgsql',
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'ois',
+        'database' => 'ois_master_db',
         'username' => 'root',
         'password' => '',
         'charset' => 'utf8',
@@ -360,12 +360,12 @@
       'local' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\xampp\\htdocs\\ois-local/../public_html',
+        'root' => 'C:\\xampp\\htdocs\\ois-master/../public_html',
       ),
       'public' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\xampp\\htdocs\\ois-local\\storage\\app/public',
+        'root' => 'C:\\xampp\\htdocs\\ois-master\\storage\\app/public',
         'visibility' => 'public',
       ),
       's3' => 
@@ -420,13 +420,13 @@
       'single' => 
       array (
         'driver' => 'single',
-        'path' => 'C:\\xampp\\htdocs\\ois-local\\storage\\logs/laravel.log',
+        'path' => 'C:\\xampp\\htdocs\\ois-master\\storage\\logs/laravel.log',
         'level' => 'debug',
       ),
       'daily' => 
       array (
         'driver' => 'daily',
-        'path' => 'C:\\xampp\\htdocs\\ois-local\\storage\\logs/laravel.log',
+        'path' => 'C:\\xampp\\htdocs\\ois-master\\storage\\logs/laravel.log',
         'level' => 'debug',
         'days' => 7,
       ),
@@ -550,7 +550,7 @@
     'lifetime' => 600,
     'expire_on_close' => false,
     'encrypt' => false,
-    'files' => 'C:\\xampp\\htdocs\\ois-local\\storage\\framework/sessions',
+    'files' => 'C:\\xampp\\htdocs\\ois-master\\storage\\framework/sessions',
     'connection' => NULL,
     'table' => 'sessions',
     'lottery' => 
@@ -595,9 +595,9 @@
   array (
     'paths' => 
     array (
-      0 => 'C:\\xampp\\htdocs\\ois-local\\resources\\views',
+      0 => 'C:\\xampp\\htdocs\\ois-master\\resources\\views',
     ),
-    'compiled' => 'C:\\xampp\\htdocs\\ois-local\\storage\\framework\\views',
+    'compiled' => 'C:\\xampp\\htdocs\\ois-master\\storage\\framework\\views',
     'cache' => false,
   ),
   'dompdf' => 
@@ -606,10 +606,10 @@
     'orientation' => 'portrait',
     'defines' => 
     array (
-      'font_dir' => 'C:\\xampp\\htdocs\\ois-local\\storage\\fonts/',
-      'font_cache' => 'C:\\xampp\\htdocs\\ois-local\\storage\\fonts/',
-      'temp_dir' => 'C:\\Users\\Rnyll\\AppData\\Local\\Temp',
-      'chroot' => 'C:\\xampp\\htdocs\\ois-local',
+      'font_dir' => 'C:\\xampp\\htdocs\\ois-master\\storage\\fonts/',
+      'font_cache' => 'C:\\xampp\\htdocs\\ois-master\\storage\\fonts/',
+      'temp_dir' => 'C:\\Users\\CHRIST~1\\AppData\\Local\\Temp',
+      'chroot' => 'C:\\xampp\\htdocs\\ois-master',
       'enable_font_subsetting' => false,
       'pdf_backend' => 'CPDF',
       'default_media_type' => 'screen',
@@ -647,7 +647,7 @@
         'host' => 'localhost',
         'port' => 11211,
       ),
-      'dir' => 'C:\\xampp\\htdocs\\ois-local\\storage\\cache',
+      'dir' => 'C:\\xampp\\htdocs\\ois-master\\storage\\cache',
     ),
     'properties' => 
     array (
@@ -713,7 +713,7 @@
       ),
       'store' => 
       array (
-        'path' => 'C:\\xampp\\htdocs\\ois-local\\storage\\exports',
+        'path' => 'C:\\xampp\\htdocs\\ois-master\\storage\\exports',
         'returnInfo' => false,
       ),
       'pdf' => 
@@ -723,15 +723,15 @@
         array (
           'DomPDF' => 
           array (
-            'path' => 'C:\\xampp\\htdocs\\ois-local\\vendor/dompdf/dompdf/',
+            'path' => 'C:\\xampp\\htdocs\\ois-master\\vendor/dompdf/dompdf/',
           ),
           'tcPDF' => 
           array (
-            'path' => 'C:\\xampp\\htdocs\\ois-local\\vendor/tecnick.com/tcpdf/',
+            'path' => 'C:\\xampp\\htdocs\\ois-master\\vendor/tecnick.com/tcpdf/',
           ),
           'mPDF' => 
           array (
-            'path' => 'C:\\xampp\\htdocs\\ois-local\\vendor/mpdf/mpdf/',
+            'path' => 'C:\\xampp\\htdocs\\ois-master\\vendor/mpdf/mpdf/',
           ),
         ),
       ),

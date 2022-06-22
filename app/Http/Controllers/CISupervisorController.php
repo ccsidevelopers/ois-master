@@ -73,8 +73,6 @@ class CISupervisorController extends Controller
         $onhand = DB::table('ci_fund_realtime_amount')
             ->where('user_id',$ci_id)
             ->get();
-
-//        return 'testing';
         return response()->json([$onhand, $user]);
     }
 
@@ -82,9 +80,6 @@ class CISupervisorController extends Controller
     {
         $min = $request->min_date_endorsed;
         $max = $request->max_date_endorsed;
-
-
-
         $seatrch_min = '';
         $seatrch_max = '';
 
@@ -108,9 +103,6 @@ class CISupervisorController extends Controller
 
         $endorsements = DB::table('endorsements')
             ->join('endorsement_user', 'endorsement_user.endorsement_id', '=', 'endorsements.id')
-            // ->join('type_of_subjects','type_of_subjects.endorsement_id','=','endorsements.id')
-            // ->join('subjects','subjects.endorsement_id','=','endorsements.id')
-            // ->leftjoin('reports','reports.endorsement_id','=','endorsement_user.endorsement_id')
             ->select
             (
                 [
@@ -123,22 +115,18 @@ class CISupervisorController extends Controller
                     'endorsements.client_name as client_name',
                     'endorsements.type_of_request as type_of_request',
                     'endorsements.city_muni as city_muni',
-                    // 'type_of_subjects.type_of_subject_name as subjcoob',
-                    // 'subjects.subject_name as subjnames',
                     'endorsements.verify_through as verify_through',
                     'endorsements.client_remarks as client_remarks',
                     'endorsements.re_ci as re_ci',
                     'endorsements.acct_status as acct_status',
-                    // 'reports.endorsement_report as endorsement_report'
                 ]
             )
-            // ->orderby('endorsements.id','desc')
             ->where('endorsement_user.user_id',$request->id)
-            ->where('endorsements.acct_status','=',1)
-            ->where('endorsement_user.position_id','=',4)
-            ->where('endorsements.date_endorsed','>=',$seatrch_min)
-            ->where('endorsements.date_endorsed','<=',$seatrch_max)
-            ->limit(10);
+            // ->where('endorsements.acct_status','=',1)
+            // ->where('endorsement_user.position_id','=',4)
+            // ->where('endorsements.date_endorsed','>=',$seatrch_min)
+            // ->where('endorsements.date_endorsed','<=',$seatrch_max)
+             ->limit(10);
 
         return DataTables::of($endorsements)
             ->editColumn('endorsement_report', function($endorsements)

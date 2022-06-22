@@ -39,13 +39,19 @@ use ZanySoft\Zip\Zip;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Barryvdh\DomPDF\Facade as PDF;
 
+//Kiosk loan
+use App\Http\Controllers\KioskEndorsementController;
+
 //========================================KIOSK LOAN ROUTE============================================================
 
-Route::get('/loan-form', function() {
-    return view('loan-form');
-});
+Route::get('/loan-form', 'KioskEndorsementController@index');
+Route::get('/show', 'KioskEndorsementController@show');
 
-Route::post('kiosk_create', 'LoanFormController@kiosk_create');
+Route::post('/store-endorsement', 'KioskEndorsementController@store');
+Route::post('/delete-endorsement/{id}', 'KioskEndorsementController@destroy');
+Route::get('/approve-endorsement/{id}', 'KioskEndorsementController@approve');
+
+// Route::post('kiosk_create', 'LoanFormController@kiosk_create');
 
 
 //========================================GENERAL ROUTE ROUTE=========================================================

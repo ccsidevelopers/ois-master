@@ -36,7 +36,7 @@
                         <div class="inner">
                             <h3>99<sup style="font-size: 20px">%</sup></h3>
 
-                            <p>Successfull TAT Account</p>
+                            <p>Successful TAT Account</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-stats-bars"></i>
