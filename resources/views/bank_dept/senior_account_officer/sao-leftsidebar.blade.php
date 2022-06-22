@@ -31,6 +31,10 @@
                 <a id="process_a" href="#sao_process_tab" class="a_sao" data-toggle="tab">
                     <i class="fa fa-users"></i> SRAO Panel - Accounts</a>
             </li>
+            <li class="class_sao active">
+                <a id="process_a" href="#sao_process_tab" class="a_sao" data-toggle="tab">
+                    <i class="fa fa-users"></i> Kiosk Loan Approval</a>
+            </li>
 
             <li class="class_sao">
                 <a id="sao_audit_a" href="#sao_audit_tab" class="a_sao" data-toggle="tab">

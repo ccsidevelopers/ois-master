@@ -45,6 +45,25 @@
                                             </div>
                                         </div>
 
+                                        <div id="update_desc_item" class="box-body" hidden>
+                                            <div class="panel panel-success">
+                                                <div class="panel-heading">
+                                                    <h4>Update Item Description</h4>
+                                                </div>
+                                                <div class="panel-body">
+                                                    <div class="form-group">
+                                                        <label for="item_update_desc">Equipment Description</label>
+                                                        <input type="text" id="item_update_desc" class="form-control update_desc_text" placeholder="Enter text here...">
+                                                    </div>
+                                                    <button class="btn btn-sm btn-success pull-right" id="update_item_desc">Update <i class="fa fa-fw fa-save"></i></button>
+                                                    <div id="item_update_desc_alert" class="alert alert-success alert-dismissible text-sm col-md-9" hidden>
+                                                        <h5><i class="icon fa fa-check"></i>Success!</h5>
+                                                        "click again the view Information button to see the new item description."
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                         <div id="update_item_div" class="box-body" hidden>
                                             <div class="panel panel-info">
                                                 <div class="panel-heading">

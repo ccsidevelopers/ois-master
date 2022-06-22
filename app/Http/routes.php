@@ -5811,6 +5811,13 @@ Route::get('admin_get_all_latest_item_pic',
         'role' => 'Admin Staff'
     ]);
 
+Route::get('admin_staff_update_item_description',
+    [
+        'uses' => 'AdminStaffController@admin_staff_update_item_description',
+        'as' => 'admin_staff_update_item_description',
+        'role' => 'Admin Staff'
+    ]);
+
 Route::post('admin_staff_update_item_status',
     [
         'uses' => 'AdminStaffController@admin_staff_update_item_status',

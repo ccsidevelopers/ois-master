@@ -101,5 +101,13 @@
     </li>
 @endif
 
+@if(!Auth::user()->hasRole ('Client') && !Auth::user()->hasRole ('Credit Investigator'))
+    <li>
+        <a href="#user_eval" id="" class="" data-toggle="tab">
+            <i class="glyphicon glyphicon-time"></i> <span>Evaluation</span>
+        </a>
+    </li>
+@endif
+
 
 

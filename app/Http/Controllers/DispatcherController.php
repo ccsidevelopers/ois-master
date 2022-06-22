@@ -2112,7 +2112,7 @@ class DispatcherController extends Controller
 
                     $texting = $text->DispatcherSendMessageToCI($request, $splitMessage[$i]);
 
-                    if($texting == '0')
+                    if($texting->Failed == 0)
                     {
                         $status = 'Success';
 
@@ -2152,7 +2152,7 @@ class DispatcherController extends Controller
                 $texting = $text->DispatcherSendMessageToCI($request, $splitMessage[0]);
                 $credit = 0;
 
-                if($texting == '0')
+                if($texting->Failed == 0)
                 {
                     $status = 'Success';
                     $credit = $request->credits_count;
