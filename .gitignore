@@ -8,4 +8,4 @@ Homestead.json
 storage/*
 /storage
 bootstrap/*
-clear-cache.bat
+cc.bat
