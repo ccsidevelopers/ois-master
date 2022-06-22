@@ -101,8 +101,8 @@ class KioskEndorsementController extends Controller
             $fileUploaded = request()->file('file');
             $fileDate = Carbon::now()->format('y-m-d-h-m');
             $fileName = $kiosk_endorsements->id . '-' . $fileUploaded->getClientOriginalName();
-            $filePath = public_path('/images');
-            $fileUploaded->move(storage_path('images'), $fileName);
+            $filePath = public_path('/kiosk_loan_attachments');
+            $fileUploaded->move(storage_path('kiosk_loan_attachments'), $fileName);
         }
 
         $kiosk_endorsements->uploaded_file_path = 'public/images/' . $fileName;
